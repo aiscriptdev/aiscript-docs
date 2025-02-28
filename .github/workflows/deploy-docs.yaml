@@ -27,8 +27,6 @@ jobs:
       - uses: pnpm/action-setup@v3 # pnpm is optional but recommended, you can also use npm / yarn
         with:
             version: 8
-      - name: Change directory
-        run: cd aiscript-docs
       - name: Setup Node
         uses: actions/setup-node@v4
         with:
