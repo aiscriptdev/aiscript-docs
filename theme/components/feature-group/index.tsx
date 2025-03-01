@@ -16,7 +16,7 @@ interface FeatureGroupProps {
 
 const FeatureGroup: FC<FeatureGroupProps> = ({ features }) => {
   const [activeIndex, setActiveIndex] = useState(0);
-
+  const feature = features[activeIndex];
   return (
     <div className={styles.featureGroup}>
       <div className={styles.tabs}>
@@ -31,11 +31,11 @@ const FeatureGroup: FC<FeatureGroupProps> = ({ features }) => {
         ))}
       </div>
       <FeatureDemo
-        title={features[activeIndex].title}
-        description={features[activeIndex].description}
-        code={features[activeIndex].code}
-        filename={features[activeIndex].filename}
-        isReversed={features[activeIndex].isReversed}
+        title={feature.title}
+        description={feature.description}
+        code={feature.code}
+        filename={feature.filename}
+        isReversed={feature.isReversed}
       />
     </div>
   );

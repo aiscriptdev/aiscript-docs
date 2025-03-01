@@ -5,7 +5,7 @@ import styles from './index.module.scss';
 
 import { useCallback } from 'react';
 import { useNavigate } from 'rspress/runtime';
-import { features } from './features.json';
+import featureData from './features.json';
 
 const LandingPage = () => {
     const navigate = useNavigate();
@@ -23,7 +23,15 @@ const LandingPage = () => {
                 githubURL="https://github.com/aiscriptdev/aiscript"
                 onClickGetStarted={onClickGetStarted}
             />
-            <FeatureGroup features={features} />
+            {
+                Object.entries(featureData).map(([key, features], index) => {
+                    const featureList = features.map((feature) => ({
+                        ...feature,
+                        isReversed: index % 2 === 0,
+                    }));
+                    return <FeatureGroup key={key} features={featureList} />;
+                })
+            }
         </div>
     );
 };
