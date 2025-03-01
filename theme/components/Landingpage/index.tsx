@@ -1,4 +1,4 @@
-import { BackgroundImage } from '@rstack-dev/doc-ui/background-image';
+import { BackgroundImage } from '../background-image';
 import { Hero } from '../hero';
 import styles from './index.module.scss';
 
@@ -8,7 +8,7 @@ import { useNavigate } from 'rspress/runtime';
 const LandingPage = () => {
     const navigate = useNavigate();
     const onClickGetStarted = useCallback(() => {
-        navigate('/guide/start/quick-start');
+        navigate('/guide');
     }, [navigate]);
 
     return (
