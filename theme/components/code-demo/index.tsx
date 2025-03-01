@@ -1,6 +1,12 @@
 import { type FC } from 'react';
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
-import { darcula as style } from 'react-syntax-highlighter/dist/esm/styles/prism';
+const style = {
+  'comment': { color: '#8B8B8B' },
+  'function': { color: '#8B5CF6' },
+  'string': { color: '#4CAF50' },
+  'keyword': { color: '#F92672' },
+  'number': { color: '#FF8B00' }
+};
 import styles from './index.module.scss';
 
 interface CodeDemoProps {
@@ -17,7 +23,7 @@ const CodeDemo: FC<CodeDemoProps> = ({ code, filename, width = '800px', height, 
       {filename && <div className={styles.filename}>{filename}</div>}
       <div className={styles.codeContainer} style={{ height }}>
         <SyntaxHighlighter
-          language={language}
+          language="javascript"
           style={style}
           customStyle={{ margin: 0, padding: '1.5rem', background: 'transparent' }}
           codeTagProps={{
