@@ -11,7 +11,7 @@ import featureData from './features.json';
 const LandingPage = () => {
     const navigate = useNavigate();
     const onClickGetStarted = useCallback(() => {
-        navigate('/guide');
+        navigate('/guide/getting-started/introduction');
     }, [navigate]);
 
     return (

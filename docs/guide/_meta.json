@@ -1,1 +1,22 @@
-["index"]
+[
+    {
+      "type": "dir",
+      "name": "getting-started",
+      "label": "Getting Started"
+    },
+    {
+      "type": "dir",
+      "name": "language",
+      "label": "Language"
+    },
+    {
+      "type": "dir",
+      "name": "web-dsl",
+      "label": "Web"
+    },
+    {
+      "type": "dir",
+      "name": "std-library",
+      "label": "Standard Library"
+    }
+  ]

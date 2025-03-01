@@ -1,0 +1,32 @@
+[
+    {
+      "type": "file",
+      "name": "language-syntax",
+      "label": "Language Syntax"
+    },
+    {
+      "type": "file",
+      "name": "language-keyword",
+      "label": "Language Keyword"
+    },
+    {
+      "type": "file",
+      "name": "route-request",
+      "label": "Route Request"
+    },
+    {
+      "type": "file",
+      "name": "directives",
+      "label": "Directives"
+    },
+    {
+      "type": "file",
+      "name": "cli",
+      "label": "Commands"
+    },
+    {
+      "type": "dir",
+      "name": "configuration",
+      "label": "Configuration"
+    }
+  ]

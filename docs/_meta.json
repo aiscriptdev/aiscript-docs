@@ -1,13 +1,8 @@
 [
   {
     "text": "Guide",
-    "link": "/guide/",
+    "link": "/guide/getting-started/introduction",
     "activeMatch": "/guide/"
-  },
-  {
-    "text": "Get Started",
-    "link": "/get-started/",
-    "activeMatch": "/get-started/"
   },
   {
     "text": "Std library",
@@ -16,7 +11,7 @@
   },
   {
     "text": "Reference",
-    "link": "/referece/",
+    "link": "/reference/language-syntax",
     "activeMatch": "/reference/"
   }
 ]
