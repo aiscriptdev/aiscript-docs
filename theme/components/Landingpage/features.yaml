@@ -1,0 +1,254 @@
+ai:
+  - title: Prompt
+    description: AIscript is designed to be the first-class language for AI development. It is designed to be easy to learn and use, and it is designed to be fast and efficient.
+    code: |
+      // Define a function that takes a prompt and returns a response
+      fn generate_response(prompt: string) -> string {
+          // Call the AI model to generate a response
+          let response = ai.generate({
+              model: "gpt-4",
+              prompt: prompt,
+              max_tokens: 100
+          });
+          
+          return response;
+      }
+
+      // Example usage
+      let result = generate_response("Tell me a joke");
+      print(result);
+    filename: main.ai
+  - title: AI Function
+    description: AIscript comes with a powerful type system that helps catch errors before they happen. The type system is designed to be intuitive and easy to use.
+    code: |
+      // Define a function that takes a prompt and returns a response
+      fn generate_response(prompt: string) -> string {
+          // Call the AI model to generate a response
+          let response = ai.generate({
+              model: "gpt-4",
+              prompt: prompt,
+              max_tokens: 100
+          });
+          
+          return response;
+      }
+
+      // Example usage
+      let result = generate_response("Tell me a joke");
+      print(result);
+    filename: main.ai
+  - title: Agent
+    description: AIscript comes with a powerful type system that helps catch errors before they happen. The type system is designed to be intuitive and easy to use.
+    code: |
+      // Define a function that takes a prompt and returns a response
+      fn generate_response(prompt: string) -> string {
+          // Call the AI model to generate a response
+          let response = ai.generate({
+              model: "gpt-4",
+              prompt: prompt,
+              max_tokens: 100
+          });
+          
+          return response;
+      }
+
+      // Example usage
+      let result = generate_response("Tell me a joke");
+      print(result);
+    filename: main.ai
+
+web:
+  - title: Route DSL
+    description: AIscript is designed to be the first-class language for AI development. It is designed to be easy to learn and use, and it is designed to be fast and efficient.
+    code: |
+      // Define a function that takes a prompt and returns a response
+      fn generate_response(prompt: string) -> string {
+          // Call the AI model to generate a response
+          let response = ai.generate({
+              model: "gpt-4",
+              prompt: prompt,
+              max_tokens: 100
+          });
+          
+          return response;
+      }
+
+      // Example usage
+      let result = generate_response("Tell me a joke");
+      print(result);
+    filename: main.ai
+  - title: Validator
+    description: AIscript comes with a powerful type system that helps catch errors before they happen. The type system is designed to be intuitive and easy to use.
+    code: |
+      // Define a function that takes a prompt and returns a response
+      fn generate_response(prompt: string) -> string {
+          // Call the AI model to generate a response
+          let response = ai.generate({
+              model: "gpt-4",
+              prompt: prompt,
+              max_tokens: 100
+          });
+          
+          return response;
+      }
+
+      // Example usage
+      let result = generate_response("Tell me a joke");
+      print(result);
+    filename: main.ai
+  - title: OpenAPI
+    description: AIscript comes with a powerful type system that helps catch errors before they happen. The type system is designed to be intuitive and easy to use.
+    code: |
+      // Define a function that takes a prompt and returns a response
+      fn generate_response(prompt: string) -> string {
+          // Call the AI model to generate a response
+          let response = ai.generate({
+              model: "gpt-4",
+              prompt: prompt,
+              max_tokens: 100
+          });
+          
+          return response;
+      }
+
+      // Example usage
+      let result = generate_response("Tell me a joke");
+      print(result);
+    filename: main.ai
+  - title: Effortless Social Login
+    description: AIscript comes with a powerful type system that helps catch errors before they happen. The type system is designed to be intuitive and easy to use.
+    code: |
+      // Define a function that takes a prompt and returns a response
+      fn generate_response(prompt: string) -> string {
+          // Call the AI model to generate a response
+          let response = ai.generate({
+              model: "gpt-4",
+              prompt: prompt,
+              max_tokens: 100
+          });
+          
+          return response;
+      }
+
+      // Example usage
+      let result = generate_response("Tell me a joke");
+      print(result);
+    filename: main.ai
+
+language:
+  - title: Enum
+    description: AIscript is designed to be the first-class language for AI development. It is designed to be easy to learn and use, and it is designed to be fast and efficient.
+    code: |
+      // Define a function that takes a prompt and returns a response
+      fn generate_response(prompt: string) -> string {
+          // Call the AI model to generate a response
+          let response = ai.generate({
+              model: "gpt-4",
+              prompt: prompt,
+              max_tokens: 100
+          });
+          
+          return response;
+      }
+
+      // Example usage
+      let result = generate_response("Tell me a joke");
+      print(result);
+    filename: main.ai
+  - title: Pipe Operator
+    description: AIscript is designed to be the first-class language for AI development. It is designed to be easy to learn and use, and it is designed to be fast and efficient.
+    code: |
+      // Define a function that takes a prompt and returns a response
+      fn generate_response(prompt: string) -> string {
+          // Call the AI model to generate a response
+          let response = ai.generate({
+              model: "gpt-4",
+              prompt: prompt,
+              max_tokens: 100
+          });
+          
+          return response;
+      }
+
+      // Example usage
+      let result = generate_response("Tell me a joke");
+      print(result);
+    filename: main.ai
+  - title: Error handling
+    description: AIscript comes with a powerful type system that helps catch errors before they happen. The type system is designed to be intuitive and easy to use.
+    code: |
+      // Define a function that takes a prompt and returns a response
+      fn generate_response(prompt: string) -> string {
+          // Call the AI model to generate a response
+          let response = ai.generate({
+              model: "gpt-4",
+              prompt: prompt,
+              max_tokens: 100
+          });
+          
+          return response;
+      }
+
+      // Example usage
+      let result = generate_response("Tell me a joke");
+      print(result);
+    filename: main.ai
+
+std-library:
+  - title: Database
+    description: AIscript is designed to be the first-class language for AI development. It is designed to be easy to learn and use, and it is designed to be fast and efficient.
+    code: |
+      // Define a function that takes a prompt and returns a response
+      fn generate_response(prompt: string) -> string {
+          // Call the AI model to generate a response
+          let response = ai.generate({
+              model: "gpt-4",
+              prompt: prompt,
+              max_tokens: 100
+          });
+          
+          return response;
+      }
+
+      // Example usage
+      let result = generate_response("Tell me a joke");
+      print(result);
+    filename: main.ai
+  - title: Redis
+    description: AIscript is designed to be the first-class language for AI development. It is designed to be easy to learn and use, and it is designed to be fast and efficient.
+    code: |
+      // Define a function that takes a prompt and returns a response
+      fn generate_response(prompt: string) -> string {
+          // Call the AI model to generate a response
+          let response = ai.generate({
+              model: "gpt-4",
+              prompt: prompt,
+              max_tokens: 100
+          });
+          
+          return response;
+      }
+
+      // Example usage
+      let result = generate_response("Tell me a joke");
+      print(result);
+    filename: main.ai
+  - title: Builtin functions
+    description: AIscript comes with a powerful type system that helps catch errors before they happen. The type system is designed to be intuitive and easy to use.
+    code: |
+      // Define a function that takes a prompt and returns a response
+      fn generate_response(prompt: string) -> string {
+          // Call the AI model to generate a response
+          let response = ai.generate({
+              model: "gpt-4",
+              prompt: prompt,
+              max_tokens: 100
+          });
+          
+          return response;
+      }
+
+      // Example usage
+      let result = generate_response("Tell me a joke");
+      print(result);
+    filename: main.ai

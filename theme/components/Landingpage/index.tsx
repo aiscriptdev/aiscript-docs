@@ -6,7 +6,7 @@ import styles from './index.module.scss';
 
 import { useCallback } from 'react';
 import { useNavigate } from 'rspress/runtime';
-import featureData from './features.json';
+import featureData from './features.yaml';
 
 const LandingPage = () => {
     const navigate = useNavigate();

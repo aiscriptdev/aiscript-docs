@@ -1,5 +1,6 @@
 import * as path from 'node:path';
 import { defineConfig } from 'rspress/config';
+import { pluginYaml } from "@rsbuild/plugin-yaml";
 
 export default defineConfig({
   root: path.join(__dirname, 'docs'),
@@ -9,6 +10,7 @@ export default defineConfig({
     light: '/aiscript-logo.svg',
     dark: '/aiscript-logo.svg',
   },
+  builderPlugins: [pluginYaml()],
   themeConfig: {
     footer: {
         message:
