@@ -1,6 +1,7 @@
 import { BackgroundImage } from '../background-image';
 import { Hero } from '../hero';
 import FeatureGroup from '../feature-group';
+import VersionCard from '../version-card';
 import styles from './index.module.scss';
 
 import { useCallback } from 'react';
@@ -23,6 +24,7 @@ const LandingPage = () => {
                 githubURL="https://github.com/aiscriptdev/aiscript"
                 onClickGetStarted={onClickGetStarted}
             />
+            <VersionCard />
             {
                 Object.entries(featureData).map(([key, features], index) => {
                     const featureList = features.map((feature) => ({
