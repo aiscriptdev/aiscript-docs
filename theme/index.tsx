@@ -1,10 +1,13 @@
 import Theme from 'rspress/theme';
+import { Content } from 'rspress/runtime';
+import { HomeLayout } from './pages/index';
+const Layout = () => <Theme.Layout ><Content /></Theme.Layout>;
 
-const Layout = () => <Theme.Layout beforeNavTitle={<div>some content</div>} />;
 
 export default {
-  ...Theme,
-  Layout,
+    ...Theme,
+    Layout,
+    HomeLayout,
 };
 
 export * from 'rspress/theme';

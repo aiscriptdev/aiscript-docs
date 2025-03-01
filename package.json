@@ -10,6 +10,9 @@
     "lint": "eslint .",
     "preview": "rspress preview"
   },
+  "dependencies": {
+    "@rstack-dev/doc-ui": "1.7.2"
+  },
   "devDependencies": {
     "@biomejs/biome": "^1.9.4",
     "@eslint/js": "^9.19.0",
