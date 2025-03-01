@@ -1,0 +1,45 @@
+.codeDemo {
+  margin: 2rem auto;
+  max-width: 800px;
+  padding: 1rem;
+}
+
+.filename {
+  font-family: 'Fira Code', monospace;
+  font-size: 0.9rem;
+  color: #d4d4d4;
+  background-color: #1e1e1e;
+  padding: 0.5rem 1rem;
+  border-top-left-radius: 8px;
+  border-top-right-radius: 8px;
+  border-bottom: 1px solid #333;
+  opacity: 0.8;
+}
+
+.codeContainer {
+  background-color: #1e1e1e;
+  border-radius: 8px;
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
+  overflow: auto;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+
+  &:has(+ .filename) {
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+  }
+}
+
+.pre {
+  margin: 0;
+  padding: 1.5rem;
+}
+
+.code {
+  font-family: 'Fira Code', monospace;
+  font-size: 0.9rem;
+  line-height: 1.5;
+  color: #d4d4d4;
+  display: block;
+  white-space: pre;
+}
