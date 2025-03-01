@@ -1,9 +1,15 @@
 .codeDemo {
   margin: 2rem auto;
-  max-width: 800px;
+  max-width: 100%;
   padding: 1rem;
   border-radius: 8px;
   overflow: hidden;
+
+  @media screen and (max-width: 768px) {
+    padding: 0.25rem;
+    margin: 0.5rem auto;
+    border-radius: 4px;
+  }
 }
 
 .filename {
@@ -14,6 +20,13 @@
   padding: 0.75rem 1.5rem;
   border-top-left-radius: 8px;
   border-top-right-radius: 8px;
+
+  @media screen and (max-width: 768px) {
+    font-size: 0.75rem;
+    padding: 0.5rem 0.75rem;
+    border-top-left-radius: 4px;
+    border-top-right-radius: 4px;
+  }
 }
 
 .codeContainer {
@@ -22,6 +35,13 @@
   border-top-left-radius: 0;
   border-top-right-radius: 0;
   overflow: auto;
+  -webkit-overflow-scrolling: touch;
+
+  @media screen and (max-width: 768px) {
+    border-radius: 4px;
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+  }
 
   &:has(+ .filename) {
     border-top-left-radius: 0;
@@ -41,4 +61,12 @@
   color: #333;
   display: block;
   white-space: pre;
+
+  @media screen and (max-width: 768px) {
+    font-size: 0.75rem;
+    line-height: 1.4;
+    white-space: pre-wrap;
+    word-break: break-all;
+    padding: 0.25rem;
+  }
 }

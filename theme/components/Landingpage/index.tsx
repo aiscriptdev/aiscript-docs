@@ -1,6 +1,7 @@
 import { BackgroundImage } from '../background-image';
 import { Hero } from '../hero';
-import CodeDemo from '../code-demo';
+// import CodeDemo from '../code-demo';
+import FeatureDemo from '../feature-demo';
 import styles from './index.module.scss';
 
 import { useCallback } from 'react';
@@ -38,7 +39,18 @@ const LandingPage = () => {
                 githubURL="https://github.com/aiscriptdev/aiscript"
                 onClickGetStarted={onClickGetStarted}
             />
-            <CodeDemo code={demoCode} filename='main.ai' />
+            <FeatureDemo
+                title='AI Native'
+                description='AIscript is designed to be the first-class language for AI development. It is designed to be easy to learn and use, and it is designed to be fast and efficient.'
+                code={demoCode}
+                filename='main.ai' />
+
+            <FeatureDemo
+                title='AI Native'
+                description='AIscript is designed to be the first-class language for AI development. It is designed to be easy to learn and use, and it is designed to be fast and efficient.'
+                code={demoCode}
+                isReversed={true}
+                filename='main.ai' />
         </div>
     );
 };
