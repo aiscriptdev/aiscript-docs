@@ -1,0 +1,17 @@
+{
+  "features": [
+    {
+      "title": "AI Native",
+      "description": "AIscript is designed to be the first-class language for AI development. It is designed to be easy to learn and use, and it is designed to be fast and efficient.",
+      "code": "// Define a function that takes a prompt and returns a response\nfn generate_response(prompt: string) -> string {\n    // Call the AI model to generate a response\n    let response = ai.generate({\n        model: \"gpt-4\",\n        prompt: prompt,\n        max_tokens: 100\n    });\n    \n    return response;\n}\n\n// Example usage\nlet result = generate_response(\"Tell me a joke\");\nprint(result);",
+      "filename": "main.ai"
+    },
+    {
+      "title": "Type Safe",
+      "description": "AIscript comes with a powerful type system that helps catch errors before they happen. The type system is designed to be intuitive and easy to use.",
+      "code": "// Define a function that takes a prompt and returns a response\nfn generate_response(prompt: string) -> string {\n    // Call the AI model to generate a response\n    let response = ai.generate({\n        model: \"gpt-4\",\n        prompt: prompt,\n        max_tokens: 100\n    });\n    \n    return response;\n}\n\n// Example usage\nlet result = generate_response(\"Tell me a joke\");\nprint(result);",
+      "filename": "main.ai",
+      "isReversed": true
+    }
+  ]
+}

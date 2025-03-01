@@ -1,0 +1,52 @@
+.featureGroup {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem;
+}
+
+.tabs {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 2rem;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.tab {
+  padding: 0.75rem 1.5rem;
+  border: none;
+  border-radius: 25px;
+  background: transparent;
+  color: var(--rstack-hero-desc-color, #6b7075);
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+  
+  &:hover {
+    color: var(--rs-hero-title-color, #0b0c0e);
+    background: rgba(0, 0, 0, 0.05);
+  }
+  
+  &.active {
+    background: linear-gradient(279deg, #ff8b00 35.21%, #f93920 63.34%);
+    color: white;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .featureGroup {
+    padding: 1rem;
+  }
+  
+  .tabs {
+    gap: 0.5rem;
+    margin-bottom: 1rem;
+  }
+  
+  .tab {
+    padding: 0.5rem 1rem;
+    font-size: 0.875rem;
+  }
+}
