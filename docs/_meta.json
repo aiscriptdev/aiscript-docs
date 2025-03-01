@@ -13,5 +13,10 @@
     "text": "Std library",
     "link": "/std-library/",
     "activeMatch": "/std-library/"
+  },
+  {
+    "text": "Reference",
+    "link": "/referece/",
+    "activeMatch": "/reference/"
   }
 ]

@@ -10,6 +10,10 @@ export default defineConfig({
     dark: '/aiscript-logo.svg',
   },
   themeConfig: {
+    footer: {
+        message:
+          '<p>AIScript Community &copy; 2025.</p>',
+      },
     prevPageText: 'Prev Page',
     nextPageText: 'Next Page',
     socialLinks: [
