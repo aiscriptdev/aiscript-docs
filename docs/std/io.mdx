@@ -1,1 +1,223 @@
 # std.io
+
+The `std.io` module provides functions for file system operations and standard input/output.
+
+## read_file(path: string)
+
+Reads the entire contents of a file into a string.
+
+**Parameters**:
+- `path`: The path to the file to read
+
+**Return Type**: `string`
+
+**Example**:
+```rust
+use std.io;
+
+let content = io.read_file("example.txt");
+// Returns the entire content of example.txt as a string
+```
+
+## read_lines(path: string)
+
+Reads all lines from a file and returns them as a single string with newlines.
+
+**Parameters**:
+- `path`: The path to the file to read
+
+**Return Type**: `string`
+
+**Example**:
+```rust
+use std.io;
+
+let content = io.read_lines("example.txt");
+// Returns all lines from example.txt joined with newlines
+```
+
+## write_file(path: string, content: string)
+
+Writes a string to a file, creating the file if it doesn't exist or overwriting it if it does.
+
+**Parameters**:
+- `path`: The path to the file to write
+- `content`: The string content to write to the file
+
+**Return Type**: `boolean`
+
+**Example**:
+```rust
+use std.io;
+
+let success = io.write_file("output.txt", "Hello, world!");
+// Creates or overwrites output.txt with "Hello, world!"
+// Returns true if successful
+```
+
+## append_file(path: string, content: string)
+
+Appends a string to the end of a file, creating the file if it doesn't exist.
+
+**Parameters**:
+- `path`: The path to the file to append to
+- `content`: The string content to append to the file
+
+**Return Type**: `boolean`
+
+**Example**:
+```rust
+use std.io;
+
+let success = io.append_file("log.txt", "New log entry\n");
+// Appends "New log entry" followed by a newline to log.txt
+// Returns true if successful
+```
+
+## input(prompt?: string)
+
+Reads a line of input from standard input. If a prompt is provided, it will be displayed before reading input.
+
+**Parameters**:
+- `prompt` (optional): A string to display as a prompt
+
+**Return Type**: `string`
+
+**Example**:
+```rust
+use std.io;
+
+let name = io.input("Enter your name: ");
+// Displays "Enter your name: " and waits for user input
+// Returns the entered text without the trailing newline
+```
+
+## exists(path: string)
+
+Checks if a file or directory exists at the specified path.
+
+**Parameters**:
+- `path`: The path to check
+
+**Return Type**: `boolean`
+
+**Example**:
+```rust
+use std.io;
+
+if (io.exists("config.json")) {
+    // File or directory exists
+}
+```
+
+## is_file(path: string)
+
+Checks if the path points to a file.
+
+**Parameters**:
+- `path`: The path to check
+
+**Return Type**: `boolean`
+
+**Example**:
+```rust
+use std.io;
+
+if (io.is_file("document.txt")) {
+    // Path exists and is a file
+}
+```
+
+## is_dir(path: string)
+
+Checks if the path points to a directory.
+
+**Parameters**:
+- `path`: The path to check
+
+**Return Type**: `boolean`
+
+**Example**:
+```rust
+use std.io;
+
+if (io.is_dir("images")) {
+    // Path exists and is a directory
+}
+```
+
+## create_dir(path: string)
+
+Creates a directory and all its parent directories if they don't exist.
+
+**Parameters**:
+- `path`: The path of the directory to create
+
+**Return Type**: `boolean`
+
+**Example**:
+```rust
+use std.io;
+
+let success = io.create_dir("data/logs/2023");
+// Creates the directory structure data/logs/2023
+// Returns true if successful
+```
+
+## remove_file(path: string)
+
+Removes a file from the file system.
+
+**Parameters**:
+- `path`: The path of the file to remove
+
+**Return Type**: `boolean`
+
+**Example**:
+```rust
+use std.io;
+
+let success = io.remove_file("temp.txt");
+// Removes the file temp.txt
+// Returns true if successful
+```
+
+## remove_dir(path: string, recursive?: boolean)
+
+Removes a directory from the file system.
+
+**Parameters**:
+- `path`: The path of the directory to remove
+- `recursive` (optional): If true, removes the directory and all its contents recursively. Default is false.
+
+**Return Type**: `boolean`
+
+**Example**:
+```rust
+use std.io;
+
+// Remove an empty directory
+let success1 = io.remove_dir("empty_folder");
+
+// Remove a directory and all its contents
+let success2 = io.remove_dir("project_backup", true);
+```
+
+## rename(from: string, to: string)
+
+Renames a file or directory.
+
+**Parameters**:
+- `from`: The current path
+- `to`: The new path
+
+**Return Type**: `boolean`
+
+**Example**:
+```rust
+use std.io;
+
+let success = io.rename("old_name.txt", "new_name.txt");
+// Renames old_name.txt to new_name.txt
+// Returns true if successful
+```

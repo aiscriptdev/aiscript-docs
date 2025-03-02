@@ -1,0 +1,22 @@
+[
+    {
+        "type": "file",
+        "name": "pg",
+        "label": "std.env.pg"
+      },
+    {
+        "type": "file",
+        "name": "mysql",
+        "label": "std.env.mysql"
+      },
+    {
+        "type": "file",
+        "name": "sqlite",
+        "label": "std.env.sqlite"
+      },
+    {
+        "type": "file",
+        "name": "redis",
+        "label": "std.env.redis"
+      }
+]

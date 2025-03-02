@@ -1,1 +1,250 @@
 # std.time
+
+The `std.time` module provides functions for working with time, including getting the current time, formatting and parsing datetime strings, and handling time durations.
+
+## Constants
+
+### UNIX_EPOCH
+
+A constant representing the Unix epoch (January 1, 1970, 00:00:00 UTC) as a timestamp value of 0.0.
+
+**Example**:
+```rust
+use std.time;
+
+let epoch = time.UNIX_EPOCH;
+// epoch will be 0.0
+```
+
+## Functions
+
+## now()
+
+Returns the current time as a Unix timestamp in seconds with fractional part.
+
+**Return Type**: `number`
+
+**Example**:
+```rust
+use std.time;
+
+let current_time = time.now();
+// Returns the current Unix timestamp, e.g., 1709389245.789
+```
+
+## unix_timestamp(time_str: string)
+
+Returns the Unix timestamp in seconds for a given time string in ISO 8601 format.
+
+**Parameters**:
+- `time_str`: A string representing a datetime in ISO 8601 format (RFC 3339)
+
+**Return Type**: `number`
+
+**Example**:
+```rust
+use std.time;
+
+let timestamp = time.unix_timestamp("2023-01-15T12:30:45Z");
+// Returns the Unix timestamp for the specified datetime
+```
+
+## sleep(seconds: number)
+
+Pauses the execution for the specified number of seconds.
+
+**Parameters**:
+- `seconds`: The number of seconds to sleep (can include fractional part for milliseconds)
+
+**Return Type**: `nil`
+
+**Example**:
+```rust
+use std.time;
+
+// Sleep for 2.5 seconds
+time.sleep(2.5);
+```
+
+## to_utc(timestamp: number)
+
+Converts a Unix timestamp to a UTC datetime string in RFC 3339 format.
+
+**Parameters**:
+- `timestamp`: A Unix timestamp in seconds
+
+**Return Type**: `string`
+
+**Example**:
+```rust
+use std.time;
+
+let datetime = time.to_utc(1609459200);
+// Returns "2021-01-01T00:00:00+00:00"
+```
+
+## to_local(timestamp: number)
+
+Converts a Unix timestamp to a local datetime string in RFC 3339 format.
+
+**Parameters**:
+- `timestamp`: A Unix timestamp in seconds
+
+**Return Type**: `string`
+
+**Example**:
+```rust
+use std.time;
+
+let local_datetime = time.to_local(1609459200);
+// Returns the datetime in local timezone, e.g., "2021-01-01T08:00:00+08:00"
+```
+
+## format_datetime(timestamp: number, format: string)
+
+Formats a timestamp using the specified format string according to the chrono crate's format syntax.
+
+**Parameters**:
+- `timestamp`: A Unix timestamp in seconds
+- `format`: A format string following chrono's syntax
+
+**Return Type**: `string`
+
+**Example**:
+```rust
+use std.time;
+
+let formatted = time.format_datetime(1609459200, "%Y-%m-%d %H:%M:%S");
+// Returns "2021-01-01 00:00:00" (in UTC) or adjusted for local timezone
+```
+
+## parse_datetime(datetime_str: string, format: string)
+
+Parses a datetime string using the specified format and returns the corresponding Unix timestamp.
+
+**Parameters**:
+- `datetime_str`: A string representing a datetime
+- `format`: A format string following chrono's syntax
+
+**Return Type**: `number`
+
+**Example**:
+```rust
+use std.time;
+
+let timestamp = time.parse_datetime("2021-01-01 12:30:45", "%Y-%m-%d %H:%M:%S");
+// Returns the Unix timestamp for the specified datetime
+```
+
+## seconds(value: number)
+
+Converts a value in seconds to seconds (identity function).
+
+**Parameters**:
+- `value`: A number of seconds
+
+**Return Type**: `number`
+
+**Example**:
+```rust
+use std.time;
+
+let duration = time.seconds(30);
+// Returns 30.0
+```
+
+## minutes(value: number)
+
+Converts a value in minutes to seconds.
+
+**Parameters**:
+- `value`: A number of minutes
+
+**Return Type**: `number`
+
+**Example**:
+```rust
+use std.time;
+
+let duration = time.minutes(2);
+// Returns 120.0 (2 * 60)
+```
+
+## hours(value: number)
+
+Converts a value in hours to seconds.
+
+**Parameters**:
+- `value`: A number of hours
+
+**Return Type**: `number`
+
+**Example**:
+```rust
+use std.time;
+
+let duration = time.hours(1);
+// Returns 3600.0 (1 * 60 * 60)
+```
+
+## days(value: number)
+
+Converts a value in days to seconds.
+
+**Parameters**:
+- `value`: A number of days
+
+**Return Type**: `number`
+
+**Example**:
+```rust
+use std.time;
+
+let duration = time.days(1);
+// Returns 86400.0 (1 * 24 * 60 * 60)
+```
+
+## Usage Examples
+
+### Working with timestamps and formatting
+
+```rust
+use std.time;
+
+// Get current timestamp
+let now = time.now();
+
+// Convert to human-readable format
+let utc_time = time.to_utc(now);
+let local_time = time.to_local(now);
+
+// Format with custom format string
+let formatted = time.format_datetime(now, "%Y-%m-%d %H:%M:%S");
+```
+
+### Creating and using durations
+
+```rust
+use std.time;
+
+// Create a duration of 2 hours and 30 minutes in seconds
+let duration = time.hours(2) + time.minutes(30);
+
+// Use with sleep
+time.sleep(time.seconds(0.5)); // Sleep for half a second
+
+// Calculate a future timestamp
+let future_time = time.now() + time.days(7); // One week from now
+```
+
+### Parsing and manipulating dates
+
+```rust
+use std.time;
+
+// Parse a date string
+let birthday = time.parse_datetime("1990-05-15", "%Y-%m-%d");
+
+// Format it differently
+let formatted_birthday = time.format_datetime(birthday, "%B %d, %Y");
+```
