@@ -13,10 +13,5 @@
       "type": "dir",
       "name": "web",
       "label": "Web"
-    },
-    {
-      "type": "dir",
-      "name": "std-library",
-      "label": "Standard Library"
     }
   ]

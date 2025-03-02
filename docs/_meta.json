@@ -6,8 +6,8 @@
   },
   {
     "text": "Std Library",
-    "link": "/std-library/",
-    "activeMatch": "/std-library/"
+    "link": "/std/overview",
+    "activeMatch": "/std/"
   },
   {
     "text": "Reference",

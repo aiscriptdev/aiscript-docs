@@ -1,0 +1,128 @@
+# std.serde
+
+The `std.serde` module provides functionality for JSON serialization and deserialization. It allows you to convert between AIScript values and JSON format, with support for both string and file operations.
+
+## Functions
+
+### from_str(json_str: string) -> any
+
+Parses a JSON string and converts it into an AIScript value.
+
+**Parameters:**
+- `json_str`: A string containing valid JSON data
+
+**Returns:**
+- The parsed AIScript value
+
+**Throws:**
+- Runtime error if the input is not valid JSON
+- Runtime error if wrong number of arguments provided
+
+**Example:**
+```rust
+use std.serde;
+
+let json = '{"name": "John", "age": 30}';
+let data = serde.from_str(json);
+print(data.name); // Outputs: John
+```
+
+### to_str(value: any, pretty?: boolean) -> string
+
+Converts an AIScript value to a JSON string.
+
+**Parameters:**
+- `value`: The value to serialize
+- `pretty`: (Optional) If true, formats the output with proper indentation and line breaks
+
+**Returns:**
+- A JSON string representation of the value
+
+**Throws:**
+- Runtime error if serialization fails
+- Runtime error if wrong number of arguments provided
+- Runtime error if pretty argument is not a boolean
+
+**Example:**
+```rust
+use std.serde;
+
+let obj = {
+    name: "John",
+    age: 30,
+    hobbies: ["reading", "coding"]
+};
+
+// Compact output
+let str1 = serde.to_str(obj);
+print(str1); // {"name":"John","age":30,"hobbies":["reading","coding"]}
+
+// Pretty-printed output
+let str2 = serde.to_str(obj, pretty=true);
+print(str2);
+// {
+//   "name": "John",
+//   "age": 30,
+//   "hobbies": [
+//     "reading",
+//     "coding"
+//   ]
+// }
+```
+
+### from_file(path: string) -> any
+
+Reads and parses a JSON file into an AIScript value.
+
+**Parameters:**
+- `path`: Path to the JSON file
+
+**Returns:**
+- The parsed AIScript value
+
+**Throws:**
+- Runtime error if file cannot be read
+- Runtime error if file content is not valid JSON
+- Runtime error if wrong number of arguments provided
+
+**Example:**
+```rust
+use std.serde;
+
+// Assuming config.json contains: {"port": 8080, "host": "localhost"}
+let config = serde.from_file("config.json");
+print(config.port); // Outputs: 8080
+```
+
+### to_file(path: string, value: any, pretty?: boolean) -> boolean
+
+Writes an AIScript value to a file in JSON format.
+
+**Parameters:**
+- `path`: Path where the JSON file should be written
+- `value`: The value to serialize
+- `pretty`: (Optional) If true, formats the output with proper indentation and line breaks
+
+**Returns:**
+- `true` if the operation was successful
+
+**Throws:**
+- Runtime error if file cannot be written
+- Runtime error if serialization fails
+- Runtime error if wrong number of arguments provided
+- Runtime error if pretty argument is not a boolean
+
+**Example:**
+```rust
+use std.serde;
+
+let data = {
+    users: [
+        { id: 1, name: "Alice" },
+        { id: 2, name: "Bob" }
+    ]
+};
+
+// Write with pretty printing
+serde.to_file("users.json", data, pretty=true);
+```

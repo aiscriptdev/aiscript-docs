@@ -1,0 +1,326 @@
+# std.math
+
+The `std.math` module provides mathematical constants and functions for numerical operations.
+
+## Constants
+
+- `PI`: The mathematical constant π (pi), approximately 3.14159
+- `E`: The mathematical constant e (Euler's number), approximately 2.71828
+- `TAU`: The mathematical constant τ (tau), equal to 2π
+- `INFINITY`: Represents positive infinity
+- `NEG_INFINITY`: Represents negative infinity
+- `NAN`: Represents "Not a Number"
+
+## Functions
+
+## add(a: number, b: number)
+
+Adds two numbers.
+
+**Parameters**:
+- `a`: First number to add
+- `b`: Second number to add
+
+**Return Type**: `number`
+
+**Example**:
+```rust
+use std.math;
+
+math.add(5, 3) // Returns: 8
+```
+
+## sub(a: number, b: number)
+
+Subtracts the second number from the first.
+
+**Parameters**:
+- `a`: Number to subtract from
+- `b`: Number to subtract
+
+**Return Type**: `number`
+
+**Example**:
+```rust
+use std.math;
+
+math.sub(5, 3) // Returns: 2
+```
+
+## mul(a: number, b: number)
+
+Multiplies two numbers.
+
+**Parameters**:
+- `a`: First number to multiply
+- `b`: Second number to multiply
+
+**Return Type**: `number`
+
+**Example**:
+```rust
+use std.math;
+
+math.mul(5, 3) // Returns: 15
+```
+
+## div(a: number, b: number)
+
+Divides the first number by the second.
+
+**Parameters**:
+- `a`: Number to divide
+- `b`: Number to divide by
+
+**Return Type**: `number`
+
+**Example**:
+```rust
+use std.math;
+
+math.div(6, 2) // Returns: 3
+```
+
+## floor_div(a: number, b: number)
+
+Performs integer division, rounding down to the nearest integer.
+
+**Parameters**:
+- `a`: Number to divide
+- `b`: Number to divide by
+
+**Return Type**: `number`
+
+**Example**:
+```rust
+use std.math;
+
+math.floor_div(7, 2) // Returns: 3
+```
+
+## sqrt(x: number)
+
+Calculates the square root of a number.
+
+**Parameters**:
+- `x`: Number to calculate square root of
+
+**Return Type**: `number`
+
+**Example**:
+```rust
+use std.math;
+
+math.sqrt(16) // Returns: 4
+```
+
+## pow(base: number, exponent: number)
+
+Raises a number to the specified power.
+
+**Parameters**:
+- `base`: The base number
+- `exponent`: The power to raise the base to
+
+**Return Type**: `number`
+
+**Example**:
+```rust
+use std.math;
+
+math.pow(2, 3) // Returns: 8
+```
+
+## log(x: number)
+
+Calculates the natural logarithm (base e) of a number.
+
+**Parameters**:
+- `x`: Number to calculate logarithm of
+
+**Return Type**: `number`
+
+**Example**:
+```rust
+use std.math;
+
+math.log(math.E) // Returns: 1
+```
+
+## sin(x: number)
+
+Calculates the sine of an angle (in radians).
+
+**Parameters**:
+- `x`: Angle in radians
+
+**Return Type**: `number`
+
+**Example**:
+```rust
+use std.math;
+
+math.sin(math.PI / 2) // Returns: 1
+```
+
+## cos(x: number)
+
+Calculates the cosine of an angle (in radians).
+
+**Parameters**:
+- `x`: Angle in radians
+
+**Return Type**: `number`
+
+**Example**:
+```rust
+use std.math;
+
+math.cos(0) // Returns: 1
+```
+
+## tan(x: number)
+
+Calculates the tangent of an angle (in radians).
+
+**Parameters**:
+- `x`: Angle in radians
+
+**Return Type**: `number`
+
+**Example**:
+```rust
+use std.math;
+
+math.tan(math.PI / 4) // Returns: 1
+```
+
+## asin(x: number)
+
+Calculates the arcsine (inverse sine) of a number.
+
+**Parameters**:
+- `x`: Number between -1 and 1
+
+**Return Type**: `number`
+
+**Example**:
+```rust
+use std.math;
+
+math.asin(1) // Returns: PI/2
+```
+
+## acos(x: number)
+
+Calculates the arccosine (inverse cosine) of a number.
+
+**Parameters**:
+- `x`: Number between -1 and 1
+
+**Return Type**: `number`
+
+**Example**:
+```rust
+use std.math;
+
+math.acos(1) // Returns: 0
+```
+
+## floor(x: number)
+
+Rounds a number down to the nearest integer.
+
+**Parameters**:
+- `x`: Number to round down
+
+**Return Type**: `number`
+
+**Example**:
+```rust
+use std.math;
+
+math.floor(3.7) // Returns: 3
+```
+
+## ceil(x: number)
+
+Rounds a number up to the nearest integer.
+
+**Parameters**:
+- `x`: Number to round up
+
+**Return Type**: `number`
+
+**Example**:
+```rust
+use std.math;
+
+math.ceil(3.2) // Returns: 4
+```
+
+## round(x: number)
+
+Rounds a number to the nearest integer.
+
+**Parameters**:
+- `x`: Number to round
+
+**Return Type**: `number`
+
+**Example**:
+```rust
+use std.math;
+
+math.round(3.5) // Returns: 4
+```
+
+## abs(x: number) \{#abs}
+
+Returns the absolute value of a number.
+
+**Parameters**:
+- `x`: Number to get absolute value of
+
+**Return Type**: `number`
+
+**Example**:
+```rust
+use std.math;
+
+math.abs(-5) // Returns: 5
+```
+
+## min(a: number, b: number)
+
+Returns the smaller of two numbers.
+
+**Parameters**:
+- `a`: First number to compare
+- `b`: Second number to compare
+
+**Return Type**: `number`
+
+**Example**:
+```rust
+use std.math;
+
+math.min(2, 5) // Returns: 2
+```
+
+## max(a: number, b: number)
+
+Returns the larger of two numbers.
+
+**Parameters**:
+- `a`: First number to compare
+- `b`: Second number to compare
+
+**Return Type**: `number`
+
+**Example**:
+```rust
+use std.math;
+
+math.max(2, 5) // Returns: 5
+```

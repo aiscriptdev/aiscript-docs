@@ -1,0 +1,47 @@
+[
+    {
+      "type": "file",
+      "name": "overview",
+      "label": "Overview"
+    },
+    {
+      "type": "file",
+      "name": "db",
+      "label": "std.db"
+    },
+    {
+      "type": "file",
+      "name": "env",
+      "label": "std.env"
+    },
+    {
+      "type": "file",
+      "name": "http",
+      "label": "std.http"
+    },
+    {
+      "type": "file",
+      "name": "io",
+      "label": "std.io"
+    },
+    {
+      "type": "file",
+      "name": "math",
+      "label": "std.math"
+    },
+    {
+      "type": "file",
+      "name": "random",
+      "label": "std.random"
+    },
+    {
+      "type": "file",
+      "name": "serde",
+      "label": "std.serde"
+    },
+    {
+      "type": "file",
+      "name": "time",
+      "label": "std.time"
+    }
+  ]
