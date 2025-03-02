@@ -32,7 +32,9 @@ ai:
           print(score); // 0.9
         filename: ai_function.ai
   - title: Agent
-    description: "`agent` is native concept of the language, use `agent` keyword to define the agent, specify the instructions, declare the functions as the tools.\n The multi-agent orchestration is inspired by https://github.com/openai/swarm"
+    description: |
+      `agent` is native concept of the language, use `agent` keyword to define the agent, specify the instructions,
+      declare the functions as the tools. The multi-agent orchestration is inspired by [OpenAI Swarm](https://github.com/openai/swarm).
     codeDemos:
       - code: |
           let player1_move = nil;

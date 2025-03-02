@@ -1,5 +1,6 @@
 import { type FC } from 'react';
-import { Tab, Tabs } from 'rspress/theme';
+import ReactMarkdown from 'react-markdown';
+import { Tab, Tabs, getCustomMDXComponent } from 'rspress/theme';
 import CodeDemo from '../code-demo';
 import styles from './index.module.scss';
 
@@ -27,7 +28,12 @@ const FeatureDemo: FC<FeatureDemoProps> = ({
             <div className={`${styles.container} ${isReversed ? styles.reversed : ''}`}>
                 <div className={styles.content}>
                     <h2 className={styles.title}>{title}</h2>
-                    <p className={styles.description}>{description}</p>
+                    <ReactMarkdown
+                        components={getCustomMDXComponent() as Record<string, React.ElementType>}
+                        skipHtml={true}
+                    >
+                        {description}
+                    </ReactMarkdown>
                 </div>
                 <div className={styles.codeWrapper}>
                     <Tabs>
@@ -40,7 +46,6 @@ const FeatureDemo: FC<FeatureDemoProps> = ({
                             </Tab>
                         ))}
                     </Tabs>
-
                 </div>
             </div>
         </div>
