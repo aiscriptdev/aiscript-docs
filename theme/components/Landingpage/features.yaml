@@ -533,6 +533,7 @@ language:
           let p = Person { name, age };
           print(p.name, p.age); // expect: Alice 30
         filename: class_literal.ai
+        lang: javascript
       - code: |
           class User {
               @string(min_len=3, max=20)
@@ -571,6 +572,7 @@ language:
           //      msg: Field required
           // }
         filename: class_field_validation.ai
+        lang: javascript
 
 
 std-library:

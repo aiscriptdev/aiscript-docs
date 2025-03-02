@@ -8,6 +8,7 @@ interface CodeDemoItem {
     code?: string;
     img?: string;
     filename?: string;
+    lang?: string;
 }
 
 interface FeatureDemoProps {
@@ -42,6 +43,7 @@ const FeatureDemo: FC<FeatureDemoProps> = ({
                                 <CodeDemo
                                     code={demo.code}
                                     img={demo.img}
+                                    language={demo.lang}
                                 />
                             </Tab>
                         ))}

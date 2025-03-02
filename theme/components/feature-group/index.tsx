@@ -10,6 +10,7 @@ interface Feature {
     filename?: string;
   }>;
   isReversed?: boolean;
+  lang?: string;
 }
 
 interface FeatureGroupProps {
