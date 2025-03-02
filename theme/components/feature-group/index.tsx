@@ -5,8 +5,10 @@ import styles from './index.module.scss';
 interface Feature {
   title: string;
   description: string;
-  code: string;
-  filename?: string;
+  codeDemos: Array<{
+    code: string;
+    filename?: string;
+  }>;
   isReversed?: boolean;
 }
 
@@ -33,8 +35,7 @@ const FeatureGroup: FC<FeatureGroupProps> = ({ features }) => {
       <FeatureDemo
         title={feature.title}
         description={feature.description}
-        code={feature.code}
-        filename={feature.filename}
+        codeDemos={feature.codeDemos}
         isReversed={feature.isReversed}
       />
     </div>
