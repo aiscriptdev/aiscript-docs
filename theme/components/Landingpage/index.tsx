@@ -20,6 +20,7 @@ const LandingPage = () => {
             <Hero
                 showStars
                 subTitle="The next generation language for human and AI."
+                description='Dedicated for building AI applications.'
                 getStartedButtonText='getStarted'
                 githubURL="https://github.com/aiscriptdev/aiscript"
                 onClickGetStarted={onClickGetStarted}

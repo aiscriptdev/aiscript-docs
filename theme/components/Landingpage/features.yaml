@@ -92,64 +92,41 @@ web:
               // Request validation
               query {
                   message: str,
-                  model?: str = "gpt-3.5-turbo"
+                  model: str = "gpt-3.5-turbo"
               }
 
-              // Response handling
-              response {
-                  content: str,
-                  tokens: int
-              }
-
-              // Route handler
-              fn handle(req) -> response {
-                  let answer = prompt req.query.message => req.query.model;
-                  return {
-                      content: answer,
-                      tokens: len(answer)
-                  };
-              }
+              let answer = prompt query.message => {
+                  model: query.model
+              };
+              return { answer };
           }
         filename: routes.ai
   - title: Validator
     description: "Built-in request validation with type checking and custom validation rules for secure API endpoints."
     codeDemos:
       - code: |
-          route POST "/api/user" {
+          post /api/user {
               // Request body validation
+              @json
               body {
-                  username: str {
-                      min_length: 3,
-                      max_length: 20,
-                      pattern: "^[a-zA-Z0-9_]+$"
-                  },
-                  email: str {
-                      format: "email"
-                  },
-                  age: int {
-                      minimum: 18
-                  }
+                  @string(min_length: 3, max_length: 20, pattern: "^[a-zA-Z0-9_]+$")
+                  username: str,
+                  @format(type="email")
+                  email: str,
+                  @number(min=18)
+                  age: int,
               }
 
-              fn handle(req) -> str {
-                  // Body is already validated
-                  db.users.create(req.body);
-                  return "User created successfully";
-              }
+              // Body is already validated
+              db.users.create(req.body);
+              return "User created successfully";
           }
         filename: validator.ai
   - title: OpenAPI
     description: "Automatic OpenAPI documentation generation from your route definitions with full type information and examples."
     codeDemos:
       - code: |
-          // OpenAPI configuration
-          openapi {
-              title: "Chat API",
-              version: "1.0.0",
-              description: "AI-powered chat API"
-          }
-
-          route POST "/api/chat" {
+          post /api/chat {
               // This will be included in OpenAPI docs
               @doc "Create a new chat message"
               @tag "Chat"
@@ -168,34 +145,82 @@ web:
               }
           }
         filename: openapi.ai
-  - title: Effortless Social Login
+  - title: Effortless Auth and Social Login
     description: "Integrate social login providers with minimal configuration and type-safe authentication flows."
     codeDemos:
       - code: |
-          // Configure auth providers
-          auth {
-              providers: {
-                  github: {
-                      client_id: env.GITHUB_CLIENT_ID,
-                      client_secret: env.GITHUB_CLIENT_SECRET
-                  },
-                  google: {
-                      client_id: env.GOOGLE_CLIENT_ID,
-                      client_secret: env.GOOGLE_CLIENT_SECRET
-                  }
-              },
-              callbacks: {
-                  async on_success(user) {
-                      await db.users.upsert(user);
-                      return redirect("/dashboard");
-                  }
+          // JWT auth
+          @auth
+          get /ask {
+              query {
+                  @string(min_len=5, max_len=50)
+                  question: str
               }
+
+              ai fn ask_llm(question: str) -> str {
+                  return prompt question;
+              }
+              let answer = ask_llm(query.question);
+              return answer;
+          }
+        filename: jwt_auth.ai
+      - code: |
+          // Username/Password auth
+          @basic_auth
+          post /guess {
+              body {
+                  @number(min=1, max=100)
+                  magic: int = 1
+              }
+              
+              header.path = "/guess";
+              let msg = "Try again!";
+              if body.magic == 42 {
+                  msg = "You guessed it!";
+              }
+              return {
+                  body: msg,
+                  headers: {
+                      path: "/guess",
+                  }
+              };
+          }
+        filename: basic_auth.ai
+      - code: |
+          @sso(provider="google")
+          get /auth/google {
+              let url = sso.authority_url();
+              print(url);
+              return temporary_redirect(target=url);
           }
 
-          // Auth routes are automatically created
-          // /auth/github
-          // /auth/google
-        filename: auth.ai
+          @sso(provider="google")
+          get /auth/google/callback {
+              query {
+                state: str,
+                code: str,
+              }
+
+              let user_info = sso.verify(state, code);
+              print(user_info);
+              return user_info;
+          }
+        filename: google_login.ai
+      - code: |
+          [auth.jwt]
+          secret = "$JWT_SECRET"
+          expiration = 3600
+
+          [auth.basic]
+          username = "admin"
+          password = "123456"
+
+          [sso.google]
+          client_id = "123"
+          client_secret = "abc"
+          redirect_url = "http://localhost:8080/auth/google/callback"
+          scopes = ["email"]
+        filename: project.toml
 
 language:
   - title: Enum

@@ -11,7 +11,7 @@
     },
     {
       "type": "dir",
-      "name": "web-dsl",
+      "name": "web",
       "label": "Web"
     },
     {
