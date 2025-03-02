@@ -1,7 +1,5 @@
 .codeDemo {
-  margin: 2rem auto;
   max-width: 100%;
-  padding: 1rem;
   border-radius: 8px;
   overflow: hidden;
 
@@ -9,42 +7,6 @@
     padding: 0.25rem;
     margin: 0.5rem auto;
     border-radius: 4px;
-  }
-}
-
-.filenameBar {
-  display: flex;
-  gap: 2px;
-  padding: 0 0.5rem;
-  background-color: #ecf0f7;
-  border-top-left-radius: 8px;
-  border-top-right-radius: 8px;
-}
-
-.filenameTab {
-  padding: 0.75rem 1.25rem;
-  font-family: system-ui, -apple-system, sans-serif;
-  font-size: 0.9rem;
-  color: #666;
-  background: transparent;
-  border: none;
-  cursor: pointer;
-  transition: all 0.2s ease;
-
-  &:hover {
-    color: #333;
-    background-color: rgba(0, 0, 0, 0.05);
-  }
-
-  &.active {
-    color: #8B5CF6;
-    background-color: #f7f8fa;
-    font-weight: 500;
-  }
-
-  @media screen and (max-width: 768px) {
-    padding: 0.5rem 0.75rem;
-    font-size: 0.75rem;
   }
 }
 
@@ -61,16 +23,6 @@
     border-top-left-radius: 0;
     border-top-right-radius: 0;
   }
-
-  &:has(+ .filename) {
-    border-top-left-radius: 0;
-    border-top-right-radius: 0;
-  }
-}
-
-.pre {
-  margin: 0;
-  padding: 1.5rem;
 }
 
 .code {

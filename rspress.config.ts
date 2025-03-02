@@ -10,12 +10,15 @@ export default defineConfig({
     light: '/aiscript-logo.svg',
     dark: '/aiscript-logo.svg',
   },
+  route: {
+    cleanUrls: true,
+  },
   builderPlugins: [pluginYaml()],
   themeConfig: {
     footer: {
-        message:
-          '<p>AIScript Community &copy; 2025.</p>',
-      },
+        message: '<p>AIScript Community &copy; 2025.</p>',
+    },
+    lastUpdated: true,
     prevPageText: 'Prev Page',
     nextPageText: 'Next Page',
     socialLinks: [

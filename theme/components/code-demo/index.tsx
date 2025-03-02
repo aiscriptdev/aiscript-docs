@@ -11,43 +11,24 @@ import styles from './index.module.scss';
 
 interface CodeDemoProps {
   code: string;
-  filename?: string;
   width?: string | number;
   height?: string | number;
   language?: string;
-  codeDemos?: Array<{ code: string; filename?: string }>;
-  activeIndex?: number;
-  onTabChange?: (index: number) => void;
 }
 
 const CodeDemo: FC<CodeDemoProps> = ({ 
   code, 
-  filename, 
   width = '800px', 
   height, 
-  language = 'rust',
-  codeDemos = [],
-  activeIndex = 0,
-  onTabChange
+  language = 'rust'
 }) => {
   return (
     <div className={styles.codeDemo} style={{ maxWidth: width }}>
-      <div className={styles.filenameBar}>
-        {codeDemos.map((demo, index) => (
-          <button
-            key={index}
-            className={`${styles.filenameTab} ${index === activeIndex ? styles.active : ''}`}
-            onClick={() => onTabChange?.(index)}
-          >
-            {demo.filename || `Example ${index + 1}`}
-          </button>
-        ))}
-      </div>
       <div className={styles.codeContainer} style={{ height }}>
         <SyntaxHighlighter
-          language="javascript"
+          language={language}
           style={style}
-          customStyle={{ margin: 0, padding: '1.5rem', background: 'transparent' }}
+          customStyle={{ margin: 0, padding: '0.6rem', background: 'transparent' }}
           codeTagProps={{
             className: styles.code
           }}
