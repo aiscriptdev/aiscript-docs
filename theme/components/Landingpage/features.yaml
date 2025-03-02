@@ -359,94 +359,314 @@ language:
           }
           print(apply(|x| x * x, 3)); // expect: 9
         filename: lambda.ai
+      - code: |
+          let p = |x| {
+              print(x);
+              99
+          };
+          print(p(100));
+          // expect: 100
+          // expect: 99
+
+          let p = |x| {
+              print(x);
+              return 99;
+          };
+          print(p(100));
+          // expect: 100
+          // expect: 99
+        filename: implicit_return.ai
   - title: Pipe Operator
     description: "The pipe operator (|>) allows for clean and readable function chaining, making data transformation more intuitive."
     codeDemos:
       - code: |
-          // Data processing pipeline example
-          let data = [1, 2, 3, 4, 5]
-              |> map(fn(x) => x * 2)
-              |> filter(fn(x) => x > 5)
-              |> reduce(fn(acc, x) => acc + x, 0);
+          let add_one = |x| x + 1;
+          let multiply_two = |x| x * 2;
+          let add_n = |x, n| x + n;
 
-          // Text processing pipeline
-          let text = "Hello, World!"
-              |> str.to_lower()
-              |> str.replace(" ", "_")
-              |> str.trim();
+          let v = 1;
+          print(v |> add_one); // expect: 2
+          print(v |> add_one + 1); // expect: 3
+
+          print(v |> multiply_two); // expect: 2
+          print(v |> multiply_two + 1); // expect: 3
+          print(v |> multiply_two |> multiply_two + 1); // expect: 5
+
+          print(v |> add_one |> multiply_two + 1); // expect: 5
+          print(v |> multiply_two |> add_one * 2); // expect: 6
+
+          print(v |> add_n(10)); // expect: 11
+          print(v |> add_n(10) + 1); // expect: 12
+          print(1 + v |> add_n(10)); // expect: 12
+          print(1 + (v |> add_n(10))); // expect: 12
         filename: pipe.ai
+      - code: |
+          // Basic pipe operator
+          let arr = [1, 2, 3, 4];
+          let doubled = arr |> map(|x| x * 2);
+          print(doubled); // expect: [2, 4, 6, 8]
+
+          let double = |x| x * 2;
+          let doubled = arr |> map(double);
+          print(doubled); // expect: [2, 4, 6, 8]
+
+          // Chained pipe operators
+          let result = arr |> map(|x| x + 1) |> filter(|x| x % 2 == 0);
+          print(result); // expect: [2, 4]
+
+          // Pipe with multiple arguments
+          let arr2 = [1, 2, 3];
+          let arr3 = arr2 |> map(|x| x + 1);
+          print(arr3); // expect: [2, 3, 4]
+
+          // Complex lambda expressions in pipe
+          let result = arr |> filter(|x| x > 2) |> map(|x| x * x);
+          print(result); // expect: [9, 16]
+
+          // Pipe with nested expressions
+          let result = [1, 2, 3, 4, 5, 6] 
+              |> filter(|x| x % 2 == 0) 
+              |> map(|x| x * 2) 
+              |> filter(|x| x > 5);
+          print(result); // expect: [8, 12]
+        filename: compose.ai
   - title: Error handling
     description: "AIscript provides robust error handling with typed errors and elegant error propagation using the raise keyword."
     codeDemos:
       - code: |
-          // Define custom error types
-          class ValidationError! {
-              field: str,
-              message: str,
+          // Every enum or class ends with ! is an error type
+          enum ArithError! {
+              DivideZero = "Can not divide zero"
           }
-
-          fn validate_user(user: map) -> bool | ValidationError! {
-              if !user.has_key("email") {
-                  raise ValidationError! {
-                      field: "email",
-                      message: "Email is required"
-                  };
+          // Multiple error types are supported, like this:
+          // fn divide(a, b) -> int, ArithError! | AnotherError! {}
+          fn divide(a, b) -> int | ArithError! {
+              if b == 0 {
+                  raise ArithError!::DivideZero;
               }
-              return true;
+
+              return a / b;
           }
+          // Catch error and early return
+          fn do_math1(n) {
+              // use syntax `|err| {}` after function call to handle error
+              let v = divide(1, n) |err| {
+                  print("[error]", err);
+                  return;
+              };
+              print("[value]", v);
+          }
+          do_math1(1); // expect: [value] 1
+          do_math1(0); // expect: [error] ArithError!::DivideZero(Can not divide zero)
         filename: error.ai
       - code: |
-          // Define custom error types
-          class ValidationError! {
-              field: str,
-              message: str,
+          enum ArithError! {
+              DivideZero,
           }
-        filename: error-propogation.ai
+
+          fn divide(a, b) -> int | ArithError! {
+              if b == 0 {
+                  raise ArithError!::DivideZero;
+              }
+              return a / b;
+          }
+
+          fn do_math1(n) -> ArithError! {
+              // use ? to propagate error
+              let v = divide(1, n)?;
+              print("[value]", v);
+          }
+
+          do_math1(1); // expect: [value] 1
+          print(do_math1(0)); // expect: ArithError!::DivideZero
+
+          fn do_math2(n) -> ArithError! {
+              // use raise to re-raise error, this equal to ? operator
+              let v = divide(1, n) |err| {
+                  raise err;
+              };
+              print("[value]", v);
+          }
+
+          do_math2(1); // expect: [value] 1
+          print(do_math2(0)); // expect: ArithError!::DivideZero
+        filename: error_propogation.ai
+      - code: |
+          enum ArithError! {
+              DivideZero,
+          }
+
+          fn divide(a, b) -> int | ArithError! {
+              if b == 0 {
+                  raise ArithError!::DivideZero;
+              }
+
+              return a / b;
+          }
+
+          let v = divide(1, 0) |err| {
+              let a = 1;
+              print("error:", err); // expect: error: ArithError!::DivideZero
+              999 // The last expression is the default return value if error handled
+          };
+          print(v); // expect: 999
+        filename: default_value.ai
+  - title: Class Literal and Validation
+    description: "AIscript provides robust error handling with typed errors and elegant error propagation using the raise keyword."
+    codeDemos:
+      - code: |
+          class Person {
+            name: str,
+            age: int = 18,
+          }
+
+          let p = Person { name: "Alice" };
+          print(p.name, p.age); // expect: Alice 18
+
+          let p = Person { name: "Alice", age: 20 };
+          print(p.name, p.age); // expect: Alice 20
+
+          let name = "Alice";
+          let age = 30;
+          let p = Person { name, age };
+          print(p.name, p.age); // expect: Alice 30
+        filename: class_literal.ai
+      - code: |
+          class User {
+              @string(min_len=3, max=20)
+              name: str,
+              @number(min=18, strict_int=true, strict_float=true)
+              age: int,
+              @in(["male", "female"])
+              gender: str = "male",
+          }
+          let u1 = User("Le", 20, "male") |err| {
+              print("Validate error:", err);
+          };
+          // Validate error: { 
+          //      loc: [name], input: Le, type: validation_error,
+          //      msg: String length is less than the minimum length of 3 
+          // }
+          let u2 = User("Lee", 17, "male") |err| {
+              print("Validate error:", err);
+          };
+          // Validate error: {
+          //      loc: [age], input: 17, type: validation_error,
+          //      msg: Number is less than the minimum value of 18
+          // }
+          let u3 = User("Lee", 20, "boy") |err| {
+              print("Validate error:", err);
+          };
+          // Validate error: {
+          //      loc: [gender], input: boy, type: validation_error,
+          //      msg: Value is not in the list of allowed values
+          // }
+          let u4 = User("Lee") |err| {
+              print("Validate error:", err);
+          };
+          // Validate error: {
+          //      loc: [age], input: nil, type: missing,
+          //      msg: Field required
+          // }
+        filename: class_field_validation.ai
+
 
 std-library:
   - title: Database
     description: "Built-in database operations with type-safe queries and migrations support."
     codeDemos:
       - code: |
-          // Define a schema
-          schema User {
-              id: int @primary,
-              name: str,
-              email: str @unique,
-              created_at: datetime @default(now())
-          }
+          // Import postgres module from std library
+          use std.db.pg;
 
-          // Type-safe database operations
-          async fn create_user(name: str, email: str) -> User {
-              let user = await db.User.create({
-                  name: name,
-                  email: email
-              });
-              return user;
+          pg.query("INSERT INTO language (name) VALUES($1) RETURNING id, name;", "Rust");
+          let languages = pg.query("select id, name from language;");
+          print(languages); // expect: [1, "Rust"]
+          let languages = pg.query_as(Language, "select id, name from language where id > 3 limit 10;");
+          class Language {
+              id: int,
+              name: str,
           }
-        filename: database.ai
-  - title: Redis
-    description: "Native Redis integration for caching and real-time data operations with type safety."
+          print(languages);
+        filename: query.ai
+      - code: |
+          // Import postgres module from std library
+          use std.db.pg;
+
+          let tx = pg.begin_transaction();
+
+          let r1 = tx.query("INSERT INTO language (name) VALUES($1) RETURNING id, name;", "JavaScript");
+          print(r1);
+          let r2 = tx.query("INSERT INTO language (name) VALUES($1) RETURNING id, name;", "AIScript");
+          print(r2);
+          tx.commit();
+
+          let languages = pg.query_as(Language, "select id, name from language where id > 10 limit 10;");
+          print(languages);
+        filename: transaction.ai
+      - code: |
+          use std.db.redis;
+
+          // Simple commands
+          redis.cmd("SET mykey somevalue");
+          let value = redis.cmd("GET mykey");
+          print(value);
+          let lists = redis.cmd("LRANGE mylist 0 -1");
+          print(lists);
+
+          // Pipeline usage
+          let p = redis.pipeline();
+          p.cmd("SET k1 v1");
+          p.cmd("SET k2 v2");
+          p.cmd("GET k1");
+          let results = p.exec();  // Execute pipeline
+          print(results);  // ["OK", "OK", "v1"]
+        filename: redis.ai
+      - code: |
+          [database.postgresql]
+          url = "your-database-url"
+
+          [database.redis]
+          url = "your-redis-url"
+        filename: project.toml
+  - title: Std Library
+    description: "AIScript provides a wide range of standard library modules for common tasks."
     codeDemos:
       - code: |
-          // Configure Redis connection
-          redis.connect({
-              host: env.REDIS_HOST,
-              port: env.REDIS_PORT
-          });
+          use std.serde;
 
-          // Cache function results
-          @cache(ttl: 3600)
-          async fn get_user_data(id: int) -> map {
-              let data = await db.users.find_by_id(id);
-              return data;
-          }
+          let s = "{\"name\": \"Alice\", \"age\": 30}";
+          let obj = serde.from_str(s);
+          // Basic usage without pretty-printing
+          let str1 = serde.to_str(obj);
+          print(str1);
+          // With pretty-printing
+          let str2 = serde.to_str(obj, pretty=true);
+          print(str2);
 
-          // Pub/Sub example
-          redis.subscribe("user_updates", fn(message) {
-              print("Received update: {message}");
-          });
-        filename: redis.ai
+          // File operations with pretty-printing
+          serde.to_file("output.json", obj, pretty=true);
+        filename: serde.ai
+      - code: |
+          use std.http;
+
+          // Simple GET request
+          let response = http.get("https://ipinfo.io/");
+
+          // GET with headers
+          let headers = {
+              "Authorization": "Bearer token123",
+              "Accept": "application/json"
+          };
+          let response = http.get("https://api.example.com/users", headers);
+
+          // // POST with JSON body
+          let json_body = {
+              name: "John Doe",
+              email: "john@example.com"
+          };
+          let response = http.post("https://api.example.com/users", headers, json_body);
+        filename: http.ai
   - title: Builtin functions
     description: "Rich set of built-in functions for common operations with consistent APIs and type safety."
     codeDemos:
