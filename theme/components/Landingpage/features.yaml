@@ -32,75 +32,142 @@ ai:
           print(score); // 0.9
         filename: ai_function.ai
   - title: Agent
-    description: "Agents in AIscript are autonomous entities that can use tools, make decisions, and solve complex tasks through multi-step reasoning."
+    description: "`agent` is native concept of the language, use `agent` keyword to define the agent, specify the instructions, declare the functions as the tools.\n The multi-agent orchestration is inspired by https://github.com/openai/swarm"
     codeDemos:
       - code: |
-          agent ResearchAssistant {
-              // Define available tools
-              use tool.WebSearch;
-              use tool.Wikipedia;
-              use tool.Calculator;
-
-              // Configure agent behavior
-              role => "Research Assistant"
-              goal => "Help users find and analyze information"
-              memory => true
-              verbose => true
-
-              // Define agent functions
-              fn research(topic: str) -> str {
-                  let info = self.search(topic);
-                  let summary = self.analyze(info);
-                  return summary;
+          let player1_move = nil;
+          let player2_move = nil;
+          agent Judge {
+            instructions: "You are the judge of the Rock Paper Scissors game.
+            1. Let Player1 move first then Player2
+            2. Use record_move to store each player's move after it finished
+            3. After both players finished, use announce_result to display the result
+            4. End the game after announcing results",
+            fn record_move(player: str, move: str) {
+              """Record a player's move."""
+                  print(player, "choose", move);
+                  if player == "Player1" {
+                      player1_move = move;
+                  } else {
+                      player2_move = move;
+                  }
+              }
+              fn announce_result() {
+                  """Check the recorded moves and announce the winner."""
+                  let winning_moves = {"rock": "scissors", "scissors": "paper", "paper": "rock"};
+                  if player1_move == player2_move {
+                      print("It's a tie!");
+                  } else if winning_moves[player1_move] == player2_move {
+                      print("Player 1 wins!");
+                  } else {
+                      print("Player 2 wins!");
+                  }
+              }
+              fn transfer_to_player1() {
+                  """Transfer control to Player 1 Agent"""
+                  return Player1;
+              }
+              fn transfer_to_player2() {
+                  """Transfer control to Player 2 Agent"""
+                  return Player2;
               }
           }
-
-          // Use the agent
-          let assistant = ResearchAssistant.new();
-          let result = assistant.research("quantum computing");
-          print(result);
-        filename: agent.ai
+        filename: judger.ai
       - code: |
-          agent Agent2 {
-
-              // Configure agent behavior
-              role => "Research Assistant"
-              goal => "Help users find and analyze information"
-              memory => true
-              verbose => true
-
-              // Define agent functions
-              fn research(topic: str) -> str {
-                  let info = self.search(topic);
-                  let summary = self.analyze(info);
-                  return summary;
-              }
+          use std.random;
+          
+          fn make_move() -> str {
+              """Make a move in the game. Returns rock, paper, or scissors."""
+              return random.choice(["rock", "paper", "scissors"]);
           }
-
-          // Use the agent
-          let assistant = ResearchAssistant.new();
-          let result = assistant.research("quantum computing");
-          print(result);
-        filename: agent2.ai
+          fn transfer_to_judge() {
+              """Transfer control to Judge Agent"""
+              return Judge;
+          }
+          agent Player1 {
+              instructions: "You are Player 1 in the Rock Paper Scissors game.
+              1. Make your move using the make_move function
+              2. Transfer control to the judge after your move",
+              tools: [make_move, transfer_to_judge],
+          }
+          agent Player2 {
+              instructions: "You are Player 2 in the Rock Paper Scissors game.
+              1. Make your move using the make_move function
+              2. Transfer control to the judge after your move",
+              tools: [make_move, transfer_to_judge],
+          }
+        filename: player.ai
+      - code: |
+          Judge.run(input="Let's start play the game!", debug=true);
+          // Here are the logs:
+          //
+          // Judge call transfer_to_player1()
+          // Player1 call make_move(): scissors
+          // Player1 call transfer_to_judge()
+          // Judge call record_move(Player1, scissors)
+          // Judge call transfer_to_player2()
+          // Player2 call make_move(): paper
+          // Player2 call transfer_to_judge()
+          // Judge call record_move(Player2, paper)
+          // Judge call announce_result(): Player 1 wins!
+        filename: main.ai
+      - code: |
+          OPENAI_API_KEY=put-your-openapi-key-here
+        filename: .env
 
 web:
   - title: Route DSL
     description: "Define web routes with a simple and intuitive DSL that supports AI-powered endpoints and type-safe request/response handling."
     codeDemos:
       - code: |
-          route GET "/api/chat" {
-              // Request validation
+          get /repo {
+              """Repo API"""
+
               query {
-                  message: str,
-                  model: str = "gpt-3.5-turbo"
+                  """repo name"""
+                  @string(min_len=3, max_len=30)
+                  name: str
               }
 
-              let answer = prompt query.message => {
-                  model: query.model
-              };
-              return { answer };
+              return "repo: " + name;
           }
-        filename: routes.ai
+        filename: get.ai
+      - code: |
+          post /repo {
+              """Create a repository"""
+
+              // Replace @json with @form to parse body from form
+              @json
+              body {
+                  """The repository name"""
+                  @string(min_len=3, max_len=30)
+                  name: str
+              }
+
+              return "create repo: " + name;
+          }
+        filename: post.ai
+      - code: |
+          put /repo/<id:int> {
+              """Update a repository"""
+
+              @json
+              body {
+                  """The repository name"""
+                  @string(min_len=3, max_len=30)
+                  name: str
+              }
+
+              return "update repo: " + name;
+          }
+        filename: put.ai
+      - code: |
+          delete /repo/<id:int> {
+              """Delete a repository"""
+
+              return "delete repo: " + id;
+          }
+        filename: delete.ai
   - title: Validator
     description: "Built-in request validation with type checking and custom validation rules for secure API endpoints."
     codeDemos:
@@ -109,7 +176,7 @@ web:
               // Request body validation
               @json
               body {
-                  @string(min_length: 3, max_length: 20, pattern: "^[a-zA-Z0-9_]+$")
+                  @string(min_length: 3, max_length: 20)
                   username: str,
                   @format(type="email")
                   email: str,
@@ -118,33 +185,55 @@ web:
               }
 
               // Body is already validated
-              db.users.create(req.body);
+              // Insert user into users table...
               return "User created successfully";
           }
         filename: validator.ai
+      - code: |
+          $ curl -X POST -X POST http://localhost:8080/api/user \
+              -H 'Content-Type: application/json' \
+              -d '{
+                  "username": "john_doe",
+                  "email": "johndoe@gmail.com",
+                  "age": 17
+              }'
+
+          {
+            "error": "ValidationError",
+            "message": "Invalid request body",
+            "details": [
+              {
+                "field": "age",
+                "message": "Value must be greater than or equal to 18"
+              }
+            ]
+          } 
+          $ curl -X POST -X POST http://localhost:8080/api/user \
+              -H 'Content-Type: application/json' \
+              -d '{
+                  "username": "john_doe",
+                  "email": "johndoe@gmail.com",
+                  "age": 25
+              }'
+           User created successfully 
+        filename: curl
   - title: OpenAPI
     description: "Automatic OpenAPI documentation generation from your route definitions with full type information and examples."
     codeDemos:
       - code: |
           post /api/chat {
-              // This will be included in OpenAPI docs
-              @doc "Create a new chat message"
-              @tag "Chat"
-              @example request {
-                  content: "Hello, AI!",
-                  model: "gpt-4"
-              }
+              """Use triple-quotes for OpenAPI documentation"""
 
               body {
-                  content: str,
-                  model?: str
+                  """Field also supports OpenAPI docs"""
+                  message: str,
               }
 
-              fn handle(req) -> str {
-                  return prompt req.body.content;
-              }
+              return "Input: " + body.message + "!";
           }
         filename: openapi.ai
+      - img: /toucan.png
+        filename: openapi.png
   - title: Effortless Auth and Social Login
     description: "Integrate social login providers with minimal configuration and type-safe authentication flows."
     codeDemos:
@@ -197,13 +286,15 @@ web:
           @sso(provider="google")
           get /auth/google/callback {
               query {
-                state: str,
-                code: str,
+                  code: str,
+                  state: str,
               }
 
-              let user_info = sso.verify(state, code);
+              print("code", query.code);
+              print("state", query.state);
+              let user_info = sso.verify(code=query.code);
               print(user_info);
-              return user_info;
+              return { user_info };
           }
         filename: google_login.ai
       - code: |
@@ -227,21 +318,47 @@ language:
     description: "Enums in AIscript provide a way to define a type that can be one of several variants, with full type safety and pattern matching support."
     codeDemos:
       - code: |
-          // Define an enum for API response status
-          enum ApiResponse {
-              Success(data: str),
-              Error(code: int, message: str),
-              Loading
+          enum Status {
+            Pending   = 1,
+            Active    = 2, 
+            Suspended = 3,
           }
-
-          fn handle_response(response: ApiResponse) -> str {
-              match response {
-                  Success(data) => "Success: {data}",
-                  Error(code, msg) => "Error {code}: {msg}",
-                  Loading => "Loading..."
+          fn process_status(status: Status) {
+              match status {
+                  Status::Pending => print("Pending"),
+                  Status::Active => print("Active"),
+                  Status::Suspended => print("Suspended"),
               }
           }
+          print(process_status(Status::Active)); // expect: Status::Active(1)
         filename: enum.ai
+      - code: |
+          enum Status {
+            Pending   = 1,
+            Active    = 2, 
+            Suspended = 3,
+          }
+          // use [Enum::Variant] syntax to evaluate
+          // the value of variant
+          print([Status::Active]); // expect: 1
+        filename: evaluate_enum.ai
+  - title: Lambda
+    description: "The lambda syntax allows for concise and expressive function definitions, capturing variables from the outer scope."
+    codeDemos:
+      - code: |
+          // Lambda capturing variables from outer scope
+          let multiplier = 2;
+          let times = |x| x * multiplier;
+          print(times(4)); // expect: 8
+          multiplier = 3;
+          print(times(4)); // expect: 12
+
+          // Passing lambda as argument
+          fn apply(f, x) {
+              return f(x);
+          }
+          print(apply(|x| x * x, 3)); // expect: 9
+        filename: lambda.ai
   - title: Pipe Operator
     description: "The pipe operator (|>) allows for clean and readable function chaining, making data transformation more intuitive."
     codeDemos:
@@ -263,13 +380,9 @@ language:
     codeDemos:
       - code: |
           // Define custom error types
-          type ValidationError! {
+          class ValidationError! {
               field: str,
-              message: str
-          }
-
-          type NetworkError! {
-              code: int
+              message: str,
           }
 
           fn validate_user(user: map) -> bool | ValidationError! {
@@ -282,6 +395,13 @@ language:
               return true;
           }
         filename: error.ai
+      - code: |
+          // Define custom error types
+          class ValidationError! {
+              field: str,
+              message: str,
+          }
+        filename: error-propogation.ai
 
 std-library:
   - title: Database

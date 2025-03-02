@@ -5,7 +5,7 @@ import { pluginYaml } from "@rsbuild/plugin-yaml";
 export default defineConfig({
   root: path.join(__dirname, 'docs'),
   title: 'AIScript',
-  icon: '/tuocan.png',
+  icon: '/toucan.png',
   logo: {
     light: '/aiscript-logo.svg',
     dark: '/aiscript-logo.svg',
@@ -13,6 +13,7 @@ export default defineConfig({
   route: {
     cleanUrls: true,
   },
+  mediumZoom: true,
   builderPlugins: [pluginYaml()],
   themeConfig: {
     footer: {

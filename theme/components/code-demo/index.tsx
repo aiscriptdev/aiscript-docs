@@ -10,7 +10,8 @@ const style = {
 import styles from './index.module.scss';
 
 interface CodeDemoProps {
-  code: string;
+  code?: string;
+  img?: string;
   width?: string | number;
   height?: string | number;
   language?: string;
@@ -18,6 +19,7 @@ interface CodeDemoProps {
 
 const CodeDemo: FC<CodeDemoProps> = ({ 
   code, 
+  img,
   width = '800px', 
   height, 
   language = 'rust'
@@ -25,16 +27,20 @@ const CodeDemo: FC<CodeDemoProps> = ({
   return (
     <div className={styles.codeDemo} style={{ maxWidth: width }}>
       <div className={styles.codeContainer} style={{ height }}>
-        <SyntaxHighlighter
-          language={language}
-          style={style}
-          customStyle={{ margin: 0, padding: '0.6rem', background: 'transparent' }}
-          codeTagProps={{
-            className: styles.code
-          }}
-        >
-          {code}
-        </SyntaxHighlighter>
+        {code ? (
+          <SyntaxHighlighter
+            language={language}
+            style={style}
+            customStyle={{ margin: 0, padding: '0.6rem', background: 'transparent' }}
+            codeTagProps={{
+              className: styles.code
+            }}
+          >
+            {code}
+          </SyntaxHighlighter>
+        ) : img ? (
+          <img src={img} alt="Code demo" style={{ maxWidth: '100%', height: 'auto' }} />
+        ) : null}
       </div>
     </div>
   );

@@ -4,7 +4,8 @@ import CodeDemo from '../code-demo';
 import styles from './index.module.scss';
 
 interface CodeDemoItem {
-    code: string;
+    code?: string;
+    img?: string;
     filename?: string;
 }
 
@@ -34,6 +35,7 @@ const FeatureDemo: FC<FeatureDemoProps> = ({
                             <Tab key={demo.filename} label={demo.filename}>
                                 <CodeDemo
                                     code={demo.code}
+                                    img={demo.img}
                                 />
                             </Tab>
                         ))}
