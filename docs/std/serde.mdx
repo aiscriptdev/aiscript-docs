@@ -20,7 +20,7 @@ Parses a JSON string and converts it into an AIScript value.
 ```rust
 use std.serde;
 
-let json = '{"name": "John", "age": 30}';
+let json = "{\"name\": \"John\", \"age\": 30}";
 let data = serde.from_str(json);
 print(data.name); // Outputs: John
 ```

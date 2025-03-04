@@ -25,9 +25,9 @@ use std.http;
 // Simple GET request
 let response = http.get("https://api.example.com/users");
 if (response.ok) {
-    println(response.json);
+    print(response.json);
 } else {
-    println(`Error: ${response.status} ${response.statusText}`);
+    print(`Error: ${response.status} ${response.statusText}`);
 }
 
 // GET request with headers
@@ -63,9 +63,9 @@ let response = http.post(
 );
 
 if (response.ok) {
-    println(`User created with ID: ${response.json.id}`);
+    print(`User created with ID: ${response.json.id}`);
 } else {
-    println(`Error: ${response.status} ${response.statusText}`);
+    print(`Error: ${response.status} ${response.statusText}`);
 }
 ```
 
@@ -95,9 +95,9 @@ let response = http.put(
 );
 
 if (response.ok) {
-    println("User updated successfully");
+    print("User updated successfully");
 } else {
-    println(`Error: ${response.status} ${response.statusText}`);
+    print(`Error: ${response.status} ${response.statusText}`);
 }
 ```
 
@@ -124,9 +124,9 @@ let response = http.delete(
 );
 
 if (response.ok) {
-    println("User deleted successfully");
+    print("User deleted successfully");
 } else {
-    println(`Error: ${response.status} ${response.statusText}`);
+    print(`Error: ${response.status} ${response.statusText}`);
 }
 ```
 
@@ -156,9 +156,9 @@ let response = http.patch(
 );
 
 if (response.ok) {
-    println("User partially updated successfully");
+    print("User partially updated successfully");
 } else {
-    println(`Error: ${response.status} ${response.statusText}`);
+    print(`Error: ${response.status} ${response.statusText}`);
 }
 ```
 
@@ -180,10 +180,10 @@ use std.http;
 let response = http.head("https://api.example.com/users/123");
 
 if (response.ok) {
-    println("Resource exists");
-    println(`Last-Modified: ${response.headers["last-modified"]}`);
+    print("Resource exists");
+    print(`Last-Modified: ${response.headers["last-modified"]}`);
 } else {
-    println("Resource not found");
+    print("Resource not found");
 }
 ```
 
@@ -199,10 +199,10 @@ if (response.ok) {
     // Access parsed JSON directly
     let items = response.json.items;
     for (item in items) {
-        println(`${item.id}: ${item.name}`);
+        print(`${item.id}: ${item.name}`);
     }
 } else {
-    println(`Failed to fetch data: ${response.status}`);
+    print(`Failed to fetch data: ${response.status}`);
 }
 ```
 
@@ -233,7 +233,7 @@ fn authenticated_request(url, method, body = nil) {
 
 // Use the function
 let user_data = authenticated_request("https://api.example.com/me", "GET");
-println(user_data.json);
+print(user_data.json);
 ```
 
 ## Submitting Form Data
@@ -251,8 +251,8 @@ let response = http.post(
 );
 
 if (response.ok) {
-    println("Form submitted successfully");
+    print("Form submitted successfully");
 } else {
-    println(`Form submission failed: ${response.text}`);
+    print(`Form submission failed: ${response.text}`);
 }
 ```

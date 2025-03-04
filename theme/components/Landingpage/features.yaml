@@ -1,6 +1,6 @@
 ai:
   - title: Prompt
-    description: "`prompt` is a keyword that allows you to interact with the AI model. It supports both simple and advanced syntax with customizable parameters."
+    description: The `prompt` keyword allows direct interaction with AI models. It supports both simple string inputs and advanced configurations with model parameters like temperature and token limits, making AI interactions a first-class language feature.
     codeDemos:
       - code: |
           // Simple prompt usage
@@ -17,7 +17,7 @@ ai:
           print(detailed_answer);
         filename: prompt.ai
   - title: AI Function
-    description: "`ai fn` is a powerful keyword that allows you to define AI-powered functions with type safety and reusability."
+    description: The `ai fn` keyword defines functions powered by AI models with full type safety and error handling. These functions seamlessly integrate AI capabilities into your application logic while maintaining the reliability of traditional functions.
     codeDemos:
       - code: |
           // Define an AI function for sentiment analysis
@@ -33,8 +33,7 @@ ai:
         filename: ai_function.ai
   - title: Agent
     description: |
-      `agent` is native concept of the language, use `agent` keyword to define the agent, specify the instructions,
-      declare the functions as the tools. The multi-agent orchestration is inspired by [OpenAI Swarm](https://github.com/openai/swarm).
+      The `agent` keyword creates autonomous AI agents with specific instructions and tool functions. Inspired by [OpenAI Swarm](https://github.com/openai/swarm), AIScript's multi-agent orchestration allows complex AI systems to be defined directly in the language, enabling sophisticated AI workflows with minimal code.
     codeDemos:
       - code: |
           let player1_move = nil;
@@ -119,7 +118,7 @@ ai:
 
 web:
   - title: Route DSL
-    description: "Define web routes with a simple and intuitive DSL that supports AI-powered endpoints and type-safe request/response handling."
+    description: Define web routes with a simple, intuitive DSL that combines the clarity of RESTful design with AIScript's type system. Routes support AI-powered endpoints, path parameters, and comprehensive request validation without additional middleware.
     codeDemos:
       - code: |
           get /repo {
@@ -171,7 +170,7 @@ web:
           }
         filename: delete.ai
   - title: Validator
-    description: "Built-in request validation with type checking and custom validation rules for secure API endpoints."
+    description: Built-in request validation with automatic type checking and customizable validation rules. Validators integrate directly with route definitions to ensure API endpoints are secure and robust with minimal boilerplate.
     codeDemos:
       - code: |
           post /api/user {
@@ -220,7 +219,7 @@ web:
            User created successfully 
         filename: curl
   - title: OpenAPI
-    description: "Automatic OpenAPI documentation generation from your route definitions with full type information and examples."
+    description: Automatic OpenAPI documentation generation from route definitions with zero configuration. Documentation includes complete type information, validation rules, and examples derived directly from your code.
     codeDemos:
       - code: |
           post /api/chat {
@@ -237,7 +236,7 @@ web:
       - img: /toucan.png
         filename: openapi.png
   - title: Effortless Auth and Social Login
-    description: "Integrate social login providers with minimal configuration and type-safe authentication flows."
+    description: Integrate authentication and social login providers with minimal configuration. AIScript's auth decorators handle complex security flows while maintaining type safety throughout the authentication process.
     codeDemos:
       - code: |
           // JWT auth
@@ -317,7 +316,7 @@ web:
 
 language:
   - title: Enum
-    description: "Enums in AIscript provide a way to define a type that can be one of several variants, with full type safety and pattern matching support."
+    description: Enums in AIScript provide a type-safe way to define a set of named constants. With full pattern matching support and the ability to associate values with variants, enums help create more expressive and error-resistant code.
     codeDemos:
       - code: |
           enum Status {
@@ -345,7 +344,7 @@ language:
           print([Status::Active]); // expect: 1
         filename: evaluate_enum.ai
   - title: Lambda
-    description: "The lambda syntax allows for concise and expressive function definitions, capturing variables from the outer scope."
+    description: Lambda expressions provide concise, flexible function definitions with automatic variable capture from the surrounding scope. AIScript's lambdas support both single-expression and block forms with implicit returns for maximum readability.
     codeDemos:
       - code: |
           // Lambda capturing variables from outer scope
@@ -379,7 +378,7 @@ language:
           // expect: 99
         filename: implicit_return.ai
   - title: Pipe Operator
-    description: "The pipe operator (|>) allows for clean and readable function chaining, making data transformation more intuitive."
+    description: The pipe operator (|>) enables clean, readable function chaining for data transformation pipelines. By passing the result of one expression as the first argument to the next function, complex operations become more intuitive and maintainable.
     codeDemos:
       - code: |
           let add_one = |x| x + 1;
@@ -433,7 +432,7 @@ language:
           print(result); // expect: [8, 12]
         filename: compose.ai
   - title: Error handling
-    description: "AIscript provides robust error handling with typed errors and elegant error propagation using the raise keyword."
+    description: AIScript provides robust error handling with typed errors and elegant propagation mechanics. The raise keyword and the ? operator for error propagation enable type-safe error handling with minimal boilerplate, while error handlers provide flexible recovery options.
     codeDemos:
       - code: |
           // Every enum or class ends with ! is an error type
@@ -514,7 +513,7 @@ language:
           print(v); // expect: 999
         filename: default_value.ai
   - title: Class Literal and Validation
-    description: "AIscript provides robust error handling with typed errors and elegant error propagation using the raise keyword."
+    description: AIScript classes combine type definitions with validation rules. Field validators ensure data integrity at runtime, while object literals provide a concise syntax for instantiation with smart defaults and property shorthand notation.
     codeDemos:
       - code: |
           class Person {
@@ -577,7 +576,7 @@ language:
 
 std-library:
   - title: Database
-    description: "Built-in database operations with type-safe queries and migrations support."
+    description: Native database operations with type-safe queries and comprehensive drivers for PostgreSQL, SQLite, and Redis. The database modules support transactions, prepared statements, and result mapping to typed objects for type-safe data access.
     codeDemos:
       - code: |
           // Import postgres module from std library
@@ -634,7 +633,7 @@ std-library:
           url = "your-redis-url"
         filename: project.toml
   - title: Std Library
-    description: "AIScript provides a wide range of standard library modules for common tasks."
+    description: AIScript's standard library provides a comprehensive set of modules for common tasks including serialization, HTTP requests, file handling, cryptography, and more. Each module follows consistent patterns for predictable and reliable behavior.
     codeDemos:
       - code: |
           use std.serde;
@@ -672,7 +671,7 @@ std-library:
           let response = http.post("https://api.example.com/users", headers, json_body);
         filename: http.ai
   - title: Builtin functions
-    description: "Rich set of built-in functions for common operations with consistent APIs and type safety."
+    description: A rich set of built-in functions for string manipulation, array operations, mathematical calculations, and date handling. These functions integrate seamlessly with the language's type system to provide powerful operations with minimal code.
     codeDemos:
       - code: |
           // String manipulation

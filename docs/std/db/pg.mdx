@@ -150,7 +150,7 @@ let users = pg.query("SELECT * FROM users WHERE age > $1", 18);
 
 // Iterate through results
 for user in users {
-    println(user.name);
+    print(user.name);
 }
 ```
 
@@ -189,7 +189,7 @@ let users = pg.query_as(User, "SELECT * FROM users WHERE active = true");
 
 // Access typed properties
 for user in users {
-    println(`${user.name} <${user.email}>`);
+    print(`${user.name} <${user.email}>`);
 }
 ```
 
