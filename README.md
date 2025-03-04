@@ -1,4 +1,8 @@
-# Rspress website
+# AIScript website
+
+![](docs/public/aiscript-social-image.png)
+
+[https://aiscript.dev](https://aiscript.dev)
 
 ## Setup
 

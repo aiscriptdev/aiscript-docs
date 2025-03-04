@@ -6,6 +6,11 @@
     },
     {
       "type": "dir",
+      "name": "builtin",
+      "label": "Buitins"
+    },
+    {
+      "type": "dir",
       "name": "db",
       "label": "std.db"
     },

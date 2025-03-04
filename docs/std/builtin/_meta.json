@@ -1,0 +1,17 @@
+[
+    {
+        "type": "file",
+        "name": "functions",
+        "label": "Functions"
+    },
+    {
+        "type": "file",
+        "name": "string",
+        "label": "String"
+    },
+    {
+        "type": "file",
+        "name": "response",
+        "label": "Response"
+    }
+]

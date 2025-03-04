@@ -18,5 +18,5 @@
         "type": "file",
         "name": "redis",
         "label": "std.env.redis"
-      }
+    }
 ]
