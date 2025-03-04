@@ -16,6 +16,7 @@ export default defineConfig({
   mediumZoom: true,
   builderPlugins: [pluginYaml()],
   themeConfig: {
+    enableScrollToTop: true,
     footer: {
         message: '<p>AIScript Community &copy; 2025.</p>',
     },
