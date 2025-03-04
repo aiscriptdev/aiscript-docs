@@ -2,9 +2,7 @@
 
 The `std.serde` module provides functionality for JSON serialization and deserialization. It allows you to convert between AIScript values and JSON format, with support for both string and file operations.
 
-## Functions
-
-### from_str(json_str: string) -> any
+## from_str(json_str: string) -> any
 
 Parses a JSON string and converts it into an AIScript value.
 
@@ -27,7 +25,7 @@ let data = serde.from_str(json);
 print(data.name); // Outputs: John
 ```
 
-### to_str(value: any, pretty?: boolean) -> string
+## to_str(value: any, pretty?: boolean) -> string
 
 Converts an AIScript value to a JSON string.
 
@@ -70,7 +68,7 @@ print(str2);
 // }
 ```
 
-### from_file(path: string) -> any
+## from_file(path: string) -> any
 
 Reads and parses a JSON file into an AIScript value.
 
@@ -94,7 +92,7 @@ let config = serde.from_file("config.json");
 print(config.port); // Outputs: 8080
 ```
 
-### to_file(path: string, value: any, pretty?: boolean) -> boolean
+## to_file(path: string, value: any, pretty?: boolean) -> boolean
 
 Writes an AIScript value to a file in JSON format.
 

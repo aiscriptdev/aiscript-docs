@@ -1,1 +1,258 @@
 # std.http
+
+The `std.http` module provides functions for making HTTP requests to external services and APIs.
+
+## get(url: string, headers?: object)
+
+Makes an HTTP GET request to the specified URL.
+
+**Parameters**:
+- `url`: The URL to send the request to
+- `headers` (optional): An object containing HTTP headers
+
+**Return Type**: `object` with the following properties:
+- `status`: HTTP status code (number)
+- `statusText`: HTTP status message (string)
+- `ok`: Whether the request was successful (boolean)
+- `headers`: Response headers (object)
+- `text`: Response body as text (string)
+- `json`: Response body parsed as JSON (if applicable)
+
+**Example**:
+```rust
+use std.http;
+
+// Simple GET request
+let response = http.get("https://api.example.com/users");
+if (response.ok) {
+    println(response.json);
+} else {
+    println(`Error: ${response.status} ${response.statusText}`);
+}
+
+// GET request with headers
+let response = http.get("https://api.example.com/users", {
+    "Authorization": "Bearer token123",
+    "Accept": "application/json"
+});
+```
+
+## post(url: string, body: string, headers?: object)
+
+Makes an HTTP POST request to the specified URL with the given body.
+
+**Parameters**:
+- `url`: The URL to send the request to
+- `body`: The request body as a string
+- `headers` (optional): An object containing HTTP headers
+
+**Return Type**: `object` (same as get)
+
+**Example**:
+```rust
+use std.http;
+
+// POST request with JSON body
+let response = http.post(
+    "https://api.example.com/users",
+    '{"name": "John", "email": "john@example.com"}',
+    {
+        "Content-Type": "application/json",
+        "Authorization": "Bearer token123"
+    }
+);
+
+if (response.ok) {
+    println(`User created with ID: ${response.json.id}`);
+} else {
+    println(`Error: ${response.status} ${response.statusText}`);
+}
+```
+
+## put(url: string, body: string, headers?: object)
+
+Makes an HTTP PUT request to the specified URL with the given body.
+
+**Parameters**:
+- `url`: The URL to send the request to
+- `body`: The request body as a string
+- `headers` (optional): An object containing HTTP headers
+
+**Return Type**: `object` (same as get)
+
+**Example**:
+```rust
+use std.http;
+
+// PUT request to update a resource
+let response = http.put(
+    "https://api.example.com/users/123",
+    '{"name": "John Updated", "email": "john.updated@example.com"}',
+    {
+        "Content-Type": "application/json",
+        "Authorization": "Bearer token123"
+    }
+);
+
+if (response.ok) {
+    println("User updated successfully");
+} else {
+    println(`Error: ${response.status} ${response.statusText}`);
+}
+```
+
+## delete(url: string, headers?: object)
+
+Makes an HTTP DELETE request to the specified URL.
+
+**Parameters**:
+- `url`: The URL to send the request to
+- `headers` (optional): An object containing HTTP headers
+
+**Return Type**: `object` (same as get)
+
+**Example**:
+```rust
+use std.http;
+
+// DELETE request to remove a resource
+let response = http.delete(
+    "https://api.example.com/users/123",
+    {
+        "Authorization": "Bearer token123"
+    }
+);
+
+if (response.ok) {
+    println("User deleted successfully");
+} else {
+    println(`Error: ${response.status} ${response.statusText}`);
+}
+```
+
+## patch(url: string, body: string, headers?: object)
+
+Makes an HTTP PATCH request to the specified URL with the given body.
+
+**Parameters**:
+- `url`: The URL to send the request to
+- `body`: The request body as a string
+- `headers` (optional): An object containing HTTP headers
+
+**Return Type**: `object` (same as get)
+
+**Example**:
+```rust
+use std.http;
+
+// PATCH request to partially update a resource
+let response = http.patch(
+    "https://api.example.com/users/123",
+    '{"email": "new.email@example.com"}',
+    {
+        "Content-Type": "application/json",
+        "Authorization": "Bearer token123"
+    }
+);
+
+if (response.ok) {
+    println("User partially updated successfully");
+} else {
+    println(`Error: ${response.status} ${response.statusText}`);
+}
+```
+
+## head(url: string, headers?: object)
+
+Makes an HTTP HEAD request to the specified URL.
+
+**Parameters**:
+- `url`: The URL to send the request to
+- `headers` (optional): An object containing HTTP headers
+
+**Return Type**: `object` (same as get, but typically without body content)
+
+**Example**:
+```rust
+use std.http;
+
+// HEAD request to check if a resource exists
+let response = http.head("https://api.example.com/users/123");
+
+if (response.ok) {
+    println("Resource exists");
+    println(`Last-Modified: ${response.headers["last-modified"]}`);
+} else {
+    println("Resource not found");
+}
+```
+
+## Usage Examples
+
+## Fetching JSON Data
+```rust
+use std.http;
+
+// Get JSON data from an API
+let response = http.get("https://api.example.com/data");
+if (response.ok) {
+    // Access parsed JSON directly
+    let items = response.json.items;
+    for (item in items) {
+        println(`${item.id}: ${item.name}`);
+    }
+} else {
+    println(`Failed to fetch data: ${response.status}`);
+}
+```
+
+## Handling Authentication
+```rust
+use std.http;
+
+// Function to make authenticated requests
+fn authenticated_request(url, method, body = nil) {
+    let token = "your-auth-token";
+    let headers = {
+        "Authorization": `Bearer ${token}`,
+        "Content-Type": "application/json"
+    };
+    
+    if (method == "GET") {
+        return http.get(url, headers);
+    } else if (method == "POST") {
+        return http.post(url, body, headers);
+    } else if (method == "PUT") {
+        return http.put(url, body, headers);
+    } else if (method == "DELETE") {
+        return http.delete(url, headers);
+    }
+    
+    return nil;
+}
+
+// Use the function
+let user_data = authenticated_request("https://api.example.com/me", "GET");
+println(user_data.json);
+```
+
+## Submitting Form Data
+```rust
+use std.http;
+
+// Submit form data
+let form_data = 'name=John&email=john@example.com&message=Hello';
+let response = http.post(
+    "https://example.com/contact",
+    form_data,
+    {
+        "Content-Type": "application/x-www-form-urlencoded"
+    }
+);
+
+if (response.ok) {
+    println("Form submitted successfully");
+} else {
+    println(`Form submission failed: ${response.text}`);
+}
+```

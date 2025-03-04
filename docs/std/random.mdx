@@ -2,9 +2,8 @@
 
 The `std.random` module provides a comprehensive set of functions for random number generation, including basic random numbers, range-based selections, and various probability distributions.
 
-## Functions
 
-### seed(value: int) -> void
+## seed(value: int) -> void
 
 Sets the seed for the random number generator to produce reproducible sequences of random numbers.
 
@@ -19,7 +18,7 @@ random.seed(42);
 // Now all subsequent random operations will produce the same sequence
 ```
 
-### random() -> float
+## random() -> float
 
 Generates a random floating-point number between 0.0 (inclusive) and 1.0 (exclusive).
 
@@ -34,7 +33,7 @@ let value = random.random();
 print(value); // Outputs: 0.7123889...
 ```
 
-### randint(min: int, max: int) -> int
+## randint(min: int, max: int) -> int
 
 Generates a random integer between min and max (inclusive).
 
@@ -53,7 +52,7 @@ let dice_roll = random.randint(1, 6);
 print(dice_roll); // Outputs a number between 1 and 6
 ```
 
-### uniform(min: float, max: float) -> float
+## uniform(min: float, max: float) -> float
 
 Generates a random floating-point number from a uniform distribution between min and max.
 
@@ -72,7 +71,7 @@ let temperature = random.uniform(20.0, 30.0);
 print(temperature); // Outputs: 25.7392...
 ```
 
-### range(start: int, end: int, step?: int) -> int
+## range(start: int, end: int, step?: int) -> int
 
 Generates a random integer from a range with optional step size.
 
@@ -93,7 +92,7 @@ let even = random.range(0, 10, 2);
 print(even); // Outputs: 0, 2, 4, 6, or 8
 ```
 
-### choice(list: array) -> any
+## choice(list: array) -> any
 
 Randomly selects an element from a list.
 
@@ -112,7 +111,7 @@ let color = random.choice(colors);
 print(color); // Outputs: one of the colors
 ```
 
-### normal(mean: float, std_dev: float) -> float
+## normal(mean: float, std_dev: float) -> float
 
 Generates a random floating-point number from a normal (Gaussian) distribution.
 
@@ -132,7 +131,7 @@ let iq = random.normal(100.0, 15.0);
 print(iq); // Outputs: 97.234...
 ```
 
-### exponential(lambda: float) -> float
+## exponential(lambda: float) -> float
 
 Generates a random floating-point number from an exponential distribution.
 
@@ -151,7 +150,7 @@ let wait_time = random.exponential(0.5);
 print(wait_time); // Outputs: 1.386...
 ```
 
-### bool() -> boolean
+## bool() -> boolean
 
 Generates a random boolean value.
 
