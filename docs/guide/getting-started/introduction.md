@@ -58,19 +58,19 @@ get / {
 }
 
 $ aiscript serve web.ai
-Listening on http://localhost:8000
+Listening on http://localhost:8080
 
-$ curl http://localhost:8000
+$ curl http://localhost:8080
 {
     "error": "Missing required field: question"
 }
 
-$ curl http://localhost:8000?question=Hi
+$ curl http://localhost:8080?question=Hi
 {
     "error": "Field validation failed: question: String length is less than the minimum length of 3"
 }
 
-$ curl http://localhost:8000?question=What is the capital of France?
+$ curl http://localhost:8080?question=What is the capital of France?
 {
     "answer": "The capital of France is Paris."
 }
@@ -79,3 +79,30 @@ $ curl http://localhost:8000?question=What is the capital of France?
 You can open [http://localhost:8080/redoc](http://localhost:8080/redoc) to see the automatically generated API documentation.
 
 ![](/guide/open-api.png)
+
+## Use Cases
+
+AIScript excels in these scenarios:
+
+- **AI-powered APIs**: When you need to build APIs that leverage LLMs and other AI services
+- **Prototyping**: Rapidly build and test ideas without configuration overhead
+- **Microservices**: Create lightweight, focused services with minimal boilerplate
+- **Data validation**: When request/response validation is critical to your application
+- **Internal tools**: Build tools quickly with integrated documentation
+
+## Philosophy
+
+AIScript embraces these core principles:
+
+- **Convention over configuration**: Sensible defaults that work out of the box
+- **Progressive complexity**: Easy to get started, powerful when you need it
+- **AI-native design**: Built from the ground up for the age of AI
+- **Developer happiness**: Focusing on the developer experience first
+- **Performance without sacrifice**: No need to choose between speed and productivity
+
+<!-- ## Roadmap
+
+- **Database migrations**: Integrated migration tools for schema evolution
+- **WebSocket support**: Retal-time communication capabilities
+- **Developer tools**: Enhanced debugging and profiling capabilities
+- **Edge deployment**: Deploy your AIScript apps to the edge -->

@@ -1,17 +1,32 @@
 [
     {
-      "type": "dir",
-      "name": "getting-started",
-      "label": "Getting Started"
+        "type": "dir",
+        "name": "getting-started",
+        "label": "Getting Started"
     },
     {
-      "type": "dir",
-      "name": "language",
-      "label": "Language"
+        "type": "dir",
+        "name": "language",
+        "label": "Language"
     },
     {
-      "type": "dir",
-      "name": "web",
-      "label": "Web"
+        "type": "dir",
+        "name": "ai",
+        "label": "AI Integration"
+    },
+    {
+        "type": "dir",
+        "name": "web",
+        "label": "Web"
+    },
+    {
+        "type": "dir",
+        "name": "database",
+        "label": "Database"
+    },
+    {
+        "type": "dir",
+        "name": "auth-security",
+        "label": "Auth and Security"
     }
-  ]
+]

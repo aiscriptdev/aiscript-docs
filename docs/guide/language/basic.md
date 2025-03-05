@@ -1,20 +1,10 @@
 # Language Syntax
 
-## Features
-
-- Dynamic typing interpreter language
-- Auto garbage collection
-- High level and domain specific in AI and web development
-- Function is first class citizen
-- No semicolon end of line
-- Rich standard library
-- High performance, the interpreter is written in Rust
-
 ## Comments
 
 AIScript use `//` as the comment symbol.
 
-```py
+```js
 // This is a comment
 
 // A hello API endpoint
@@ -32,7 +22,7 @@ Every comment on route will be generated to the OpenAPI documentation.
 
 ## Variables
 
-```rs
+```js
 let name = "AIScript";
 let age = 18;
 ```
@@ -41,11 +31,11 @@ let age = 18;
 
 Constants are declared with the `const` keyword, and they are immutable. Constants can only be declared once and must be initialized with a value, they cannot be reassigned.
 
-```rs
+```js
 const PI = 3.14;
 ```
 
-```py
+```js
 get /hello {
     return "PI is {PI}";
 }
@@ -273,7 +263,7 @@ for i in 1..10 {
 
 ### Continue
 
-```py
+```js
 for i in 1..10 {
     if i % 2 == 0 {
         continue;
@@ -285,7 +275,7 @@ for i in 1..10 {
 
 Every type sufix with `!` is an error type. Use `raise` keyword to raise an error,
 
-```py
+```js
 fn div(a: int, b: int) -> int | DivByZero! {
     if b == 0 {
         raise DivByZero!;

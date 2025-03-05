@@ -1,11 +1,6 @@
 [
     {
       "type": "file",
-      "name": "language-syntax",
-      "label": "Language Syntax"
-    },
-    {
-      "type": "file",
       "name": "language-keyword",
       "label": "Language Keyword"
     },
