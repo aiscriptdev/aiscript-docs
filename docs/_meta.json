@@ -5,13 +5,13 @@
     "activeMatch": "/guide/"
   },
   {
-    "text": "Std Library",
-    "link": "/std/overview",
-    "activeMatch": "/std/"
-  },
-  {
-    "text": "Reference",
-    "link": "/reference/language-syntax",
-    "activeMatch": "/reference/"
-  }
+      "text": "Reference",
+      "link": "/reference/language-syntax",
+      "activeMatch": "/reference/"
+    },
+    {
+      "text": "Std Library",
+      "link": "/std/overview",
+      "activeMatch": "/std/"
+    }
 ]

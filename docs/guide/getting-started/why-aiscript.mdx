@@ -1,0 +1,232 @@
+import { Tab, Tabs } from "rspress/theme";
+
+# Why AIScript
+
+AIScript is my experimental project to explore a new way to build web application in AI era. It isn't an oh-another-language built by a guy who just want to learn how to write an interpreter. My ambient is bigger than that.
+
+Not matter what language you use to build web API, you need a web framework. These web framework essentially does the same thing. They all parse HTTP requests, execute SQL queries, and response the result with JSON or render HTML templates. Some framework can do more, validating request params, generate OpenAPI spec, etc. However, different framworks from different languages have totally different develope experience to build an web app. When you switch from one to another, you can't escape to learn the syntax and docs again. That why I want to adopt an brand-new intuitive apporach combine language with web framework to bring the modern experience to build web apps.
+
+## Intuitive first
+
+What I want is write a code like this to run a web API with single command, no need to learn a new web framework, no need to struggle choose which framework to use, no need to install the dependencies to run. Just run `aiscript serve`.
+
+<Tabs>
+<Tab label="route.ai">
+```javascript
+get /guess {
+
+    query {
+        @number(min=0, max=100)
+        value: int
+    }
+
+    let message = "You got it!" if query.value == 42 else "Try again";
+    return { message };
+}
+```
+</Tab>
+<Tab label="run">
+```bash
+$ aiscript serve route.ai
+Listening on http://localhost:8080
+```
+</Tab>
+<Tab label="curl">
+```bash
+$ curl -X GET http://localhost:8080/guess?n=10
+{"message": "Try again"}
+
+$ curl -X GET http://localhost:8080/guess?n=42
+{"message": "You got it!"}
+
+$ curl -X GET http://localhost:8080/guess?n=999
+{"error": "Field validation failed: value: Number is greater than the maximum value of 100."}
+```
+</Tab>
+</Tabs>
+
+Here are just a small poart of cool ideas come to my brain. I always seek for it if someone already built it. But I cannot find one, so I decided to build one.
+
+## Out-of-box first
+
+When build a web app, almost the rest besides the core business logic is the same. How can I support JWT authentication? How to integrate Google or GitHub login? How to query database or validate data? For those reraly changed standard, I wish it built into the language or framework, give me an out-of-box experience.
+
+<Tabs>
+<Tab label="jwt_auth.ai">
+```rust
+@auth // JWT auth
+post /chat {
+    query {
+        @string(min_len=5, max_len=200)
+        message: str
+    }
+
+    use std.db.pg;
+    let message = pg.query("INSERT INTO messages (message) VALUES ($1)", query.message);
+    return message;
+}
+```
+</Tab>
+<Tab label="google_login.ai">
+```javascript
+@sso(provider="google")
+get /auth/google {
+    let url = sso.authority_url();
+    print(url);
+    return temporary_redirect(target=url);
+}
+
+@sso(provider="google")
+get /auth/google/callback {
+    query {
+        code: str,
+        state: str,
+    }
+
+    print("code", query.code);
+    print("state", query.state);
+    let user_info = sso.verify(code=query.code);
+    print(user_info);
+    return { user_info };
+}
+```
+</Tab>
+<Tab label="validation.ai">
+```javascript
+class User {
+    @string(min_len=3, max=20)
+    name: str,
+    @number(min=18, strict_int=true, strict_float=true)
+    age: int,
+    @in(["male", "female"])
+    gender: str = "male",
+}
+let u1 = User("Le", 20, "male") |err| {
+    print("Validate error:", err);
+};
+// Validate error: { 
+//      loc: [name], input: Le, type: validation_error,
+//      msg: String length is less than the minimum length of 3 
+// }
+let u2 = User("Lee", 17, "male") |err| {
+    print("Validate error:", err);
+};
+// Validate error: {
+//      loc: [age], input: 17, type: validation_error,
+//      msg: Number is less than the minimum value of 18
+// }
+let u3 = User("Lee", 20, "boy") |err| {
+    print("Validate error:", err);
+};
+// Validate error: {
+//      loc: [gender], input: boy, type: validation_error,
+//      msg: Value is not in the list of allowed values
+// }
+let u4 = User("Lee") |err| {
+    print("Validate error:", err);
+};
+// Validate error: {
+//      loc: [age], input: nil, type: missing,
+//      msg: Field required
+// }
+```
+</Tab>
+<Tab label="project.toml">
+```toml
+[auth.jwt]
+secret = "$JWT_SECRET"
+expiration = 3600
+
+[sso.google]
+client_id = "your_google_client_id"
+client_secret = "your_google_client_secret"
+redirect_url = "http://localhost:8080/auth/google/callback"
+scopes = ["email"]
+```
+</Tab>
+</Tabs>
+
+## AI first
+
+People we'll ask:
+
+:::info
+"Do we really need a new programming language in the age AI can write code for us?". 
+:::
+
+In my own opionion, I think yes, at least for web application. 
+
+In the one hand, most of mainstream language designed two-decades ago, `prompt`, `agent` isn't a primitive features in the language, it is in AIScript. Your don't need to install a package to call LLM API or orchestrate multiple agents.
+
+<Tabs>
+<Tab label="prompt.ai">
+```rust
+let answer = prompt "Why the sky is blue?" => {
+    model: "claude-3.7",
+    temperature: 0.8,
+};
+print(answer);
+```
+</Tab>
+<Tab label="agent.ai">
+```python
+agent WeatherAgent {
+    instructions: "Providing a weather forecast at the locations the user provides.",
+    model: "gpt-4o",
+
+    fn get_forecast(location: str, forecast_date: date) -> str {
+        """
+        Call this tools to forecast weather based on `location` and `forecast_date`.
+        """
+        // In real code: call weather API, DB queries, etc.
+        return f'The forecast in {location} on {forecast_date} is 24°C and sunny.';
+    }
+}
+
+let user_prompt = "What will the weather be like in Paris on Tuesday?";
+WeatherAgent.run(input=user_prompt);
+```
+</Tab>
+<Tab label="project.toml">
+```toml
+[ai.embedding]
+model = "gpt-3.5-turbo"
+
+[ai.openai]
+api_key = "YOUR_API_KEY"
+
+[ai.anthropic]
+api_key = "YOUR_API_KEY"
+```
+</Tab>
+</Tabs>
+
+In the other hands, many features is out-of-box and batter-included in the standard library. It's helpful for AI code generation. 
+
+:::info Thought on AI code generation era
+
+#### Building web app is not that easy
+
+- Solid coding experience is required, from programming languages to web frameworks and libraries. You need a lot of hands-on experience to build software with confidence.
+
+- Even though AI code generation is pretty helpful, you still need expertise in coding if you're not going to build a toy project.
+
+- Finishing the code is just the beginning; deploying, observability, security, there are a bunch of things waiting for you. AI is not that helpful for these right now.
+
+#### Code Generation: Just the Tip of the Iceberg
+
+- For any serious piece of software that makes it to production, 80% or more of the cost is in the phase after initial development. That's the phase called Day-2 operations.
+
+- Day-2 operations present the biggest challenges.
+
+- Can Cursor and WindSurf solve the deployment problem, make the whole Day-2 easy and effortless? No, I don't think so, neither can Devin.
+
+:::
+
+
+## Best practice first
+
+I hope I don't need to learn serveral methods to compare and figure out which one is the best practice. What I hope I only need one solution which is the best practice, free myself from such a choose struggeling.
+
+AIScript choose Rust's best practice of web developement, and encapsulate those best practices into the language and framework.
+

@@ -8,7 +8,7 @@ export default defineConfig({
   icon: '/toucan.png',
   logo: {
     light: '/aiscript-logo.svg',
-    dark: '/aiscript-logo.svg',
+    dark: '/aiscript-logo-white.svg',
   },
   route: {
     cleanUrls: true,
