@@ -2,11 +2,11 @@ import { Badge } from 'rspress/theme';
 
 # Basic Syntax
 
-AIScript syntax is inspired by Python, JavaScript and Rust. If you familiar one of three languages, you can grasp the basic language syntax in 10 minutes.
+AIScript syntax is inspired by Python, JavaScript and Rust. If you're familiar with any of these languages, you can grasp the basic language syntax in about 10 minutes.
 
 ## Comments
 
-AIScript use `//` as the comment symbol.
+AIScript uses `//` for comments.
 
 ```js
 // This is a comment
@@ -17,7 +17,7 @@ print("Hello World");
 
 ## Semicolon
 
-AIScript is semnicolon end language, that mean the `;` is required at the end of statements.
+AIScript is a semicolon-terminated language, which means `;` is required at the end of statements.
 
 ```js
 let a = 1;
@@ -28,7 +28,7 @@ print(1 + 2);
 
 ## Variables
 
-AIScript use `let` to define a variable, however type annotation is not support yet.
+AIScript uses `let` to define variables. Type annotations are not supported yet.
 
 ```js
 let name = "AIScript";
@@ -37,7 +37,7 @@ let age = 18;
 // let flag: bool = false;
 ```
 
-There are two kinds of variable: `global variable` and `local variable`. Any variable defined in the root scope is global variable, otherwise it is local scope variable.
+There are two kinds of variables: `global variables` and `local variables`. Any variable defined in the root scope is a global variable; otherwise, it's a local scope variable.
 
 ```js
 let global_variable = "abc";
@@ -47,14 +47,15 @@ if len(global_variable) > 1 {
    print("I can access global variable:", global_variable); // print: I can access global variable: abc
 }
 
-// local variable is inaccessible outer of local scope,
-// this print statement will raise error: Undefined variable 'local_variable'.
+// Local variables are inaccessible outside of their local scope.
+// This print statement will raise error: Undefined variable 'local_variable'.
 // print(local_variable);
 ```
 
 ## Constants
 
-Constants are declared with the `const` keyword, and they are immutable. Constants can only be declared once and must be initialized with a value, they cannot be reassigned.
+Constants are declared with the `const` keyword and are immutable. Constants can only be declared once and must be initialized with a value; they cannot be reassigned.
+
 
 ```js
 const PI = 3.14;
@@ -94,10 +95,10 @@ let numbers = [1, 2, 3, 4, 5];
 let address_key = "address";
 let person = {
     "name": "AIScript",
-    age: 18, // double quotes is optional
+    age: 18, // double quotes are optional
     "is_male": true,
     "hobbies": ["reading", "coding", "gaming"],
-    [address_key]: { // key name is computable
+    [address_key]: { // key name are computable
         "city": "Beijing",
         "street": "No. 100, Xihuan Road",
         "zipcode": "100000",
@@ -154,7 +155,7 @@ let b = 1 not in [1, 2, 3];
 ```
 
 :::danger
-AIScript doesn't support `i++`, `++i`, `i--` or `--i`!
+AIScript doesn't support increment/decrement operators like `i++`, `++i`, `i--` or `--i`.
 :::
 
 ## String
@@ -191,7 +192,7 @@ if age > 60 {
 
 ## Inline if
 
-AIScript doesn't support `?` ternary operator like other languages, however you can use inline if syntax.
+AIScript doesn't support the `?:` ternary operator like other languages, but you can use `inline if` syntax.
 
 ```js
 let score = 92;
@@ -201,11 +202,11 @@ print(result); // "A"
 
 ## Match
 
-Use `match` to evaluate the expression whether meet the arms. 
+Use `match` to evaluate expressions against different patterns:
 
-- `match` also support evaluate enum, learn more in [Enum chapter](/guide/language/enum-match)
+- `match` also support evaluate enums, learn more in [Enum chapter](/guide/language/enum-match)
 - Use `|` to combine multipe case in one arm
-- `match` arm support `if guard`
+- `match` arm support `if` guards
 
 ```js
 let language = "AIScript";
@@ -221,9 +222,9 @@ match language {
 
 ## Functions
 
-- Use `fn` keyword to define function, you can use `ai fn` to define [AI function](/guide/ai/function).
-- Argument and return type annotation is recommend but can be optional.
-- Use `|` to append error type after return type, see [Error handling](/guide/language/error-handling).
+- Use `fn` keyword to define function; you can use `ai fn` to define [AI function](/guide/ai/function).
+- Argument and return type annotations are recommend but optional.
+- Use `|` to append error types after return type, see [Error handling](/guide/language/error-handling).
 
 ```js
 fn add(a: int, b: int) -> int {
@@ -235,22 +236,22 @@ print(add(1, 2)); // 3
 
 ## Closures
 
-Function is the first-class citizen in AIScript, hence you can return a function as closure. The biggest different closure compare to function is `closure will capture variable`.
+Functions are first-class citizens in AIScript, so you can return a function as a closure. The key difference between closures and regular functions is that `closures capture variables` from their surrounding scope.
 
 ```js
-fn add(a: int) -> fn {
-    fn _add(b: int) -> int {
+fn add(a: int) {
+    fn add_inner(b: int) -> int {
         return a + b;
     }
 
-    return _add;
+    return add_inner;
 }
 
 let add5 = add(5);
 print(add5(10)); // 15
 ```
 
-Closure `_add` captured outer variable `a`.
+Closure `add_inner` captures the outer variable `a`.
 
 ## Slice <Badge text="Not supported yet" type="warning" />
 
@@ -272,7 +273,7 @@ let d = a[:2]; // "AI"
 
 ## Loops
 
-AIScript only has two keyword for loops, `for` and `while`.
+AIScript only has two keyword for loops: `for` and `while`.
 
 ### Regular for iteration
 
@@ -280,9 +281,22 @@ AIScript only has two keyword for loops, `for` and `while`.
 for let i = 0; i < 10; i = i + 1 {
     print(i);
 }
+```
 
-while (let i = 0; i < 10; i++>) {
+### While loop
+
+:::info
+AIScript doesn't support `do...while`.
+:::
+
+```js
+let i = 0;
+while i < 10 {
     print(i);
+}
+
+while true {
+    // infinite loop
 }
 ```
 
