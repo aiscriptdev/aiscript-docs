@@ -1,33 +1,35 @@
 # Introduction
 
-AIScript is a combination of interpreter programming language and web framework both written in Rust dedicated to help people build AI applications effortlessly. The language syntax learn from Python, JavaScript and Rust, combine its good parts and designed to be easy to learn and use.
+AIScript is a unique combination of interpreter programming language and web framework, both written in Rust, designed to help developers build AI applications effortlessly. The language syntax draws inspiration from Python, JavaScript, and Rust, combining their strengths to create something that's intuitive, powerful, and easy to use.
 
 :::warning
-`AIScript` is in early development, please do not use it in production yet.
+`AIScript` is in early development. Please do not use it in production yet.
 :::
 
 ## Programming Language
 
-As a programming language, AIScript write it interpreter from scratch.
+As a programming language, AIScript is built with a custom interpreter from the ground up:
 
-- Function is the first class citizen and object oriented programming paradigm
-- Builtin AI primitive, including prompt, ai function, and agent
-- Dynamic typing with limited static type checking
-- Buitlin data validation like Python's [Pydantic](https://docs.pydantic.dev/latest/)
-- Simple and elegant error handling, inspired from Rust, Golang and Zig
-- Rich standard library backed by Rust's standard library and ecosystems underneath
-- Garbage collection
+- Functions are first-class citizens with support for object-oriented programming paradigms
+- Built-in AI primitives, including prompt, AI functions, and agent capabilities
+- Dynamic typing system with targeted static type checking for improved safety
+- Built-in data validation similar to Python's [Pydantic](https://docs.pydantic.dev/latest/)
+- Simple yet powerful error handling, inspired by Rust, Go, and Zig
+- Rich standard library leveraging Rust's ecosystem underneath
+- Automatic garbage collection for memory management
 
 ## Web Framework
 
-- Elegant and intuitive route DSL
-- Auto params validation
-- Auto generate OpenAPI schema and docs
-- Backed by Rust's best practices, use [axum](https://github.com/tokio-rs/axum) and [sqlx](https://github.com/launchbadge/sqlx) underneath, 
-- Rust's axum performance but with Python's flask-like syntax
-- Buitlin database modules ([`std.db.pg`](/std/db/pg) and [`std.db.redis`](/std/db/redis))
-- Buitlin auth and social login
-- Battery-included features with simple configuration to enable them
+AIScript isn't just a language—it's a complete web development solution:
+
+- Elegant and intuitive route DSL for defining endpoints
+- Automatic parameter validation with clear error messages
+- Automatic OpenAPI schema and documentation generation
+- Built on Rust's best practices, using [axum](https://github.com/tokio-rs/axum) and [sqlx](https://github.com/launchbadge/sqlx) under the hood
+- Combines Rust's axum performance with Python's Flask-like simplicity
+- Built-in database modules ([`std.db.pg`](/std/db/pg) and [`std.db.redis`](/std/db/redis))
+- Built-in authentication and social login capabilities
+- Battery-included features easily enabled through simple configuration
 
 ## How AIScript works
 
@@ -74,6 +76,6 @@ $ curl http://localhost:8000?question=What is the capital of France?
 }
 ```
 
-You can open [http://localhost:8080/redoc](http://localhost:8080/redoc) to see the API docs.
+You can open [http://localhost:8080/redoc](http://localhost:8080/redoc) to see the automatically generated API documentation.
 
 ![](/guide/open-api.png)

@@ -2,13 +2,15 @@ import { Tab, Tabs } from "rspress/theme";
 
 # Why AIScript
 
-AIScript is my experimental project to explore a new way to build web application in AI era. It isn't an oh-another-language built by a guy who just want to learn how to write an interpreter. My ambient is bigger than that.
+AIScript is an experimental project exploring a new approach to building web applications in the AI era. This isn't just another language created by someone learning interpreter design—my ambition is much greater.
 
-Not matter what language you use to build web API, you need a web framework. These web framework essentially does the same thing. They all parse HTTP requests, execute SQL queries, and response the result with JSON or render HTML templates. Some framework can do more, validating request params, generate OpenAPI spec, etc. However, different framworks from different languages have totally different develope experience to build an web app. When you switch from one to another, you can't escape to learn the syntax and docs again. That why I want to adopt an brand-new intuitive apporach combine language with web framework to bring the modern experience to build web apps.
+Regardless of which language you use to build web APIs, you need a web framework. These frameworks essentially perform the same functions: parsing HTTP requests, executing database queries, and returning results as JSON or rendered HTML. Some frameworks offer additional features like request validation or OpenAPI spec generation. However, frameworks across different languages provide vastly different development experiences. Switching between them inevitably requires learning new syntax and documentation. That's why I wanted to create an intuitive approach that combines language with web framework to deliver a modern experience for building web applications.
 
-## Intuitive first
+![](/guide/web-framework.png)
 
-What I want is write a code like this to run a web API with single command, no need to learn a new web framework, no need to struggle choose which framework to use, no need to install the dependencies to run. Just run `aiscript serve`.
+## Intuitive First
+
+My vision is to write code that runs a web API with a single command—no need to learn a new framework, struggle with choosing which one to use, or install dependencies to run it. Just execute `aiscript serve` and you're up and running.
 
 <Tabs>
 <Tab label="route.ai">
@@ -45,11 +47,11 @@ $ curl -X GET http://localhost:8080/guess?n=999
 </Tab>
 </Tabs>
 
-Here are just a small poart of cool ideas come to my brain. I always seek for it if someone already built it. But I cannot find one, so I decided to build one.
+This is just a small part of the ideas that have come to mind. I've searched to see if someone has already built something similar, but finding nothing, I decided to build it myself.
 
-## Out-of-box first
+## Out-of-box First
 
-When build a web app, almost the rest besides the core business logic is the same. How can I support JWT authentication? How to integrate Google or GitHub login? How to query database or validate data? For those reraly changed standard, I wish it built into the language or framework, give me an out-of-box experience.
+When building a web app, most components beyond the core business logic are standard across projects. How do you implement JWT authentication? How do you integrate Google or GitHub login? How do you query databases or validate data? For these rarely changing standards, I believe they should be built directly into the language or framework, providing an out-of-box experience.
 
 <Tabs>
 <Tab label="jwt_auth.ai">
@@ -146,17 +148,15 @@ scopes = ["email"]
 </Tab>
 </Tabs>
 
-## AI first
+## AI First
 
-People we'll ask:
-
-:::info
-"Do we really need a new programming language in the age AI can write code for us?". 
+:::info People often ask
+"Do we really need a new programming language in an age when AI can write code for us?". 
 :::
 
-In my own opionion, I think yes, at least for web application. 
+In my opinion, for web applications at least, the answer is yes.
 
-In the one hand, most of mainstream language designed two-decades ago, `prompt`, `agent` isn't a primitive features in the language, it is in AIScript. Your don't need to install a package to call LLM API or orchestrate multiple agents.
+Most mainstream languages were designed decades ago—features like `prompt` and `agent` aren't primitives in these languages, but they are in AIScript. You don't need to install packages to call LLM APIs or orchestrate multiple agents.
 
 <Tabs>
 <Tab label="prompt.ai">
@@ -201,32 +201,32 @@ api_key = "YOUR_API_KEY"
 </Tab>
 </Tabs>
 
-In the other hands, many features is out-of-box and batter-included in the standard library. It's helpful for AI code generation. 
+Additionally, AIScript includes many out-of-box features in its standard library, which is particularly helpful for AI code generation.
 
-:::info Thought on AI code generation era
+:::info Thoughts on the AI Code Generation Era
 
-#### Building web app is not that easy
+#### Building Web Apps Is Not That Easy
 
-- Solid coding experience is required, from programming languages to web frameworks and libraries. You need a lot of hands-on experience to build software with confidence.
+- Solid coding experience is still required, from programming languages to web frameworks and libraries. You need substantial hands-on experience to build software with confidence.
 
-- Even though AI code generation is pretty helpful, you still need expertise in coding if you're not going to build a toy project.
+- Even with AI code generation, you still need expertise if you're building anything beyond a toy project.
 
-- Finishing the code is just the beginning; deploying, observability, security, there are a bunch of things waiting for you. AI is not that helpful for these right now.
+- Finishing the code is just the beginning; deployment, observability, and security present additional challenges that current AI tools don't fully address.
 
 #### Code Generation: Just the Tip of the Iceberg
 
-- For any serious piece of software that makes it to production, 80% or more of the cost is in the phase after initial development. That's the phase called Day-2 operations.
+- For any serious production software, 80% or more of the cost comes after initial development—in what's called "Day-2 operations."
 
 - Day-2 operations present the biggest challenges.
 
-- Can Cursor and WindSurf solve the deployment problem, make the whole Day-2 easy and effortless? No, I don't think so, neither can Devin.
+- Tools like Cursor, WindSurf, or even Devin can't fully solve deployment problems or make Day-2 operations effortless.
 
 :::
 
 
-## Best practice first
+## Best Practice First
 
-I hope I don't need to learn serveral methods to compare and figure out which one is the best practice. What I hope I only need one solution which is the best practice, free myself from such a choose struggeling.
+Developers shouldn't need to learn several approaches to the same problem just to determine which is best. Ideally, there should be one solution representing best practices, freeing you from decision paralysis.
 
-AIScript choose Rust's best practice of web developement, and encapsulate those best practices into the language and framework.
+AIScript adopts Rust's web development best practices and encapsulates them directly into the language and framework, letting you focus on what matters most—your application's unique value.
 
