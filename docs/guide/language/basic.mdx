@@ -1,0 +1,339 @@
+import { Badge } from 'rspress/theme';
+
+# Basic Syntax
+
+AIScript syntax is inspired by Python, JavaScript and Rust. If you familiar one of three languages, you can grasp the basic language syntax in 10 minutes.
+
+## Comments
+
+AIScript use `//` as the comment symbol.
+
+```js
+// This is a comment
+
+// Print a Hello World
+print("Hello World");
+```
+
+## Semicolon
+
+AIScript is semnicolon end language, that mean the `;` is required at the end of statements.
+
+```js
+let a = 1;
+let flag = true;
+
+print(1 + 2);
+```
+
+## Variables
+
+AIScript use `let` to define a variable, however type annotation is not support yet.
+
+```js
+let name = "AIScript";
+let age = 18;
+// Type annotation is not support yet
+// let flag: bool = false;
+```
+
+There are two kinds of variable: `global variable` and `local variable`. Any variable defined in the root scope is global variable, otherwise it is local scope variable.
+
+```js
+let global_variable = "abc";
+
+if len(global_variable) > 1 {
+   let local_variable = "xyz";
+   print("I can access global variable:", global_variable); // print: I can access global variable: abc
+}
+
+// local variable is inaccessible outer of local scope,
+// this print statement will raise error: Undefined variable 'local_variable'.
+// print(local_variable);
+```
+
+## Constants
+
+Constants are declared with the `const` keyword, and they are immutable. Constants can only be declared once and must be initialized with a value, they cannot be reassigned.
+
+```js
+const PI = 3.14;
+
+print(PI); // print 3.14
+PI = 3.1415; // Error at 'PI': Cannot assign to constant variable.
+```
+
+## Primitive types
+
+```js
+// nil
+let nil_value = nil;
+
+// strings
+let name = "AIScript";
+
+// integers
+let age = 18;
+let negative = -1;
+// let hex = 0x10;
+// let octal = 0o10;
+// let binary = 0b10;
+// let big = 1_000_000_000_000;
+
+// floats
+let pi = 3.14;
+
+// booleans
+let flag1 = true;
+let flag2 = false;
+
+// arrays
+let numbers = [1, 2, 3, 4, 5];
+
+// object literal
+let address_key = "address";
+let person = {
+    "name": "AIScript",
+    age: 18, // double quotes is optional
+    "is_male": true,
+    "hobbies": ["reading", "coding", "gaming"],
+    [address_key]: { // key name is computable
+        "city": "Beijing",
+        "street": "No. 100, Xihuan Road",
+        "zipcode": "100000",
+        "country": "China",
+        "phone": "13800138000",
+    }
+};
+
+//  tuples
+let person = ("AIScript", 18, true);
+```
+
+## Operators
+
+```js
+// arithmetic operators
+let a = 1 + 2;
+let b = 1 - 2;
+let c = 1 * 2;
+let d = 1 / 2;
+let e = 1 % 2;
+
+// logical operators
+let a = true and false;
+let b = true or false;
+let c = not true;
+
+// comparison operators
+let a = 1 == 2;
+let b = 1 != 2;
+let c = 1 > 2;
+let d = 1 < 2;
+let e = 1 >= 2;
+let f = 1 <= 2;
+
+// bitwise operators
+let a = 1 & 2;
+let b = 1 | 2;
+let c = 1 ^ 2;
+let d = 1 << 2;
+let e = 1 >> 2;
+
+// assignment operators
+let a = 1;
+a += 2;
+a -= 2;
+a *= 2;
+a /= 2;
+a %= 2;
+
+// in operator
+let a = 1 in [1, 2, 3];
+let b = 1 not in [1, 2, 3];
+```
+
+:::danger
+AIScript doesn't support `i++`, `++i`, `i--` or `--i`!
+:::
+
+## String
+
+```js
+// string interpolation
+let a = "AIScript";
+let b = "Hello, {a}!";
+
+// string concatenation
+let a = "AIScript";
+let b = "Hello, " + a + "!";
+
+// string length
+let a = "AIScript";
+print(len(a)); // print 8
+```
+
+## Control flow
+
+```js
+let age = 20;
+
+if age > 60 {
+    print("You are a senior");
+} else if age > 18 and age <= 60 {
+    print("You are an adult");
+} else if age > 12 and age <= 18 {
+    print("You are a teenager");
+} else {
+    print("You are a child");
+}
+```
+
+## Inline if
+
+AIScript doesn't support `?` ternary operator like other languages, however you can use inline if syntax.
+
+```js
+let score = 92;
+let result = "A" if score > 90 else "B";
+print(result); // "A"
+```
+
+## Match
+
+Use `match` to evaluate the expression whether meet the arms. 
+
+- `match` also support evaluate enum, learn more in [Enum chapter](/guide/language/enum-match)
+- Use `|` to combine multipe case in one arm
+- `match` arm support `if guard`
+
+```js
+let language = "AIScript";
+
+match language {
+    "AIScript" => print("AIScript"),
+    "Rust" | "Python" => print("Rust or Python"),
+    "JavaScript" => print("JavaScript"),
+    x if x.starts_with("Z") => print("Maybe Zig?"),
+    _ => print("Unknown language"),
+};
+```
+
+## Functions
+
+- Use `fn` keyword to define function, you can use `ai fn` to define [AI function](/guide/ai/function).
+- Argument and return type annotation is recommend but can be optional.
+- Use `|` to append error type after return type, see [Error handling](/guide/language/error-handling).
+
+```js
+fn add(a: int, b: int) -> int {
+    return a + b;
+}
+
+print(add(1, 2)); // 3
+```
+
+## Closures
+
+Function is the first-class citizen in AIScript, hence you can return a function as closure. The biggest different closure compare to function is `closure will capture variable`.
+
+```js
+fn add(a: int) -> fn {
+    fn _add(b: int) -> int {
+        return a + b;
+    }
+
+    return _add;
+}
+
+let add5 = add(5);
+print(add5(10)); // 15
+```
+
+Closure `_add` captured outer variable `a`.
+
+## Slice <Badge text="Not supported yet" type="warning" />
+
+```js
+// array slice
+let a = [1, 2, 3, 4, 5];
+let b = a[0:3]; // [1, 2, 3]
+let c = a[3:]; // [4, 5]
+let d = a[:3]; // [1, 2, 3]
+
+// string slice
+let a = "AIScript";
+let b = a[0:2]; // "AI"
+let c = a[3:]; // "Script"
+let d = a[:2]; // "AI"
+
+```
+
+
+## Loops
+
+AIScript only has two keyword for loops, `for` and `while`.
+
+### Regular for iteration
+
+```js
+for let i = 0; i < 10; i = i + 1 {
+    print(i);
+}
+
+while (let i = 0; i < 10; i++>) {
+    print(i);
+}
+```
+
+### Iterate over a list <Badge text="Not supported yet" type="warning" />
+
+```js
+let numbers = [1, 2, 3, 4, 5];
+
+for number in numbers {
+    print(number);
+}
+```
+
+### Iterate over a map <Badge text="Not supported yet" type="warning" />
+
+```js
+let person = {
+    "name": "AIScript",
+    "age": 18,
+    "gender": "male",
+};
+
+for (key, value) in person {
+    print("{key}: {value}");
+}
+```
+
+### Iterate over range <Badge text="Not supported yet" type="warning" />
+
+```js
+for i in 1..10 {
+    print(i);
+}
+```
+
+
+### Break and Continue
+
+```js
+for let i = 0; i < 10; i += 1 {
+    if i % 2 == 0 {
+        continue;
+    } else if i == 9 {
+        print("i == 9");
+        break;
+    }
+    print(i);
+}
+// 1
+// 3
+// 5
+// 7
+// i == 9
+```
