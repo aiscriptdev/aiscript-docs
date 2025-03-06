@@ -146,7 +146,7 @@ let developer = Employee("Carlos", 28, "Software Developer");
 developer.greet(); // "Hello, my name is Carlos and I'm 28 years old, a Software Developer"
 ```
 
-:::danger
+:::danger Notice
 AIScript only support inherit single super class.
 :::
 

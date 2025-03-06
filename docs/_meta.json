@@ -13,5 +13,10 @@
       "text": "Std Library",
       "link": "/std/overview",
       "activeMatch": "/std/"
+    },
+    {
+      "text": "Why AIScript",
+      "link": "/guide/getting-started/why-aiscript",
+      "activeMatch": "/guide/getting-started/why-aiscript"
     }
 ]

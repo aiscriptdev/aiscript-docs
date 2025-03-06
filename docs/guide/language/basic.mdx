@@ -351,3 +351,12 @@ for let i = 0; i < 10; i += 1 {
 // 7
 // i == 9
 ```
+
+## Environment
+
+AIScript provide a convenient way to access environment variables, the syntax is `$ENV_NAME`. You can also use [std.env](/std/env) module too.
+
+```rust
+let home = $HOME;
+print(home);
+```

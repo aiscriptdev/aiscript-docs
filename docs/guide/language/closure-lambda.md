@@ -179,7 +179,7 @@ fetch_data(
 );
 ```
 
-:::danger
+:::danger Notice
 AIScript current doesn't support `fn` as type annotation.
 ```rs
 fn fetch_data(url: str, on_success: fn(data: str), on_error: fn(error: str)) {}
