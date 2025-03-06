@@ -1,76 +1,222 @@
+import { Badge } from "rspress/theme";
 
-**aim** (AIScript Manager) is a command-line tool for AIScript. Similar [cargo](https://github.com/rust-lang/cargo) for Rust. It provides a set of commands to help you build web applications quickly.
+# Commands Reference
 
-## ai
+## aiscript
 
-`aim ai` is a command to generate AI apps built in AIScript from a prompt.
+Launch an interactive AIScript interactive environment (REPL) where you can test AIScript code snippets and explore language features.
 
+```bash
+$ aiscript
+AI Script REPL v0.1.0
+Type '.help' for more information.
+> 
 ```
+### aiscript new
+
+Create a new AIScript project with a standard directory structure.
+
+```bash
+$ aiscript new [PROJECT_NAME]
+```
+
+**Example:**
+
+```bash
+$ aiscript new my-project
+
+$ tree my-project
+my-project
+├── lib/
+├── migrations/
+├── routes/
+└── project.toml
+```
+
+### aiscript serve
+
+Run the AIScript project as a web server.
+
+```bash
+$ aiscript serve [--port=8000] [--host=0.0.0.0]
+```
+
+**Options:**
+
+- `--port`: Port to listen on (default: 8000)
+- `--host`: Host to bind to (default: 0.0.0.0)
+- `--reload`: Run in development mode with hot reloading
+
+
+## aim
+
+The **aim** (AIScript Manager) is a command-line tool for AIScript, similar to [cargo](https://github.com/rust-lang/cargo) for Rust. It provides a comprehensive set of commands to help you build, test, and deploy web applications quickly.
+
+### aim ai <Badge text="Not supported yet" type="warning" />
+
+Generate AI applications built in AIScript from a prompt description.
+
+```bash
+$ aim ai [PROMPT_FILE]
+```
+
+This command analyzes a prompt and generates a complete AIScript application based on the description.
+
+**Example:**
+
+```bash
 $ cat prompts.txt
-Please write a chatbot apps that can answer questions about the
+Please write a chatbot app that can answer questions about the
 following topics:
 - history
 - geography
 
 $ aim ai prompts.txt
-
 ```
 
-## compile
+The generated application will include all necessary files, routes, and AI integration to build the described chatbot.
 
-## console
+### aim compile <Badge text="Not supported yet" type="warning" />
 
-## deploy
+Compile an AIScript project into executable code.
 
-Deploy the AIScript project to the aiscript.dev server.
-
-```
-$ aim deploy
+```bash
+$ aim compile [--release]
 ```
 
-## debug
+**Options:**
 
-Open interactive Postman like debug UI in the browser. **aim** will import the API routes into the debug UI.
+- `--release`: Compile in release mode with optimizations
+
+This command validates your code and compiles it to an executable format.
+
+### aim deploy <Badge text="Not supported yet" type="warning" />
+
+Deploy an AIScript project to the aiscript.dev server.
+
+```bash
+$ aim deploy [--env=production]
+```
+
+**Options:**
+
+- `--env`: Target environment (default: production)
+
+This command packages your application and deploys it to the AIScript cloud hosting service.
+
+### aim debug <Badge text="Not supported yet" type="warning" />
+
+Open an interactive, Postman-like debug UI in the browser for testing your API routes.
+
+```bash
+$ aim debug [--port=8001]
+```
+
+**Options:**
+
+- `--port`: Port to use for the debug UI (default: 8001)
+
+The debug UI automatically imports your API routes, allowing you to test endpoints with different parameters and view responses.
+
+### aim fmt <Badge text="Not supported yet" type="warning" />
+
+Format AIScript source code according to the language style guidelines.
+
+```bash
+$ aim fmt [FILES...]
+```
+
+**Options:**
+
+- `--check`: Check if files are formatted without modifying them
+- `--all`: Format all files in the project
+
+### aim lint <Badge text="Not supported yet" type="warning" />
+
+Lint AIScript source code to identify potential problems.
+
+```bash
+$ aim lint [FILES...]
+```
+
+**Options:**
+
+- `--fix`: Automatically fix issues when possible
+- `--all`: Lint all files in the project
+
+### aim migrate <Badge text="Not supported yet" type="warning" />
+
+Manage database schema migrations.
+
+#### aim migrate up
+
+Apply pending migrations to update the database schema.
+
+```bash
+$ aim migrate up [--steps=N]
+```
+
+**Options:**
+
+- `--steps`: Number of migrations to apply (default: all pending)
+
+#### aim migrate down
+
+Revert migrations to roll back database schema changes.
+
+```bash
+$ aim migrate down [--steps=N]
+```
+
+**Options:**
+
+- `--steps`: Number of migrations to revert (default: 1)
+
+### aim mock <Badge text="Not supported yet" type="warning" />
+
+Generate mock data for development and testing.
+
+```bash
+$ aim mock [ENTITY] [COUNT]
+```
+
+**Example:**
+
+```bash
+$ aim mock users 100
+```
+
+This generates 100 mock user records based on your data models.
+
+### aim test <Badge text="Not supported yet" type="warning" />
+
+Run tests for an AIScript project.
+
+```bash
+$ aim test [TEST_PATH]
+```
+
+**Options:**
+
+- `--watch`: Watch for file changes and rerun tests
+- `--coverage`: Generate test coverage report
+
+### aim version
+
+Display the version information for AIScript and its components.
+
+```bash
+$ aim version
+```
+
+**Output example:**
 
 ```
-$ aim debug
-Opening http://localhost:8001
+AIScript CLI v1.0.0
+AIScript Runtime v1.0.0
+AIScript Compiler v1.0.0
 ```
 
-## fmt
+---
 
-Format the source code.
-
-## gen
-
-Generate code from templates.
-
-## lint
-
-Lint the source code.
-
-## migrate
-
-Database schema migration.
-
-### migrate up
-
-### migrate down
-
-## mock
-
-Generate mock data.
-
-## new
-
-Create a new AIScript project.
-
-## test
-
-## server
-
-Run the AIScript project as a web server.
-
-## version
-
-Show the version of AIScript.
+These commands provide a complete toolkit for AIScript development, from project creation and testing to deployment. The `aim` command-line interface streamlines the development workflow, making it easy to build, test, and deploy AIScript applications.

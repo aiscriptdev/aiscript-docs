@@ -3,6 +3,6 @@
     "validator",
     "response",
     "openapi-docs",
-    "configuration",
-    "project"
+    "project",
+    "configuration"
 ]
