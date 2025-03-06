@@ -1,0 +1,192 @@
+import { Badge, Tab, Tabs } from "rspress/theme";
+
+# Modules
+
+AIScript's module system allows you to organize your code into reusable, self-contained units. This helps maintain clean code structure, prevents naming conflicts, and enables efficient code sharing across your application.
+
+## Importing Modules
+
+Use the `use` keyword to import modules:
+
+```rust
+// Import a standard library module
+use std.math;
+use std.http;
+
+// Import a local module
+use my_app.utils;
+```
+
+## Using Imported Modules
+
+After importing a module, you can access its functions, classes, and variables using dot notation:
+
+```rust
+use std.math;
+
+// Use functions from the math module
+let result = math.sin(0.5) + math.cos(0.5);
+print(result);
+
+// Constants are also available
+print(math.PI);  // 3.14159...
+```
+
+## Creating and Export Modules
+
+In AIScript, each file is automatically a module. The name of the module corresponds to its file path relative to your project root:
+
+<Tabs>
+<Tab label="string_helpers.ai">
+
+```rust
+pub fn pluralize(word: str) -> str {
+    // Simple pluralization logic
+    if word.ends_with("s") {
+        return word + "es";
+    }
+    return word + "s";
+}
+
+// Private helper function (not exported)
+fn is_vowel(char: str) -> bool {
+    return char.to_lowercase() in ["a", "e", "i", "o", "u"];
+}
+```
+</Tab>
+</Tabs>
+
+Use `pub` keyword to make items public and available for import in other modules.
+
+## Importing and Using Your Modules
+
+```rust
+// Import your module
+use string_helpers;
+
+let word = "apple";
+let plural = string_helpers.pluralize(word);
+print(plural); // "apples"
+
+// The private is_vowel function is not accessible
+// string_helpers.is_vowel("a"); // Error: function is not exported
+```
+
+## Module Hierarchies <Badge text="Not supported yet" type="warning" />
+
+AIScript supports hierarchical module structures:
+
+```
+project/
+├── main.ai
+├── models/
+│   ├── user.ai
+│   └── product.ai
+└── utils/
+    ├── validation.ai
+    └── formatting.ai
+```
+
+You can import modules from this hierarchy:
+
+```rust
+// In main.ai
+use models.user;
+use models.product;
+use utils.validation;
+use utils.formatting;
+
+let new_user = user.User("Alice", "alice@example.com");
+```
+
+:::warning Circular Dependencies
+
+AIScript also has circular dependencies issue:
+
+```rust
+// In module_a.ai
+use module_b;
+
+pub fn function_a() {
+    print("Function A");
+    module_b.function_b();
+}
+
+// In module_b.ai
+use module_a;
+
+pub fn function_b() {
+    print("Function B");
+}
+```
+
+AIScript cannot fix circular dependencies automatically, you should refactor your code to avoid them.
+
+:::
+
+## Standard Library Modules
+
+AIScript comes with a rich standard library organized into modules:
+
+```rust
+// Math operations
+use std.math;
+print(math.sqrt(16)); // 4
+
+// File system operations
+use std.fs;
+fs.write_file("output.txt", "Hello, world!");
+
+// HTTP client and server
+use std.http;
+let response = http.get("https://api.example.com/data");
+
+// Date and time
+use std.time;
+print(time.now());
+
+// JSON handling
+use std.serde;
+let parsed = srde.from_str('{"name": "AIScript"}');
+
+// Database operations
+use std.db.pg;
+let users = pg.query("SELECT * FROM users");
+```
+
+## Module Aliases <Badge text="Not supported yet" type="warning" />
+
+Use the `as` keyword to create aliases for imported modules or items:
+
+```rust
+use std.collections.HashMap as Map;
+use utils.very_long_module_name as short;
+
+let map = Map();
+short.do_something();
+```
+
+
+## Dynamic Module Loading
+
+AIScript supports dynamic module loading for advanced use cases:
+
+```rust
+fn load_module(module_name: str) -> object {
+    return import(module_name);
+}
+
+let module = load_module("utils.helpers");
+module.function();
+```
+
+## Best Practices
+
+1. **Organize by feature**: Group related functionality together rather than organizing by type (e.g., models, utils)
+2. **Keep modules focused**: Each module should have a single responsibility
+3. **Minimize public API**: Only export what is necessary
+4. **Use clear naming**: Module names should clearly indicate their purpose
+5. **Avoid circular dependencies**: Restructure your code to minimize circular references
+6. **Document public API**: Add comments or docstrings to explain exported functions and classes
+
+AIScript's module system strikes a balance between simplicity and power, allowing you to organize your code effectively while maintaining a clean development experience.
