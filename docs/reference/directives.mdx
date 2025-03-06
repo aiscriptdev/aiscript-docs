@@ -1,65 +1,281 @@
-## Route
+# Directives Reference
 
-### @auth
+Directives in AIScript are special annotations that provide additional metadata, validation, or behavior for different language elements. This reference documents all available directives and their usage.
 
-### @form
+## Route Directives
+
+These directives are applied to route declarations to modify their behavior.
 
 ### @json
 
-## Validators
+Specifies that the route expects and parses JSON request bodies.
 
-### @compare
+```js
+post /api/users {
+    @json
+    body {
+        name: str,
+        email: str
+    }
+    
+    // Process body as JSON
+    return "Created user: " + body.name;
+}
+```
 
-- eq
+### @form
 
-- gt
+Specifies that the route expects and parses form data (`application/x-www-form-urlencoded` or `multipart/form-data`).
 
-- gte
+```js
+post /api/contact {
+    @form
+    body {
+        name: str,
+        message: str
+    }
+    
+    // Process body as form data
+    return "Received message from: " + body.name;
+}
+```
 
-- le
+### @auth
 
-- lt
+Requires authentication for the route. Can specify roles or permissions.
 
-### @format
+```js
+@auth
+get /api/profile {
+    // Only authenticated users can access
+    return "Your profile data";
+}
 
-- email
-- url
-- uuid
-- ipv4
-- ipv6
-- date
-- date-time
-- time
-- month
-- week
-- color
+@auth(roles=["admin"])
+get /api/users {
+    // Only admins can access
+    return "All users data";
+}
+```
 
-### @in
+### @basic_auth
 
-### @length
+Enables HTTP Basic Authentication for the route.
 
-- min
+```js
+@basic_auth(realm="Admin Area")
+get /admin/dashboard {
+    // Only users with valid basic auth credentials can access
+    return "Admin dashboard";
+}
+```
 
-- max
+### @sso
 
-- equal
+Enables Single Sign-On authentication for the route.
 
-### @matches
+```js
+@sso(provider="google")
+get /dashboard {
+    // User must be authenticated via Google SSO
+    return "Welcome, " + user.name;
+}
+```
 
-- prefix
+### @deprecated
 
-- suffix
+Marks a route as deprecated, which can be used for documentation and warnings.
 
-- regex
+```js
+@deprecated(message="Use /api/v2/users instead", since="v1.5.0")
+get /api/users {
+    // This route is deprecated
+    return "Users list";
+}
+```
 
-### @not
+## Validator Directives
 
-### @or
+These directives validate field values in route parameters, request bodies, or model definitions.
+
+### @string
+
+Validates string values with various constraints.
+
+Parameters:
+- `min_len`: Minimum length of the string
+- `max_len`: Maximum length of the string
+- `exact_len`: Exact length the string must have
+- `start_with`: String must start with this prefix
+- `end_with`: String must end with this suffix
+
+```js
+post /api/register {
+    @json
+    body {
+        @string(min_len=3, max_len=20)
+        username: str,
+        
+        @string(min_len=8, start_with="A")
+        password: str
+    }
+}
+```
 
 ### @number
 
-- min
+Validates numeric values against specified constraints.
 
-- max
+Parameters:
+- `min`: Minimum value
+- `max`: Maximum value
+- `equal`: Value must equal this number
 
-- equal
+```js
+post /api/product {
+    @json
+    body {
+        @number(min=1, max=1000)
+        price: float,
+        
+        @number(min=0)
+        quantity: int
+    }
+}
+```
+
+### @in
+
+Validates that a value is one of a set of allowed values.
+
+```js
+post /api/order {
+    @json
+    body {
+        @in(["small", "medium", "large"])
+        size: str,
+        
+        @in([1, 2, 3, 4, 5])
+        rating: int
+    }
+}
+```
+
+### @regex
+
+Validates that a string matches a given regular expression pattern.
+
+```js
+post /api/register {
+    @json
+    body {
+        @regex(r"^[a-zA-Z0-9_]+$")
+        username: str,
+        
+        @regex(r"^\d{3}-\d{2}-\d{4}$")
+        ssn: str
+    }
+}
+```
+
+### @format
+
+Validates that a string conforms to a specific format.
+
+Supported formats:
+- `email`: Email address
+- `url`: URL
+- `uuid`: UUID
+- `ipv4`: IPv4 address
+- `ipv6`: IPv6 address
+- `date`: Date (YYYY-MM-DD)
+- `datetime`: Datetime (ISO 8601)
+- `time`: Time (HH:MM:SS)
+- `month`: Month (YYYY-MM)
+- `week`: Week (YYYY-Www)
+- `color`: HTML color code
+
+```js
+post /api/user {
+    @json
+    body {
+        @format(type="email")
+        email: str,
+        
+        @format(type="url")
+        website: str,
+        
+        @format(type="date")
+        birthdate: str
+    }
+}
+```
+
+### @array
+
+Validates arrays against specified constraints.
+
+Parameters:
+- `min_items`: Minimum number of items
+- `max_items`: Maximum number of items
+- `unique`: Whether items must be unique
+
+```js
+post /api/tags {
+    @json
+    body {
+        @array(min_items=1, max_items=5, unique=true)
+        tags: array
+    }
+}
+```
+
+### @date
+
+Validates that a string is a valid date in the specified format and range.
+
+Parameters:
+- `format`: Date format string (default: "YYYY-MM-DD")
+- `min`: Minimum date
+- `max`: Maximum date
+
+```js
+post /api/event {
+    @json
+    body {
+        @date(format="YYYY-MM-DD", min="2023-01-01", max="2023-12-31")
+        event_date: str
+    }
+}
+```
+
+### @not
+
+Negates another validator, passing if the inner validator fails.
+
+```js
+post /api/product {
+    @json
+    body {
+        @not(@in(["admin", "system"]))
+        role: str
+    }
+}
+```
+
+### @or
+
+Combines multiple validators with logical OR, passing if any of the inner validators pass.
+
+```js
+post /api/identifier {
+    @json
+    body {
+        @or([
+            @format(type="email"),
+            @regex(r"^\d{10}$")
+        ])
+        identifier: str  // Can be either email or 10-digit number
+    }
+}
+```
