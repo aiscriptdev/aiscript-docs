@@ -1,4 +1,4 @@
-# Response Reference
+# Response
 
 The `Response` object in AIScript represents an HTTP response and provides control over status codes, headers, cookies, and the response body.
 

@@ -5,17 +5,12 @@
       "label": "Language Keyword"
     },
     {
-      "type": "file",
-      "name": "route-request",
-      "label": "Route Request"
+      "type": "dir",
+      "name": "route",
+      "label": "Route"
     },
     {
-      "type": "file",
-      "name": "route-response",
-      "label": "Route Response"
-    },
-    {
-      "type": "file",
+      "type": "dir",
       "name": "directives",
       "label": "Directives"
     },

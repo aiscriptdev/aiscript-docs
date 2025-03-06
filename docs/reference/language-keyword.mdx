@@ -1,251 +1,415 @@
-# Language Keyword
+# Language Keywords
 
 ## AI
 
 ### ai
 
-Use `ai` keword to define an AI function and call AI functions.
+The `ai` keyword defines an AI-powered function that can interact with AI models.
 
-```rs
-ai fn sentiment(text: str) -> float {
-    prompt "Analyze the sentiment of the following text: {text}";
+```rust
+ai fn summarize(text: str) -> str {
+    prompt "Summarize the following text in 3 sentences: {text}";
 }
 
-let value = sentiment("I love AIScript")
-print(value) # 0.9
+let summary = summarize("AIScript is a programming language designed for AI interactions...");
+print(summary);
 ```
 
 ### prompt
 
-`prompt` is used to ask AI for a response with the given prompt.
+The `prompt` keyword sends a text prompt to an AI model and returns the response.
 
-```rs
-let a = prompt "What is AI?";
-print(a);
+```rust
+// Basic usage
+let response = prompt "What is the capital of France?";
+
+// With model specification
+let response = prompt "Explain quantum physics simply." => "anthropic://claude-3-5-sonnet-20241022?temperature=0.7";
 ```
-
-`prompt` supports customizations, the format is `prompt "text" => "<company>://<model>?<key1>=<value1>&<key2>=<value2>"`. For example:
-
-```rs
-let a = prompt "What is Rust?" => "openai://gpt-3.5-turbo?temperature=1";
-print(a);
-
-let b = prompt "What is Rust?" => "anthropic://claude-3-5-sonnet-20241022?temperature=1";
-print(b);
-```
-
-### embedding
 
 ### agent
 
-```rs
-agent Researcher {
-    use tool.GoogleSearch
-    use tool.Wikipedia
+The `agent` keyword defines an AI agent with specific capabilities and instructions.
 
-    role => "Researcher"
-    goal => "You are a researcher. Your task is to find information about the following"
-    backstroy => "You have access to the following tools: {tools}"
-    verbose => true
-}
-```
-
-## Language
-
-### and
-
-Binary operator for logical conjunction. Returns `true` if both operands are `true`. `and` is short-circuiting, meaning that the second operand is not evaluated if the first operand is `false`.
-
-```py
-print(true and false) # false
-print(true and true) # true
-print(false and true) # false, second operand is not evaluated
-```
-
-### break
-
-Breaks out of the innermost loop.
-
-```rs
-for i in 1..10 {
-    if i == 5 {
-        break;
+```rust
+agent SearchAssistant {
+    instructions: "You are a search assistant. Help users find information.",
+    model: "claude-3-5-sonnet",
+    tools: ["search", "summarize"],
+    
+    fn search(query: str) -> str {
+        // Implementation of search functionality
+        prompt "Search for: {query}";
     }
-    print(i);
-}
-```
-
-### const
-
-Declares a constant. Constants can only be declared once and must be initialized with a value, they cannot be reassigned.
-
-```rs
-const PI = 3.14
-```
-
-### continue
-
-Continues to the next iteration of the innermost loop.
-
-```rs
-for i in 1..10 {
-    if i % 2 == 0 {
-        continue
+    
+    fn summarize(text: str) -> str {
+        prompt "Summarize: {text}";
     }
-    print(i)
+}
+
+// Using the agent
+let result = SearchAssistant.run(input: "Find information about climate change");
+```
+
+## Control Flow
+
+### if
+
+Executes a block of code conditionally.
+
+```rust
+let x = 10;
+if x > 5 {
+    print("x is greater than 5");
+} else if x < 5 {
+    print("x is less than 5");
+} else {
+    print("x equals 5");
 }
 ```
 
 ### else
 
-`else` is used to specify a block of code to be executed if the condition in the `if` statement is `false`.
-
-```rs
-if condition1 {
-    // do something1
-} else if condition2 {
-    // do something2
-} else {
-    // do something else
-}
-```
-
-### enum
-
-```rs
-enum Color {
-    Red,
-    Green,
-    Blue,
-}
-```
-
-### false
-
-`false` is a boolean literal that represents the logical value `false`.
-
-### fn
-
-`fn` is used to declare a function.
-
-```rs
-fn add(a: int, b: int) -> int {
-    return a + b;
-}
-```
+Used with `if` to provide alternative code blocks.
 
 ### for
 
-### if
+Creates a loop that iterates over collections or ranges.
 
-`if` is used to specify a block of code to be executed if a condition is `true`.
+```rust
+for i in 1..5 {
+    print(i);  // Prints 1, 2, 3, 4
+}
 
-```rs
-if condition1 {
-    // do something1
-else if condition2 {
-    // do something2
-} else {
-    // do something else
+let names = ["Alice", "Bob", "Charlie"];
+for name in names {
+    print(name);
 }
 ```
 
-### in
+### while
 
-`in` has two use cases:
+Creates a loop that continues as long as a condition is true.
 
-- iterate over a list, a map, or a range.
-- check if a value is in a list, a map, or a range.
-
-```rs
-let numbers = [1, 2, 3, 4, 5];
-for number in numbers {
-    print(number);
+```rust
+let i = 0;
+while i < 5 {
+    print(i);
+    i = i + 1;
 }
-
-let person = {
-    "name": "AIScript",
-};
-print("name" in person); # true
-print("age" in person); # false
-print(1 in numbers); # true
-print(0 in numbers); # false
 ```
 
-### let
+### break
 
-`let` is used to declare a variable.
+Exits the current loop.
 
-```rs
-let name = "AIScript";
+```rust
+for i in 1..10 {
+    if i == 5 {
+        break;
+    }
+    print(i);  // Prints 1, 2, 3, 4
+}
+```
+
+### continue
+
+Skips to the next iteration of a loop.
+
+```rust
+for i in 1..10 {
+    if i % 2 == 0 {
+        continue;
+    }
+    print(i);  // Prints 1, 3, 5, 7, 9
+}
 ```
 
 ### match
 
-```rs
-let language = "AIScript";
+Pattern matching for conditional logic.
 
-match language {
-    "AIScript" => print("AIScript"),
-    "Rust" => print("Rust"),
-    "Python" => print("Python"),
-    "JavaScript" => print("JavaScript"),
-    _ => print("Unknown language"),
+```rust
+let value = 2;
+match value {
+    1 => print("One"),
+    2 => print("Two"),
+    3 => print("Three"),
+    _ => print("Other number")
+}
+
+// Match with enum variants
+enum Status {
+    Pending,
+    Started,
+    Finished,
+}
+
+let result = Result::Pending;
+match result {
+    Result::Pending => print("status: pending"),
+    Result::Started => print("status: started"),
+    Result::Finished => print("status: finished"),
 }
 ```
 
-### not
+## Function
 
-`not` is a unary operator that returns the opposite of its operand. In other languages, it often use the `!` symbol, but in AIScript, we use the `not` keyword.
+### fn
 
-```
-print(not true); # false
-print(not false); # true
-```
+Defines a function.
 
-### or
-
-Binary operator for logical disjunction. Returns `true` if either of the operands is `true`. `or` is short-circuiting, meaning that the second operand is not evaluated if the first operand is `true`.
-
-```py
-print(true or false); # true, second operand is not evaluated
-print(true or true); # true
-print(false or true); # true
-```
-
-### raise
-
-`raise` is used to return an error from a function.
-
-```rs
-fn divide(a: int, b: int) -> int, !DivideByZero {
-    if b == 0 {
-        raise !DivideByZero;
-    }
-    return a / b;
+```rust
+fn add(a: int, b: int) -> int {
+    return a + b;
 }
 ```
 
 ### return
 
-Return a value from a function. If no value is returned, `nil` is returned.
+Returns a value from a function.
 
-`return` can be used to return multiple values from a function.
-
-```rs
-fn add(a: int, b: int) -> int {
-    return a + b;
-}
-
-fn add_and_subtract(a: int, b: int) -> (int, int) {
-    return a + b, a - b;
+```rust
+fn is_even(num: int) -> bool {
+    if num % 2 == 0 {
+        return true;
+    }
+    return false;
 }
 ```
 
+### raise
+
+Returns an error from a function.
+
+```rust
+enum ArithError! {
+    DivideByZero
+}
+fn divide(a: int, b: int) -> float, ArithError! {
+    if b == 0 {
+        raise ArithError!::DivideByZero;
+    }
+    return a / b;
+}
+
+// Using the function with error handling
+let result = divide(10, 0) |err| {
+    print("Division by zero");
+    return 0;
+};
+```
+
+## Variable Declaration
+
+### let
+
+Declares a mutable variable.
+
+```rust
+let name = "AIScript";
+name = "AI Script Language";  // Valid - can be reassigned
+```
+
+### const
+
+Declares an immutable constant.
+
+```rust
+const PI = 3.14159;
+const MAX_USERS = 100;
+// PI = 3.14;  // Invalid - constants cannot be reassigned
+```
+
+## Visibility
+
+### pub
+
+Makes a declaration public and accessible from other modules.
+
+```rust
+pub fn add(a: int, b: int) -> int {
+    return a + b;
+}
+
+pub const VERSION = "1.0.0";
+```
+
+## Type Definition
+
+### enum
+
+Defines an enumeration type.
+
+```rust
+enum Color {
+    Red,
+    Green,
+    Blue
+}
+
+// Enum with values
+enum HttpStatus {
+    OK = 200,
+    NotFound = 404,
+    ServerError = 500
+}
+
+// Enum for errors
+enum NetworkError! {
+    ConnectionFailed,
+    Timeout,
+    InvalidResponse,
+}
+```
+
+### class
+
+Defines a class with fields and methods.
+
+```rust
+class Person {
+    name: str,
+    age: int,
+    
+    fn new(name: str, age: int) {
+        self.name = name;
+        self.age = age;
+    }
+}
+
+let person = Person("John", 30);
+```
+
+## Logical Operators
+
+### and
+
+Logical AND operator.
+
+```rust
+if x > 0 and x < 10 {
+    print("x is between 0 and 10");
+}
+```
+
+### or
+
+Logical OR operator.
+
+```rust
+if x < 0 or x > 10 {
+    print("x is not between 0 and 10");
+}
+```
+
+### not
+
+Logical NOT operator.
+
+```rust
+if not (x == 5) {
+    print("x is not 5");
+}
+```
+
+## Boolean Literals
+
 ### true
 
-`true` is a boolean literal that represents the logical value `true`.
+Boolean literal representing a true value.
+
+### false
+
+Boolean literal representing a false value.
+
+## Other
+
+### in
+
+Tests for membership or is used with `for` loops.
+
+```rust
+// Membership test
+let numbers = [1, 2, 3, 4, 5];
+print(3 in numbers);  // true
+
+// Used in for loops
+for element in numbers {
+    print(element);
+}
+```
+
+### self
+
+References the current instance in a class method.
+
+```rust
+class Counter {
+    count: int = 0,
+    
+    fn increment(self) {
+        self.count = self.count + 1;
+    }
+    
+    fn get_count(self) -> int {
+        return self.count;
+    }
+}
+```
+
+### super
+
+References the parent class in a class inheritance context.
+
+```rust
+class Animal {
+    fn make_sound() {
+        print("Generic animal sound");
+    }
+}
+
+class Dog(Animal) {
+    fn make_sound() {
+        super.make_sound();
+        print("Woof!");
+    }
+}
+```
+
+### nil
+
+Represents the absence of a value.
+
+```rust
+let optional = nil;
+if optional == nil {
+    print("No value");
+}
+```
 
 ### use
 
-`use` is used to import a module.
+Imports modules or specific items from modules.
+
+```rust
+// Import a module
+use std.math;
+print(math.sin(0.5));
+
+// Import multiple modules
+use std.io;
+use std.time;
+```
+
+### _
+
+Used as a wildcard in match expressions.
+
+```rust
+match value {
+    1 => print("One"),
+    2 => print("Two"),
+    _ => print("Other number")
+}
+```
