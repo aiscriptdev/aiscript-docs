@@ -11,117 +11,180 @@ enum Color {
     Red,
     Green,
     Blue,
+}
+```
+
+In this example, `Color` can be one of three variants: `Red`, `Green`, `Blue`.
+
+:::warning
+
+AIScript does not support algebra data types like Rust, and has no plan to support it. So following enum type is not supported.
+
+```rs
+enum Color {
+    Red,
+    Green,
+    Blue,
     RGB(int, int, int),
     Hex(str),
 }
 ```
 
-In this example, `Color` can be one of five variants: `Red`, `Green`, `Blue`, `RGB` with three integer values, or `Hex` with a string value.
+:::
 
-### Creating Enum Values
+### Create Enum Variant
 
-You can create enum values using the double colon (`::`) syntax:
+You can create enum variant using the double colon (`::`) syntax:
 
 ```js
 let red = Color::Red;
-let custom_rgb = Color::RGB(255, 128, 0);
-let navy = Color::Hex("#000080");
 ```
 
 ### Enum with Values
 
 Enum variants can have associated values:
 
-```js
-enum Shape {
-    Circle(float),           // radius
-    Rectangle(float, float), // width, height
-    Triangle(float, float, float) // sides
+```rust
+enum Color {
+    Red = "#FF0000",
+    Green = "#00FF00",
+    Blue = "#0000FF",
 }
 
-let circle = Shape::Circle(5.0);
-let rectangle = Shape::Rectangle(10.0, 20.0);
-let triangle = Shape::Triangle(3.0, 4.0, 5.0);
+let red = Color::Red;
+print(red); // Color::Red(#FF0000)
 ```
 
-### Enums for Error Types
+Enum's number value will be auto increment if you don't specify the value.
 
-AIScript uses enums with the `!` suffix to represent error types:
-
-```js
-enum NetworkError! {
-    ConnectionFailed,
-    Timeout(int),
-    ServerError(str),
+```rust
+enum Status {
+    Draft = 1,
+    Pending,
+    Active = 10, // you can change the value of enum variant
+    Finished,
 }
 
-fn fetch_data(url: str) -> str | NetworkError! {
-    if url == "" {
-        raise NetworkError!::ConnectionFailed;
-    }
-    
-    if url == "slow.example.com" {
-        raise NetworkError!::Timeout(30);
-    }
-    
-    if url == "error.example.com" {
-        raise NetworkError!::ServerError("Internal server error");
-    }
-    
-    return "Data from {url}";
+print([Status::Draft]); // 1
+print([Status::Pending]); // 2
+print([Status::Active]); // 10
+print([Status::Finished]); // 11
+```
+
+However, some caveats should be noted:
+
+- you cannot mix different type value
+- for string value, no default value will be set, you must specify all values for all variants
+
+```rust
+enum Status {
+    Draft = "draft",
+    Pending, // [line 3] Error at 'Pending': Must specify value for non-integer enum variants
+    Active = 10,
+    Finished,
 }
+```
+
+### Evaluate Enum Values
+
+You can use `[]` to evaluate the value of enum variant.
+
+```rust
+let value = [Color::Red];
+print(value); // #FF0000
+
+let color = Color::Blue;
+print([color]); // #0000FF
+```
+
+:::tip
+The `[Enum::Variant]` syntax is similar to Python Enum's `.value`.
+
+```py
+from enum import Enum
+
+class Color(Enum):
+    RED = "#FF0000"
+    Green = "#00FF00",
+    Blue = "#0000FF",
+
+print(Color.RED.value) # "#FF0000"
+```
+
+:::
+
+### Enum Methods
+
+`enum` supports methods like `class`.
+
+```rust
+
+enum Color {
+    Red = "#FF0000",
+    Green = "#00FF00",
+    Blue = "#0000FF",
+
+    fn name(self) -> str {
+        match self {
+            Color::Red => "red",
+            Color::Green => "green",
+            Color::Blue => "blue",
+        }
+    }
+
+    fn static_method() {
+        print("static method of Color enum");
+    }
+}
+
+print(Color::Blue.name()); // blue
+Color.static_method(); // static method of Color enum
 ```
 
 ## Match Expression
 
 The match expression allows you to compare a value against a series of patterns and execute code based on which pattern matches:
 
-```js
-let color = Color::RGB(255, 0, 0);
+```rust
+fn match_string(s: str) {
+    return match s {
+        "hello" | "hi" => "greeting",
+        "bye" => "farewell",
+        s if s.starts_with("#") => "sharp",
+        x if x.starts_with("@") => "at",
+        x if x in ["luck", "magic"] => "lucky",
+        s if s == "ai" => "ai",
+        _ => "unknown",
+    };
+}
 
-match color {
-    Color::Red => print("Basic red"),
-    Color::Green => print("Basic green"),
-    Color::Blue => print("Basic blue"),
-    Color::RGB(r, g, b) => print("RGB({r}, {g}, {b})"),
-    Color::Hex(code) => print("Hex color: {code}"),
-};
+match_string("hello"); // greeting
+match_string("bye"); // farewell
+match_string("#id"); // sharp
+match_string("@aiscript"); // at
+match_string("luck"); // lucky
+match_string("ai"); // ai
+match_string("unknown"); // unknown
 ```
 
-### Match with Return Values
+- Use `|` to match multiple values
+- Match support `if` guards
 
-Match expressions can return values:
-
-```js
-let shape = Shape::Circle(5.0);
-
-let area = match shape {
-    Shape::Circle(radius) => 3.14 * radius * radius,
-    Shape::Rectangle(width, height) => width * height,
-    Shape::Triangle(a, b, c) => {
-        // Heron's formula
-        let s = (a + b + c) / 2.0;
-        return (s * (s - a) * (s - b) * (s - c)) ** 0.5;
-    }
-};
-
-print("Area: {area}");
-```
-
-### Pattern Matching on Different Types
+### Pattern Matching on Number Types
 
 Match works on other data types too, not just enums:
 
-```js
+```rust
 let value = 42;
 
 match value {
     0 => print("Zero"),
     1 | 2 | 3 => print("Small number"),
-    n if n < 10 => print("Single digit: {n}"),
-    n if n >= 10 and n < 100 => print("Double digits: {n}"),
+    n if n < 10 => print("Single digit:", n),
+    n if n >= 10 and n < 100 => print("Double digits:", n),
     _ => print("Large number"),
 };
+// Double digits: 42
 ```
 
 ### Match with Variable Binding
@@ -136,25 +199,6 @@ match point {
     [0, y] => print("On y-axis at y={y}"),
     [x, 0] => print("On x-axis at x={x}"),
     [x, y] => print("At position ({x}, {y})"),
-};
-```
-
-### Exhaustive Matching
-
-Match expressions must be exhaustive – they must cover all possible values:
-
-```js
-enum Result<T, E> {
-    Ok(T),
-    Err(E),
-}
-
-let result = Result::Ok("Success");
-
-// This would cause a compile error if `Result::Err` wasn't covered
-let message = match result {
-    Result::Ok(value) => "Operation succeeded with: {value}",
-    Result::Err(error) => "Operation failed with: {error}",
 };
 ```
 
@@ -173,35 +217,13 @@ match num {
 };
 ```
 
-### Destructuring in Match
-
-Match allows deep destructuring of complex data structures:
-
-```js
-let user = {
-    name: "Alice",
-    age: 30,
-    address: {
-        city: "Wonderland",
-        country: "Fictional"
-    }
-};
-
-match user {
-    {name: "Alice", age} => print("Alice is {age} years old"),
-    {name, address: {city: "Wonderland"}} => print("{name} lives in Wonderland"),
-    {name, age: n} if n < 18 => print("{name} is underage"),
-    _ => print("Unknown user pattern"),
-};
-```
-
 ## Advanced Pattern Matching
 
 ### Range Patterns
 
 Match values within ranges:
 
-```js
+```rust
 let grade = 85;
 
 let letter = match grade {
@@ -213,7 +235,21 @@ let letter = match grade {
     _ => "Invalid grade",
 };
 
-print("Grade: {letter}");
+print("Grade: ", letter); // Grade: B
+
+fn match_range(n) {
+    return match n {
+        0..60 => "F",
+        60..70 => "D",
+        70..80 => "C",
+        80..90 => "B",
+        90..=100 => "A",
+        _ => "Invalid grade",
+    };
+}
+
+print(match_range(92)); // A
+print(match_range(101)); // Invalid grade
 ```
 
 ### Or Patterns
@@ -229,7 +265,7 @@ let type = match day {
     _ => "Invalid day",
 };
 
-print("{day} is a {type}.");
+print(day, " is a ", type); // Saturday is a Weekend
 ```
 
 ### Match with Error Handling
@@ -240,8 +276,8 @@ Use match with error enums for elegant error handling:
 let result = fetch_data("example.com") |err| {
     match err {
         NetworkError!::ConnectionFailed => "Failed to connect",
-        NetworkError!::Timeout(seconds) => "Connection timed out after {seconds} seconds",
-        NetworkError!::ServerError(message) => "Server error: {message}",
+        NetworkError!::Timeout => "Connection timed out",
+        NetworkError!::ServerError => "Server error",
     }
 };
 
@@ -252,7 +288,7 @@ print(result);
 
 ### State Machine
 
-```js
+```rust
 enum TrafficLight {
     Red,
     Yellow,
@@ -268,66 +304,13 @@ fn next_state(current: TrafficLight) -> TrafficLight {
 }
 
 let light = TrafficLight::Red;
-light = next_state(light);
-print(match light {
+
+let next_light = match next_state(light) {
     TrafficLight::Red => "Stop",
     TrafficLight::Yellow => "Caution",
     TrafficLight::Green => "Go",
-}); // "Go"
-```
-
-### Option Type
-
-```js
-enum Option<T> {
-    Some(T),
-    None,
-}
-
-fn find_user(id: str) -> Option<object> {
-    if id == "1234" {
-        return Option::Some({
-            id: "1234",
-            name: "Alice",
-            email: "alice@example.com"
-        });
-    }
-    return Option::None;
-}
-
-let user_result = find_user("5678");
-
-match user_result {
-    Option::Some(user) => print("Found user: {user.name}"),
-    Option::None => print("User not found"),
 };
-```
-
-### Parser Combinator
-
-```js
-enum ParseResult<T> {
-    Success(T, str),  // Result and remaining input
-    Failure(str),     // Error message
-}
-
-fn parse_number(input: str) -> ParseResult<int> {
-    let match_result = input.match(/^(\d+)(.*)/);
-    
-    if match_result {
-        let [_, num, rest] = match_result;
-        return ParseResult::Success(int(num), rest);
-    }
-    
-    return ParseResult::Failure("Expected a number");
-}
-
-let result = parse_number("123abc");
-
-match result {
-    ParseResult::Success(num, rest) => print("Parsed {num}, remaining: '{rest}'"),
-    ParseResult::Failure(msg) => print("Error: {msg}"),
-}; // "Parsed 123, remaining: 'abc'"
+print(next_light); // "Go"
 ```
 
 Enums and match expressions in AIScript provide a powerful way to model domain concepts, handle errors, and create clean, maintainable code. By leveraging pattern matching, you can write code that is both safer and more expressive than traditional if-else chains.
