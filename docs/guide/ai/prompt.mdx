@@ -1,0 +1,156 @@
+import { Badge, Tab, Tabs } from "rspress/theme";
+
+# Prompt
+
+The `prompt` keyword is one of AIScript's core AI integration features, allowing you to easily interact with large language models (LLMs) directly from your code.
+
+## Basic Usage
+
+The simplest form of the `prompt` keyword takes a string argument and returns the model's response:
+
+```rust
+let answer = prompt "What is the capital of France?";
+print(answer); // The capital of France is Paris.
+```
+
+In this basic form, AIScript will use the default model configuration (typically OpenAI's model) to generate the response.
+
+## Advanced Configuration
+
+For more control over the prompt behavior, you can provide additional configuration options:
+
+```rust
+let detailed_answer = prompt {
+    input: "Explain quantum computing",
+    model: "claude-3.7",
+    max_tokens: 500,
+    temperature: 0.7,
+    system_prompt: "You are a quantum physics expert"
+};
+```
+
+### Configuration Options
+
+| Option | Type | Description |
+|--------|------|-------------|
+| `input` | String | The prompt text to send to the LLM |
+| `model` | String | The model identifier to use (e.g., "gpt-4", "claude-3.7") |
+| `max_tokens` | Number | Maximum number of tokens in the generated response |
+| `temperature` | Number | Controls randomness (0.0-1.0, lower is more deterministic) |
+| `system_prompt` | String | System message to guide the model's behavior |
+
+## Dynamic Prompts
+
+You can construct prompts dynamically using variables and string interpolation:
+
+```rust
+let topic = "quantum computing";
+let detail_level = "beginner";
+let response = prompt f"Explain {topic} at a {detail_level} level";
+```
+
+## API Keys and Configuration
+
+To use the `prompt` feature, you need to configure your API keys. AIScript supports multiple LLM providers.
+
+### Environment Variables
+
+Set your API keys using environment variables:
+
+```bash
+# For OpenAI
+export OPENAI_API_KEY="your_openai_key"
+
+# For Anthropic Claude
+export CLAUDE_API_KEY="your_claude_key"
+```
+
+### Configuration File
+
+Alternatively, you can specify API keys in your project [configuration file](/reference/configuration/ai):
+
+<Tabs>
+<Tab label="project.toml">
+
+```toml
+[ai.openai]
+api_key = "YOUR_OPENAI_API_KEY"
+
+[ai.anthropic]
+api_key = "YOUR_CLAUDE_API_KEY"
+```
+</Tab>
+</Tabs>
+
+## Error Handling <Badge text="Not supported yet" type="warning" />
+
+Like other AIScript operations, you can use error handling with the `prompt` keyword:
+
+```rust
+let response = prompt "Generate a complex response" |err| {
+    print("Error occurred: {err}");
+    return "Fallback response";
+};
+```
+
+## Best Practices
+
+- **Be specific**: The more specific your prompt, the better the response quality.
+- **Consider context limits**: Each model has a maximum context window. Very large prompts may be truncated.
+- **Handle rate limits**: API providers have rate limits. Consider implementing retry logic for production applications.
+- **Manage costs**: Using LLMs incurs costs based on token usage. Monitor usage to avoid unexpected charges.
+
+## Examples
+
+### Simple Question-Answering
+
+```rust
+let question = "What is the capital of Japan?";
+let answer = prompt question;
+print(answer);
+```
+
+### Generating Content with Specific Parameters
+
+```rust
+let poem = prompt {
+    input: "Write a haiku about programming",
+    temperature: 0.9,
+    max_tokens: 100
+};
+print(poem);
+```
+
+### Using Different Models
+
+```rust
+// Using OpenAI
+let openai_response = prompt {
+    input: "Summarize this article: {article_text}",
+    model: "gpt-4"
+};
+
+// Using Claude
+let claude_response = prompt {
+    input: "Summarize this article: {article_text}" ,
+    model: "claude-3.7"
+};
+```
+
+### Chaining Prompts
+
+```rust
+let topic = prompt "Suggest a topic for a blog post";
+let outline = prompt "Create an outline for a blog post about: {topic}";
+let introduction = prompt "Write an introduction for a blog post with this outline: {outline}";
+
+print("Topic:", topic);
+print("Outline", outline);
+print("Introduction:", introduction);
+```
+
+## Notes and Limitations
+
+- The response from a prompt is always a string. If you need structured data, consider asking for specific formats like JSON in your prompt or parse the result.
+- Network connectivity is required for the `prompt` keyword to function, as it makes API calls to LLM providers.
+- API costs apply based on your provider's pricing model, typically based on the number of tokens processed.

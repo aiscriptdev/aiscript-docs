@@ -1,0 +1,341 @@
+import { Tab, Tabs } from "rspress/theme";
+
+# Agents
+
+Agents in AIScript provide a powerful way to create autonomous, goal-directed AI assistants with access to specific tools and capabilities. The `agent` keyword allows you to define intelligent agents that can execute complex workflows, make decisions, and interact with both users and other agents.
+
+## Basic Syntax
+
+An agent is defined using the `agent` keyword followed by a name and a set of configurations and tool functions:
+
+```rust
+agent AgentName {
+    instructions: "Detailed instructions for the agent",
+    model: "model-name",  // Optional
+    tools: [function1, function2],  // Optional
+    fn tool_function1(param1: type, param2: type) -> return_type {
+        // Tool implementation
+    }
+    fn tool_function2(param: type) -> return_type {
+        // Another tool implementation
+    }
+}
+```
+
+## Agent Configuration
+
+Agents can be configured with several parameters:
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `instructions` | String | Detailed instructions for the agent's behavior and goals |
+| `model` | String | Optional. The LLM model to use (defaults to system default) |
+| `tools` | Array | Optional. List of external functions the agent can use |
+| `tool_choice` | String | Optional. Strategy for selecting tools ("auto" or "none") |
+
+## Agent Tools
+
+Tools are functions that agents can call to perform specific actions. Tools can be defined in three ways:
+
+1. **Internal tools**: Functions defined inside the agent block
+2. **External tools**: Functions passed to the agent via the `tools` parameter
+3. **Tool references**: References to tools defined in other files or modules
+
+Example of internal tools:
+
+```rust
+agent Researcher {
+    instructions: "You are a research assistant...",
+    
+    fn search_web(query: str) -> str {
+        // Implementation
+        return "search results";
+    }
+    
+    fn save_notes(content: str) -> bool {
+        // Implementation
+        return true;
+    }
+}
+```
+
+Example of external tools:
+
+```rust
+fn fetch_data(url: str) -> str {
+    // Implementation
+}
+
+fn analyze_data(data: str) -> object {
+    // Implementation
+}
+
+agent DataAnalyst {
+    instructions: "You are a data analyst...",
+    tools: [fetch_data, analyze_data]
+}
+```
+
+### Tool Docs
+
+In order to help LLM understand the purpose of each tool, you can add docstrings to your tools. Docstrings should be placed immediately after the tool's definition and should follow the python-style doc comment format.
+
+```rust
+agent Researcher {
+    instructions: "You are a research assistant...",
+    
+    fn search_web(query: str) -> str {
+        """
+        Search the web for information about a topic.
+        """
+        // Implementation
+        return "search results";
+    }
+    
+    fn save_notes(content: str) -> bool {
+        """
+        Save notes about a topic.
+        """
+        // Implementation
+        return true;
+    }
+}
+```
+
+## Running Agents
+
+To activate an agent, use the `run` method. This starts the agent's execution with optional input and configuration:
+
+```rust
+// Basic usage
+let result = MyAgent.run(input="Please help me with this task");
+
+// With debug mode
+let debug_result = MyAgent.run(
+    input="Analyze this data", 
+    debug=true
+);
+```
+
+The `run` method accepts these parameters:
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `input` | String | Initial input/instruction for the agent |
+| `debug` | Boolean | Optional. When true, shows detailed agent thought process |
+
+## Multi-Agent Orchestration
+
+AIScript supports sophisticated multi-agent systems where agents can collaborate and transfer control between each other. This enables complex workflows and agent swarms.
+
+:::info
+AIScript builtin multi-agent orchestration was inspired by [OpenAI Swarm](https://github.com/openai/swarm).
+:::
+
+### Agent Transfer
+
+Agents can transfer control to other agents using return values:
+
+```rust
+agent Coordinator {
+    instructions: "You coordinate the workflow...",
+    
+    fn transfer_to_specialist(topic: str) {
+        if topic == "finance" {
+            return FinanceSpecialist;
+        } else {
+            return TechSpecialist;
+        }
+    }
+}
+
+agent FinanceSpecialist {
+    instructions: "You provide financial advice...",
+    
+    fn transfer_back() {
+        return Coordinator;
+    }
+}
+```
+
+## Example: Rock Paper Scissors Game
+
+This example demonstrates a multi-agent system that implements a simple Rock Paper Scissors game:
+
+<Tabs>
+<Tab label="judger.ai">
+
+```rust
+let player1_move = nil;
+let player2_move = nil;
+
+agent Judge {
+    instructions: "You are the judge of the Rock Paper Scissors game.
+    1. Let Player1 move first then Player2
+    2. Use record_move to store each player's move after it finished
+    3. After both players finished, use announce_result to display the result
+    4. End the game after announcing results",
+    
+    fn record_move(player: str, move: str) {
+        """Record a player's move."""
+        print(player, "choose", move);
+        if player == "Player1" {
+            player1_move = move;
+        } else {
+            player2_move = move;
+        }
+    }
+    
+    fn announce_result() {
+        """Check the recorded moves and announce the winner."""
+        let winning_moves = {"rock": "scissors", "scissors": "paper", "paper": "rock"};
+        if player1_move == player2_move {
+            print("It's a tie!");
+        } else if winning_moves[player1_move] == player2_move {
+            print("Player 1 wins!");
+        } else {
+            print("Player 2 wins!");
+        }
+    }
+    
+    fn transfer_to_player1() {
+        """Transfer control to Player 1 Agent"""
+        return Player1;
+    }
+    
+    fn transfer_to_player2() {
+        """Transfer control to Player 2 Agent"""
+        return Player2;
+    }
+}
+```
+</Tab>
+
+<Tab label="player.ai">
+
+```rust
+use std.random;
+
+fn make_move() -> str {
+    """Make a move in the game. Returns rock, paper, or scissors."""
+    return random.choice(["rock", "paper", "scissors"]);
+}
+
+fn transfer_to_judge() {
+    """Transfer control to Judge Agent"""
+    return Judge;
+}
+
+agent Player1 {
+    instructions: "You are Player 1 in the Rock Paper Scissors game.
+    1. Make your move using the make_move function
+    2. Transfer control to the judge after your move",
+    tools: [make_move, transfer_to_judge],
+}
+
+agent Player2 {
+    instructions: "You are Player 2 in the Rock Paper Scissors game.
+    1. Make your move using the make_move function
+    2. Transfer control to the judge after your move",
+    tools: [make_move, transfer_to_judge],
+}
+```
+
+</Tab>
+<Tab label="main.ai">
+
+```js
+// Start the game with the Judge agent
+Judge.run(input="Let's start play the game!", debug=true);
+// Here are the logs:
+//
+// Judge call transfer_to_player1()
+// Player1 call make_move(): scissors
+// Player1 call transfer_to_judge()
+// Judge call record_move(Player1, scissors)
+// Judge call transfer_to_player2()
+// Player2 call make_move(): paper
+// Player2 call transfer_to_judge()
+// Judge call record_move(Player2, paper)
+// Judge call announce_result(): Player 1 wins!
+```
+
+</Tab>
+</Tabs>
+
+## Advanced Agent Techniques
+
+### Stateful Agents
+
+Agents can maintain state across interactions by using variables in their surrounding scope:
+
+```rust
+let conversation_history = [];
+
+agent CustomerSupport {
+    instructions: "You are a customer support agent...",
+    
+    fn add_to_history(message: str) {
+        conversation_history.push(message);
+    }
+    
+    fn summarize_conversation() -> str {
+        let history = conversation_history.join("\n");
+        return prompt "Summarize this conversation: {history}";
+    }
+}
+```
+
+### Agent Specialization
+
+Create specialized agents for different domains or tasks:
+
+```rust
+agent CodeExpert {
+    instructions: "You are an expert in software development...",
+    model: "gpt-4",  // More capable model for coding tasks
+    
+    fn review_code(code: str) -> str {
+        return prompt "Review this code and provide feedback: {code}";
+    }
+}
+
+agent ContentWriter {
+    instructions: "You are a creative content writer...",
+    model: "claude-3.7",  // Different model for creative tasks
+    
+    fn write_article(topic: str, style: str) -> str {
+        return prompt "Write an article about {topic} in {style} style";
+    }
+}
+```
+
+## Best Practices
+
+1. **Clear Instructions**: Provide detailed, step-by-step instructions to guide your agent's behavior.
+
+2. **Minimize State**: Keep shared state minimal and explicit to avoid confusion.
+
+3. **Tool Documentation**: Add descriptive docstrings to your tools to help the agent understand their purpose.
+
+4. **Error Handling**: Implement error handling in tools to provide informative feedback.
+
+5. **Agent Boundaries**: Clearly define responsibilities for each agent in multi-agent systems.
+
+6. **Test Thoroughly**: Test your agents with various inputs to ensure they behave as expected.
+
+## Limitations
+
+- Agents operate within the constraints of the underlying LLM models
+- Tool execution may have latency due to API calls and network operations
+- Complex multi-agent systems may require careful orchestration to avoid loops or deadlocks
+- Agents cannot maintain state independently of your code; state must be explicitly managed
+
+## Performance Considerations
+
+- Use the most appropriate model for each agent based on task complexity
+- Consider batching operations when possible to reduce API calls
+- Monitor token usage for cost management
+- For complex workflows, consider implementing checkpoints or resumable states
+
+Agents in AIScript provide a powerful framework for building autonomous AI systems that can work together to solve complex problems, all while maintaining the simplicity and clarity that AIScript is designed for.
