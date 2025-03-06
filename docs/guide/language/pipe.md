@@ -18,6 +18,11 @@ let result = len("hello world");
 print(result); // 11
 ```
 
+:::tip
+
+`len()` is a builtin function in AIScript, see [Builtin Functions](/std/builtin/functions#len) for more details.
+:::
+
 ## Chaining Transformations
 
 The real power of the pipe operator is in creating readable processing pipelines:
@@ -25,13 +30,17 @@ The real power of the pipe operator is in creating readable processing pipelines
 ```js
 let data = [1, 2, 3, 4, 5];
 
-let result = data 
+let result = data
     |> map(|x| x * 2)         // [2, 4, 6, 8, 10]
     |> filter(|x| x > 5)      // [6, 8, 10]
-    |> reduce(|acc, x| acc + x, 0); // 24
+    |> sum; // 24
 
 print(result); // 24
 ```
+
+:::tip
+You can omit the `()` if the function only has one argument, for example `sum()` in the above example.
+:::
 
 Without the pipe operator, this would be written as:
 
@@ -39,36 +48,48 @@ Without the pipe operator, this would be written as:
 let data = [1, 2, 3, 4, 5];
 let mapped = map(data, |x| x * 2);
 let filtered = filter(mapped, |x| x > 5);
-let result = reduce(filtered, |acc, x| acc + x, 0);
+let result = sum(filtered);
 print(result); // 24
 ```
 
 Or even less readably as nested function calls:
 
 ```js
-let result = reduce(
+let result = sum(
     filter(
         map(
-            [1, 2, 3, 4, 5], 
+            [1, 2, 3, 4, 5],
             |x| x * 2
-        ), 
+        ),
         |x| x > 5
-    ), 
-    |acc, x| acc + x, 
-    0
+    )
 );
 ```
+
+:::tip
+
+`map()`, `filter()` and `sum()` are builtin functions in AIScript, see [Builtin Functions](/std/builtin/functions#sum) for more details.
+:::
 
 ## Working with Additional Arguments
 
 When piping to a function that requires multiple arguments, the piped value becomes the first argument, and you must provide the remaining arguments:
 
 ```js
+let v = 1;
+let add_n = |x, n| x + n;
+let mul_n = |x, n| x * n;
 // Without pipe
-let index = str_index("Hello World", "World");  // 6
+print(
+    mul_n(add_n(v, 10), 5)
+); // expect: 55
 
 // With pipe
-let index = "Hello World" |> str_index("World"); // 6
+print(
+    v 
+    |> add_n(10) 
+    |> mul_n(5)
+); // expect: 55
 ```
 
 ## Creating Custom Pipelines
@@ -88,9 +109,9 @@ fn count_chars(text: str) -> int {
     return len(text);
 }
 
-let result = "Hello World" 
-    |> to_uppercase      // "HELLO WORLD"
-    |> remove_spaces     // "HELLOWORLD"
+let result = "Hello World"
+    |> remove_spaces     // "HelloWorld"
+    |> to_uppercase      // "HELLOWORLD"
     |> count_chars;      // 10
 
 print(result); // 10
@@ -102,72 +123,13 @@ You can pipe directly to method calls using a special syntax:
 
 ```js
 // The standard library's string module
-let processed = "hello world" 
-    |> str.trim()
-    |> str.to_uppercase()
-    |> str.replace("WORLD", "AISCRIPT");
+let processed =
+  "hello world"
+  |> str.trim()
+  |> str.to_uppercase()
+  |> str.replace("WORLD", "AISCRIPT");
 
 print(processed); // "HELLO AISCRIPT"
-```
-
-## Error Handling in Pipelines
-
-The pipe operator works seamlessly with AIScript's error handling:
-
-```js
-enum ParseError! {
-    InvalidFormat,
-    OutOfRange,
-}
-
-fn parse_int(s: str) -> int | ParseError! {
-    if s.match(/^\d+$/) {
-        let num = int(s);
-        if num > 1000 {
-            raise ParseError!::OutOfRange;
-        }
-        return num;
-    }
-    raise ParseError!::InvalidFormat;
-}
-
-fn double(n: int) -> int {
-    return n * 2;
-}
-
-let result = "42" 
-    |> parse_int |err| {
-        match err {
-            ParseError!::InvalidFormat => {
-                print("Invalid format");
-                return 0;
-            },
-            ParseError!::OutOfRange => {
-                print("Number out of range");
-                return 1000;
-            }
-        }
-    }
-    |> double;
-
-print(result); // 84
-```
-
-## Conditional Pipelines
-
-You can combine the pipe operator with inline if expressions for conditional processing:
-
-```js
-let data = {
-    name: "AIScript",
-    version: "1.0.0"
-};
-
-let result = data
-    |> (|obj| obj if "version" in obj else {version: "0.0.0"})
-    |> (|obj| obj.version);
-
-print(result); // "1.0.0"
 ```
 
 ## Practical Examples
@@ -184,25 +146,9 @@ let users = [
 
 let result = users
     |> filter(|user| user.active)
-    |> map(|user| user.name)
-    |> join(", ");
+    |> map(|user| user.name);
 
-print(result); // "Alice, Charlie, Diana"
-```
-
-### API Request Processing
-
-```js
-let response = fetch("https://api.example.com/data")
-    |> (|resp| resp.json())
-    |> (|data| data.items)
-    |> filter(|item| item.category == "books")
-    |> sort_by(|item| item.price);
-
-// Process sorted items
-for item in response {
-    print("{item.title}: ${item.price}");
-}
+print(", ".join(result)); // "Alice, Charlie, Diana"
 ```
 
 ### Text Analysis
