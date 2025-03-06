@@ -1,3 +1,5 @@
+# Database
+
 ```toml
 [database.pinecone]
 api_key = "YOUR_API_KEY"

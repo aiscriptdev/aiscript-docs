@@ -1,3 +1,4 @@
+# General
 
 ```toml
 [project]

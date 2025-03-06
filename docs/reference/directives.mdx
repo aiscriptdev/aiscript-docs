@@ -82,15 +82,33 @@ get /dashboard {
 }
 ```
 
-### @deprecated
+### @docs
 
-Marks a route as deprecated, which can be used for documentation and warnings.
+Provides documentation and metadata for OpenAPI generation.
+
+Parameters:
+
+- **deprecated**: Marks a route as deprecated
+- **tag**: Assigns the route to a specific tag group in documentation
+- **hidden**: Excludes the route from documentation
 
 ```js
-@deprecated(message="Use /api/v2/users instead", since="v1.5.0")
+@docs(deprecated=true)
 get /api/users {
     // This route is deprecated
     return "Users list";
+}
+
+@docs(tag="Authentication")
+post /api/login {
+    // This route will be grouped under "Authentication" in docs
+    return "Login successful";
+}
+
+@docs(hidden=true)
+get /internal/metrics {
+    // This route won't appear in documentation
+    return "Internal metrics";
 }
 ```
 

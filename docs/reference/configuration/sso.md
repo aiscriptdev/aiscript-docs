@@ -1,3 +1,5 @@
+# SSO
+
 ```toml
 [sso.google]
 client_id = "123"

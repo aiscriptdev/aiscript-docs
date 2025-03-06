@@ -1,3 +1,5 @@
+# AI
+
 > For AI observability, please refer to [observability](./observability.md).
 
 ```toml

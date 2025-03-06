@@ -1,3 +1,5 @@
+# Observability
+
 ```toml
 [observability.llm]
 prompt_log = true

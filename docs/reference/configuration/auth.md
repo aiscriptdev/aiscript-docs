@@ -1,3 +1,5 @@
+# Auth
+
 ```toml
 [auth.jwt]
 secret = "$JWT_SECRET"
