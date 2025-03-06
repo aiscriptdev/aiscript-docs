@@ -11,6 +11,11 @@
     },
     {
       "type": "file",
+      "name": "route-response",
+      "label": "Route Response"
+    },
+    {
+      "type": "file",
       "name": "directives",
       "label": "Directives"
     },

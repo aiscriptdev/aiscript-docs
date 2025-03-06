@@ -175,18 +175,8 @@ Use the `@or` directive for conditional validation:
 post /api/payment {
     @json
     body {
+        @or(@regex(r"^\d{16}$"), @format(type="email"))
         payment_type: str,
-        
-        @or([
-            @and([
-                @equal(field="payment_type", value="credit_card"),
-                @regex(r"^\d{16}$")
-            ]),
-            @and([
-                @equal(field="payment_type", value="paypal"),
-                @format(type="email")
-            ])
-        ])
         payment_details: str
     }
 }
