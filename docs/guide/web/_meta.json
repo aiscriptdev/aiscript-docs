@@ -4,5 +4,6 @@
     "response",
     "openapi-docs",
     "project",
-    "configuration"
+    "database",
+    "auth"
 ]

@@ -18,15 +18,5 @@
         "type": "dir",
         "name": "web",
         "label": "Web"
-    },
-    {
-        "type": "dir",
-        "name": "database",
-        "label": "Database"
-    },
-    {
-        "type": "dir",
-        "name": "auth-security",
-        "label": "Auth and Security"
     }
 ]

@@ -1,4 +1,4 @@
-# Route
+# Route Keywords
 
 In AIScript, the route handlers are defined using HTTP method keywords followed by a URL path pattern. This approach provides a clean and intuitive way to build web APIs and handle HTTP requests.
 
@@ -8,7 +8,6 @@ The `get` keyword defines a route handler for HTTP GET requests, which are used 
 
 ```rust
 get /hello {
-    // Return all products
     return "Hello World!";
 }
 ```

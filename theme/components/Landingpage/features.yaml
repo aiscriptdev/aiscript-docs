@@ -241,6 +241,24 @@ web:
     codeDemos:
       - code: |
           // JWT auth
+          post /signin {
+              body {
+                  username: str
+                  password: str
+              }
+
+              // Verify username and password correctly
+              use std.auth.jwt;
+              // Create payload with claims
+              let payload = {
+                  sub: body.username,
+              };
+
+              // Create access token that expires in 1 hour (3600 seconds)
+              let token = jwt.create_access_token(payload, 3600, "your-secret");
+              return { token };
+          }
+
           @auth
           get /ask {
               query {
@@ -252,9 +270,26 @@ web:
                   return prompt question;
               }
               let answer = ask_llm(query.question);
-              return answer;
+              return { answer };
           }
         filename: jwt_auth.ai
+      - code: |
+          $ curl --location 'http://localhost:8080/signin' \
+          --header 'Content-Type: application/json' \
+          --data '{"username": "abc", "password": "123455"}'
+
+          {
+              "token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhYmMiLCJleHAiOjE3NDEzMjA0NzUsIm5iZiI6MTc0MTMxNjg3NSwiaWF0IjoxNzQxMzE2ODc1fQ.542CSBvnWbmQZAO8Ba-IjxxsZ4U-JSTmSalJFN574SY"
+          }
+
+          $ curl --location --request GET 'http://localhost:8080/ask?question=What%20is%20the%20capital%20of%20China%3F' \
+          --header 'Content-Type: application/json' \
+          --header 'Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhYmMiLCJleHAiOjE3NDEzMjA0NzUsIm5iZiI6MTc0MTMxNjg3NSwiaWF0IjoxNzQxMzE2ODc1fQ.542CSBvnWbmQZAO8Ba-IjxxsZ4U-JSTmSalJFN574SY'
+
+          {
+              "answer": "The capital of France is Paris."
+          }
+        filename: curl
       - code: |
           // Username/Password auth
           @basic_auth
@@ -264,17 +299,11 @@ web:
                   magic: int = 1
               }
               
-              header.path = "/guess";
-              let msg = "Try again!";
+              let result = "Try again!";
               if body.magic == 42 {
-                  msg = "You guessed it!";
+                  result = "You guessed it!";
               }
-              return {
-                  body: msg,
-                  headers: {
-                      path: "/guess",
-                  }
-              };
+              return { result };
           }
         filename: basic_auth.ai
       - code: |
@@ -301,7 +330,7 @@ web:
         filename: google_login.ai
       - code: |
           [auth.jwt]
-          secret = "$JWT_SECRET"
+          secret = "your-secret"
           expiration = 3600
 
           [auth.basic]

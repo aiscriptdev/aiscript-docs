@@ -1,0 +1,219 @@
+import { Tab, Tabs } from "rspress/theme";
+
+# Auth and Social Login
+
+Authentication is a critical component of modern web applications, yet implementing it correctly can be challenging and error-prone. AIScript simplifies this process with built-in authentication directives that handle complex security flows while maintaining type safety throughout the authentication process.
+
+## Authentication Options
+
+AIScript provides several authentication mechanisms out of the box:
+
+- **JWT Authentication**: Secure token-based authentication
+- **Basic Authentication**: Simple username/password authentication
+- **SSO (Single Sign-On)**: Integration with social login providers like Google, GitHub, and more
+
+## JWT
+
+JSON Web Tokens (JWT) provide a stateless authentication mechanism that's perfect for APIs and single-page applications. AIScript makes JWT implementation straightforward with the `@auth` directive.
+
+<Tabs>
+<Tab label="route.ai">
+
+```js
+post /signin {
+    body {
+        username: str
+        password: str
+    }
+
+    // Verify username and password correctly
+    use std.auth.jwt;
+    // Create payload with claims
+    let payload = {
+        sub: body.username,
+    };
+
+    // Create access token that expires in 1 hour (3600 seconds)
+    let token = jwt.create_access_token(payload, 3600, "your-secret");
+    return { token };
+}
+
+@auth
+get /ask {
+    query {
+        @string(min_len=5, max_len=50)
+        question: str
+    }
+
+    ai fn ask_llm(question: str) -> str {
+        return prompt question;
+    }
+    let answer = ask_llm(query.question);
+    return { answer };
+}
+```
+
+</Tab>
+<Tab label="curl">
+
+```bash
+$ curl --location 'http://localhost:8080/signin' \
+--header 'Content-Type: application/json' \
+--data '{"username": "abc", "password": "123455"}'
+
+{
+    "token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhYmMiLCJleHAiOjE3NDEzMjA0NzUsIm5iZiI6MTc0MTMxNjg3NSwiaWF0IjoxNzQxMzE2ODc1fQ.542CSBvnWbmQZAO8Ba-IjxxsZ4U-JSTmSalJFN574SY"
+}
+
+$ curl --location --request GET 'http://localhost:8080/ask?question=What%20is%20the%20capital%20of%20China%3F' \
+--header 'Content-Type: application/json' \
+--header 'Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhYmMiLCJleHAiOjE3NDEzMjA0NzUsIm5iZiI6MTc0MTMxNjg3NSwiaWF0IjoxNzQxMzE2ODc1fQ.542CSBvnWbmQZAO8Ba-IjxxsZ4U-JSTmSalJFN574SY'
+
+{
+    "answer": "The capital of France is Paris."
+}
+```
+</Tab>
+<Tab label="project.toml">
+
+```toml
+[auth.jwt]
+secret = "your-secret"
+expiration = 3600  # Token expiration time in seconds
+```
+
+</Tab>
+</Tabs>
+
+When a route is decorated with `@auth`, AIScript automatically:
+
+1. Verifies the JWT token from the `Authorization` header
+2. Rejects requests with invalid or expired tokens
+3. Makes the decoded token payload available within the route handler
+
+Configure JWT settings in your `project.toml`:
+
+```toml
+[auth.jwt]
+secret = "your-secret"
+expiration = 3600  # Token expiration time in seconds
+```
+
+For enhanced security, use environment variables for sensitive values like the JWT secret.
+
+## Basic Auth
+
+For simpler use cases or admin interfaces, AIScript provides basic authentication with the `@basic_auth` directive:
+
+```js
+@basic_auth
+post /guess {
+    body {
+        @number(min=1, max=100)
+        magic: int = 1
+    }
+    
+    let result = "Try again!";
+    if body.magic == 42 {
+        result = "You guessed it!";
+    }
+    return { result };
+}
+```
+
+The `@basic_auth` directive validates username and password credentials according to your configuration.
+
+Configure basic authentication in your `project.toml`:
+
+```toml
+[auth.basic]
+username = "admin"
+password = "123456"  # Use environment variables for production
+```
+
+## Social Login with SSO
+
+AIScript makes implementing social login seamless with the `@sso` directive. This handles the complex OAuth flows required by providers like Google, GitHub, or Microsoft.
+
+### Setting Up Google Authentication
+
+1. Configure the provider in your `project.toml`:
+
+```toml
+[sso.google]
+client_id = "123"  # Your Google OAuth client ID
+client_secret = "abc"  # Your Google OAuth client secret
+redirect_url = "http://localhost:8080/auth/google/callback"
+scopes = ["email", "profile"]
+```
+
+2. Create an authorization endpoint:
+
+```js
+@sso(provider="google")
+get /auth/google {
+    let url = sso.authority_url();
+    print(url);
+    return temporary_redirect(target=url);
+}
+```
+
+3. Implement the callback endpoint:
+
+```js
+@sso(provider="google")
+get /auth/google/callback {
+    query {
+        code: str,
+        state: str,
+    }
+
+    print("code", query.code);
+    print("state", query.state);
+    let user_info = sso.verify(code=query.code);
+    print(user_info);
+    return { user_info };
+}
+```
+
+When a user visits `/auth/google`, they'll be redirected to Google's authentication page. After successful authentication, Google redirects back to your `/auth/google/callback` endpoint with an authorization code. The `sso.verify()` function exchanges this code for an access token and retrieves the user's profile information.
+
+### Supporting Multiple Providers
+
+AIScript supports multiple SSO providers simultaneously. Simply add additional configurations in your `project.toml`:
+
+```toml
+[sso.github]
+client_id = "456"
+client_secret = "def"
+redirect_url = "http://localhost:8080/auth/github/callback"
+scopes = ["user:email"]
+
+[sso.microsoft]
+client_id = "789"
+client_secret = "ghi"
+redirect_url = "http://localhost:8080/auth/microsoft/callback"
+scopes = ["User.Read"]
+```
+
+Then create corresponding route handlers for each provider:
+
+```js
+@sso(provider="github")
+get /auth/github {
+    return temporary_redirect(target=sso.authority_url());
+}
+
+@sso(provider="github")
+get /auth/github/callback {
+    query { code: str, state: str }
+    let user_info = sso.verify(code=query.code);
+    return { user_info };
+}
+```
+
+## Conclusion
+
+AIScript's authentication directives simplify the implementation of secure authentication flows without sacrificing flexibility. Whether you need simple password-based authentication or complex multi-provider SSO, AIScript provides the tools to implement authentication with minimal boilerplate while maintaining type safety throughout the process.
+
+By abstracting away the complex security details, AIScript lets you focus on building your application logic while ensuring your authentication implementation follows security best practices.
