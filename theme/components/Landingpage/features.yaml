@@ -17,6 +17,9 @@ ai:
           };
           print(detailed_answer);
         filename: prompt.ai
+      - code: |
+            OPENAI_API_KEY=put-your-openapi-key-here
+        filename: .env
   - title: AI Function
     description: The `ai fn` keyword defines functions powered by AI models with full type safety and error handling. These functions seamlessly integrate AI capabilities into your application logic while maintaining the reliability of traditional functions.
     codeDemos:
@@ -32,6 +35,9 @@ ai:
           let score = analyze_sentiment(review);
           print(score); // 0.9
         filename: ai_function.ai
+      - code: |
+          OPENAI_API_KEY=put-your-openapi-key-here
+        filename: .env
   - title: Agent
     description: |
       The `agent` keyword creates autonomous AI agents with specific instructions and tool functions. Inspired by [OpenAI Swarm](https://github.com/openai/swarm), AIScript's multi-agent orchestration allows complex AI systems to be defined directly in the language, enabling sophisticated AI workflows with minimal code.
@@ -240,7 +246,6 @@ web:
     description: Integrate authentication and social login providers with minimal configuration. AIScript's auth decorators handle complex security flows while maintaining type safety throughout the authentication process.
     codeDemos:
       - code: |
-          // JWT auth
           post /signin {
               body {
                   username: str
@@ -259,6 +264,7 @@ web:
               return { token };
           }
 
+          // JWT auth
           @auth
           get /ask {
               query {
