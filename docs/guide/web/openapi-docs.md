@@ -19,7 +19,7 @@ post /api/chat {
         message: str,
     }
 
-    return "Input: " + body.message + "!";
+    return f"Input: {body.message}!";
 }
 ```
 

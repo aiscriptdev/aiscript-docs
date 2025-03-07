@@ -196,9 +196,9 @@ let point = [10, 20];
 
 match point {
     [0, 0] => print("At origin"),
-    [0, y] => print("On y-axis at y={y}"),
-    [x, 0] => print("On x-axis at x={x}"),
-    [x, y] => print("At position ({x}, {y})"),
+    [0, y] => print(f"On y-axis at y={y}"),
+    [x, 0] => print(f"On x-axis at x={x}"),
+    [x, y] => print(f"At position ({x}, {y})"),
 };
 ```
 
@@ -213,7 +213,7 @@ match num {
     n if n % 15 == 0 => print("FizzBuzz"),
     n if n % 3 == 0 => print("Fizz"),
     n if n % 5 == 0 => print("Buzz"),
-    n => print("{n}"),
+    n => print(f"{n}"),
 };
 ```
 

@@ -1,4 +1,4 @@
-import { Badge } from 'rspress/theme';
+import { Badge } from "rspress/theme";
 
 # Basic Syntax
 
@@ -56,7 +56,6 @@ if len(global_variable) > 1 {
 
 Constants are declared with the `const` keyword and are immutable. Constants can only be declared once and must be initialized with a value; they cannot be reassigned.
 
-
 ```js
 const PI = 3.14;
 
@@ -94,17 +93,18 @@ let numbers = [1, 2, 3, 4, 5];
 // object literal
 let address_key = "address";
 let person = {
-    "name": "AIScript",
-    age: 18, // double quotes are optional
-    "is_male": true,
-    "hobbies": ["reading", "coding", "gaming"],
-    [address_key]: { // key name are computable
-        "city": "Beijing",
-        "street": "No. 100, Xihuan Road",
-        "zipcode": "100000",
-        "country": "China",
-        "phone": "13800138000",
-    }
+  name: "AIScript",
+  age: 18, // double quotes are optional
+  is_male: true,
+  hobbies: ["reading", "coding", "gaming"],
+  [address_key]: {
+    // key name are computable
+    city: "Beijing",
+    street: "No. 100, Xihuan Road",
+    zipcode: "100000",
+    country: "China",
+    phone: "13800138000",
+  },
 };
 
 //  tuples
@@ -167,12 +167,36 @@ let b = "Hello, {a}!";
 
 // string concatenation
 let a = "AIScript";
-let b = "Hello, " + a + "!";
+let b = "Hello, {a}!";
 
 // string length
 let a = "AIScript";
 print(len(a)); // print 8
 ```
+
+## Formatted String Literal
+
+AIScript supports `f-strings` (formatted string literals, like Python's [f-string](https://docs.python.org/3/tutorial/inputoutput.html#tut-f-strings) but not identical) for string interpolation. F-strings provide a concise and readable way to embed expressions inside string literals. To create an f-string, prefix the string with `f` and use curly braces `{}` to include expressions.
+
+```js
+let name = "Alice";
+let greeting = f"Hello, {name}!";
+print(greeting); // Hello, Alice!
+
+let x = 10;
+let y = 5;
+print(f"{x} + {y} = {x + y}"); // 10 + 5 = 15
+print(f"{x} - {y} = {x - y}"); // 10 - 5 = 5
+print(f"{x} * {y} = {x * y}"); // 10 * 5 = 50
+print(f"{x} / {y} = {x / y}"); // 10 / 5 = 2
+```
+
+F-strings can contain any valid AIScript expression inside the curly braces. The expressions are evaluated at runtime and their results are converted to strings. This makes f-strings particularly useful for:
+
+- String interpolation with variables
+- Embedding arithmetic expressions
+- Calling functions within strings
+- Formatting complex data structures
 
 ## Control flow
 
@@ -270,7 +294,6 @@ let d = a[:2]; // "AI"
 
 ```
 
-
 ## Loops
 
 AIScript only has two keyword for loops: `for` and `while`.
@@ -320,7 +343,7 @@ let person = {
 };
 
 for (key, value) in person {
-    print("{key}: {value}");
+    print(f"{key}: {value}");
 }
 ```
 
@@ -331,7 +354,6 @@ for i in 1..10 {
     print(i);
 }
 ```
-
 
 ### Break and Continue
 

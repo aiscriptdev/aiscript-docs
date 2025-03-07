@@ -26,7 +26,7 @@ ai:
       - code: |
           // Define an AI function for sentiment analysis
           ai fn analyze_sentiment(text: str) -> float {
-              let sentiment = prompt "Analyze the sentiment of this text and return a score between -1 and 1: {text}";
+              let sentiment = prompt f"Analyze the sentiment of this text and return a score between -1 and 1: {text}";
               return float(sentiment);
           }
 
@@ -237,7 +237,7 @@ web:
                   message: str,
               }
 
-              return "Input: " + body.message + "!";
+              return f"Input:  {body.message}!";
           }
         filename: openapi.ai
       - img: /toucan.png

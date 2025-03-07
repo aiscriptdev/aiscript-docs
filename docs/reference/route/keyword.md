@@ -128,7 +128,7 @@ get /search {
 
     let term = query.term;
     let page = query.page;
-    return "Searching for '{term}' on page {page}";
+    return f"Searching for '{term}' on page {page}";
 }
 ```
 
@@ -145,7 +145,7 @@ get /users/:id/posts/:postId {
 
     let userId = path.id;
     let postId = path.postId;
-    return "Accessing post {postId} for user {userId}";
+    return f"Accessing post {postId} for user {userId}";
 }
 ```
 
@@ -175,7 +175,7 @@ Access request headers through the `header` object.
 get /headers {
     let userAgent = header["User-Agent"];
     let contentType = header["Content-Type"];
-    return "User-Agent: {userAgent}, Content-Type: {contentType}";
+    return f"User-Agent: {userAgent}, Content-Type: {contentType}";
 }
 ```
 

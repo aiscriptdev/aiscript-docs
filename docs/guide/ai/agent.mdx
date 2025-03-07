@@ -281,7 +281,7 @@ agent CustomerSupport {
     
     fn summarize_conversation() -> str {
         let history = conversation_history.join("\n");
-        return prompt "Summarize this conversation: {history}";
+        return prompt f"Summarize this conversation: {history}";
     }
 }
 ```
@@ -296,7 +296,7 @@ agent CodeExpert {
     model: "gpt-4",  // More capable model for coding tasks
     
     fn review_code(code: str) -> str {
-        return prompt "Review this code and provide feedback: {code}";
+        return prompt f"Review this code and provide feedback: {code}";
     }
 }
 

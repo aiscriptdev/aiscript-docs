@@ -73,12 +73,12 @@ let tx = pg.begin_transaction();
 
 // Execute multiple operations within the transaction
 tx.query("INSERT INTO users (name, email) VALUES($1, $2);", "Alice", "alice@example.com") |err| {
-    print("Transaction failed: {err}");
+    print(f"Transaction failed: {err}");
     tx.rollback();
     return;
 };
 tx.query("INSERT INTO user_roles (user_id, role) VALUES(LASTVAL(), 'admin');") |err| {
-    print("Transaction failed: {err}");
+    print(f"Transaction failed: {err}");
     tx.rollback();
     return;
 };
@@ -132,12 +132,12 @@ use std.db.sqlite;
 let tx = sqlite.begin_transaction();
 
 tx.query("INSERT INTO notes (title, content) VALUES($1, $2);", "Note 1", "Content 1") |err| {
-    print("Transaction failed: {err}");
+    print(f"Transaction failed: {err}");
     tx.rollback();
     return;
 };
 tx.query("INSERT INTO notes (title, content) VALUES($1, $2);", "Note 2", "Content 2") |err| {
-    print("Transaction failed: {err}");
+    print(f"Transaction failed: {err}");
     tx.rollback();
     return;
 };

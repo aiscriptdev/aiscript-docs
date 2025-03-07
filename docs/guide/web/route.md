@@ -54,7 +54,7 @@ get /hello {
         name: str = "Alice"
     }
 
-    return "Hello, " + query.name + "!";
+    return f"Hello, {query.name}!";
 }
 ```
 
@@ -93,7 +93,7 @@ post /hello {
         name: str
     }
 
-    return "Hello, " + body.name + "!";
+    return f"Hello, {body.name}!";
 }
 ```
 
@@ -113,7 +113,7 @@ post /hello {
         name: str
     }
 
-    return "Hello, " + body.name + "!";
+    return f"Hello, {body.name}!";
 }
 ```
 
@@ -136,7 +136,7 @@ get /hello {
     header.test = "Test Header";
     // Modify cookie
     cookie.xyz = "changed";
-    return "header: abc={abc}, cookie: xyz={xyz}";
+    return f"header: abc={abc}, cookie: xyz={xyz}";
 }
 ```
 
@@ -150,7 +150,7 @@ get /hello {
     let scheme = request.scheme;
     let host = request.host;
     let port = request.port;
-    return "method: {method}, url: {url}, path: {path}, scheme: {scheme}, host: {host}, port: {port}";
+    return f"method: {method}, url: {url}, path: {path}, scheme: {scheme}, host: {host}, port: {port}";
 }
 ```
 

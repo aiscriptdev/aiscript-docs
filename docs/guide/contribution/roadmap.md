@@ -4,9 +4,12 @@ Currently, **AIScript** is in its early stages of development. This roadmap outl
 
 ## Language Features
 
-- [ ] **String Interpolation Enhancement**
+- [x] **String Interpolation**
   - Improve the current string interpolation with formatting options
   - Add support for more complex expressions within interpolated strings
+
+- [ ] `for in` Loop
+  - Add support for iterating over arrays and objects
 
 - [ ] **Type System Improvements**
   - Enhance type annotations and static checking

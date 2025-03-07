@@ -104,26 +104,6 @@ print(math.multiply(5)); // 10
 print(math.combined(5)); // 30
 ``` -->
 
-<!-- ## Partial Application
-
-Use closures to create partially applied functions:
-
-```js
-fn partial(func, ...fixed_args) -> fn {
-    return |...args| func(...fixed_args, ...args);
-}
-
-fn greet(greeting, name) -> str {
-    return "{greeting}, {name}!";
-}
-
-let hello = partial(greet, "Hello");
-let goodbye = partial(greet, "Goodbye");
-
-print(hello("Alice"));  // "Hello, Alice!"
-print(goodbye("Bob"));  // "Goodbye, Bob!"
-``` -->
-
 ## Immediate Invocation
 
 You can immediately invoke a lambda after defining it:
@@ -166,9 +146,9 @@ Closures are ideal for event-driven or asynchronous programming:
 fn fetch_data(url: str, on_success, on_error) {
     // Simulating an async operation
     if url.starts_with("https") {
-        on_success("Data from {url}");
+        on_success(f"Data from {url}");
     } else {
-        on_error("Invalid URL: {url}");
+        on_error(f"Invalid URL: {url}");
     }
 }
 

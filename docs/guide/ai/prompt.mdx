@@ -88,7 +88,7 @@ Like other AIScript operations, you can use error handling with the `prompt` key
 
 ```rust
 let response = prompt "Generate a complex response" |err| {
-    print("Error occurred: {err}");
+    print(f"Error occurred: {err}");
     return "Fallback response";
 };
 ```
@@ -126,13 +126,13 @@ print(poem);
 ```rust
 // Using OpenAI
 let openai_response = prompt {
-    input: "Summarize this article: {article_text}",
+    input: f"Summarize this article: {article_text}",
     model: "gpt-4"
 };
 
 // Using Claude
 let claude_response = prompt {
-    input: "Summarize this article: {article_text}" ,
+    input: f"Summarize this article: {article_text}" ,
     model: "claude-3.7"
 };
 ```
@@ -141,8 +141,8 @@ let claude_response = prompt {
 
 ```rust
 let topic = prompt "Suggest a topic for a blog post";
-let outline = prompt "Create an outline for a blog post about: {topic}";
-let introduction = prompt "Write an introduction for a blog post with this outline: {outline}";
+let outline = prompt f"Create an outline for a blog post about: {topic}";
+let introduction = prompt f"Write an introduction for a blog post with this outline: {outline}";
 
 print("Topic:", topic);
 print("Outline", outline);

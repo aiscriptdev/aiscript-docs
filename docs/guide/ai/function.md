@@ -21,7 +21,7 @@ You can not use `prompt` outside the non-ai function.
 ```rust
 fn analyze_sentiment(text: str) -> float {
     // [line 3] Error at 'prompt': Can't prompt outside of ai function or root script.
-    let sentiment = prompt "Analyze the sentiment of this text and return a score between -1 and 1: {text}";
+    let sentiment = prompt f"Analyze the sentiment of this text and return a score between -1 and 1: {text}";
     return float(sentiment);
 }
 ```
@@ -34,7 +34,7 @@ Here's a basic example of an AI function that analyzes sentiment in text:
 
 ```rust
 ai fn analyze_sentiment(text: str) -> float {
-    let sentiment = prompt "Analyze the sentiment of this text and return a score between -1 and 1: {text}";
+    let sentiment = prompt f"Analyze the sentiment of this text and return a score between -1 and 1: {text}";
     return float(sentiment);
 }
 
@@ -50,14 +50,14 @@ Since AI functions often involve network operations and third-party services, it
 
 ```rust
 ai fn generate_summary(text: str) -> str | NetworkError! {
-    let summary = prompt "Summarize this text in 2-3 sentences: {text}" ?;
+    let summary = prompt f"Summarize this text in 2-3 sentences: {text}" ?;
     return summary;
 }
 
 // Using the function with error handling
 let article = "...long article text...";
 let summary = generate_summary(article) |err| {
-    print("Failed to generate summary: {err}");
+    print(f"Failed to generate summary: {err}");
     return "Summary unavailable";
 };
 ```
@@ -69,7 +69,7 @@ You can customize the behavior of AI functions by configuring prompt parameters:
 ```rust
 ai fn generate_ideas(topic: str, count: int = 3) -> str {
     let ideas = prompt {
-        input: "Generate {count} creative ideas about {topic}",
+        input: f"Generate {count} creative ideas about {topic}",
         temperature: 0.9,  // Higher creativity
         max_tokens: 300
     };
