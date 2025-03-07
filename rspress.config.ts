@@ -33,6 +33,11 @@ export default defineConfig({
         mode: 'link',
         content: 'https://github.com/aiscriptdev/aiscript',
       },
+      {
+        icon: 'discord',
+        mode: 'link',
+        content: 'https://discord.gg/bXRqsweNPb',
+      },
     ],
   },
 });
