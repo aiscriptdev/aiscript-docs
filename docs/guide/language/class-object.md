@@ -6,7 +6,7 @@ AIScript offers a powerful class-based object-oriented programming model inspire
 
 Use the `class` keyword to define a class with properties and methods.
 
-```rust
+```js
 class Person {
     name: str,
     age: int,

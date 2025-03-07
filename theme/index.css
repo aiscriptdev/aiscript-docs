@@ -1,0 +1,16 @@
+:root {
+    /* Modify theme color */
+    --rp-c-brand: #db4c38;
+    --rp-c-brand-dark: #f96b6b;
+    --rp-c-brand-darker: #f96b6b;
+    --rp-c-brand-light: #f96b6b;
+    --rp-c-brand-lighter: #f53939;
+    /* Modify the width of the left sidebar */
+    --rp-sidebar-width: 280px;
+    /* Modify the width of the right outline column */
+    --rp-aside-width: 256px;
+    /* Modify the background of the code block title */
+    /* --rp-code-title-bg: rgba(250, 192, 61, 0.15); */
+    /* Modify the background of the code block content */
+    /* --rp-code-block-bg: rgba(214, 188, 70, 0.05); */
+  }

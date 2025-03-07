@@ -15,6 +15,7 @@ export default defineConfig({
   },
   mediumZoom: true,
   builderPlugins: [pluginYaml()],
+  globalStyles: path.join(__dirname, 'theme/index.css'),
   themeConfig: {
     enableScrollToTop: true,
     footer: {
