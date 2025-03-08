@@ -42,12 +42,54 @@
     border-radius: 8px;
     width: 100%;
     text-align: center;
+    position: relative;
+    cursor: pointer;
+    transition: background-color 0.2s;
+
+    &:hover {
+        background: rgba(255, 255, 255, 0.15);
+
+        .copyButton {
+            opacity: 1;
+        }
+    }
+}
+
+.copyButton {
+    position: absolute;
+    right: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: rgba(255, 255, 255, 0.2);
+    border: none;
+    border-radius: 4px;
+    padding: 4px 8px;
+    color: white;
+    font-size: 12px;
+    cursor: pointer;
+    opacity: 0;
+    transition: all 0.2s;
+
+    &:hover {
+        background: rgba(255, 255, 255, 0.3);
+    }
+}
+
+.copied .copyButton {
+    background: rgba(76, 175, 80, 0.3);
 }
 
 .commandText {
+    display: block;
+    transition: opacity 0.3s ease;
     font-family: monospace;
     font-weight: bold;
     font-size: 14px;
+    opacity: 1;
+}
+
+.commandText.fade {
+    opacity: 0;
 }
 
 @media screen and (max-width: 600px) {
