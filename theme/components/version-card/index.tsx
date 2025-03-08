@@ -11,7 +11,7 @@ const VersionCard: FC = () => {
                 </div>
                 <div className={styles.command}>
                     <code className={styles.commandText}>
-                        cargo install aiscript
+                        curl https://aiscript.dev/install.sh | sh
                     </code>
                 </div>
             </div>
