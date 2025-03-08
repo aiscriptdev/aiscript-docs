@@ -13,9 +13,6 @@ export default defineConfig({
   route: {
     cleanUrls: true,
   },
-//   ssg: {
-//     strict: true,
-//   },
   mediumZoom: true,
   builderPlugins: [pluginYaml()],
   globalStyles: path.join(__dirname, 'theme/index.css'),
