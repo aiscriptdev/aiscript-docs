@@ -103,9 +103,23 @@
 
     .command {
         padding: 10px 16px;
+        cursor: default;
+
+        &:hover {
+            background: rgba(255, 255, 255, 0.1);
+
+            .copyButton {
+                opacity: 0;
+            }
+        }
     }
 
     .commandText {
         font-size: 12px;
+        transition: none;
+    }
+
+    .copyButton {
+        display: none;
     }
 }

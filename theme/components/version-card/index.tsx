@@ -7,7 +7,19 @@ const VersionCard: FC = () => {
     const [currentCommand, setCurrentCommand] = useState(0);
     const [isHovered, setIsHovered] = useState(false);
     const [isFading, setIsFading] = useState(false);
+    const [isMobile, setIsMobile] = useState(false);
     const intervalRef = useRef<NodeJS.Timeout>();
+
+    useEffect(() => {
+        const checkMobile = () => {
+            setIsMobile(window.innerWidth <= 600);
+        };
+        
+        checkMobile();
+        window.addEventListener('resize', checkMobile);
+        
+        return () => window.removeEventListener('resize', checkMobile);
+    }, []);
 
     const commands = [
         'curl https://aiscript.dev/install.sh | sh',
@@ -15,11 +27,12 @@ const VersionCard: FC = () => {
     ];
 
     const handleCopy = useCallback(() => {
+        if (isMobile) return;
         navigator.clipboard.writeText(commands[currentCommand]).then(() => {
             setCopied(true);
             setTimeout(() => setCopied(false), 2000);
         });
-    }, [currentCommand, commands]);
+    }, [currentCommand, commands, isMobile]);
 
     const switchCommand = useCallback(() => {
         setIsFading(true);
@@ -30,7 +43,7 @@ const VersionCard: FC = () => {
     }, [commands.length]);
 
     useEffect(() => {
-        if (!isHovered) {
+        if (!isHovered && !isMobile) {
             intervalRef.current = setInterval(switchCommand, 3000);
         }
         return () => {
@@ -38,7 +51,7 @@ const VersionCard: FC = () => {
                 clearInterval(intervalRef.current);
             }
         };
-    }, [isHovered, switchCommand]);
+    }, [isHovered, switchCommand, isMobile]);
 
     const handleMouseEnter = useCallback(() => {
         setIsHovered(true);
