@@ -81,20 +81,3 @@ $ cargo build --release
 
 # The binary will be in target/release/aiscript
 ```
-
-# Getting Started
-
-After installation, you can run AIScript:
-
-```bash
-# Check the version
-aiscript --version
-
-# Run a script
-aiscript my_script.ai
-
-# Enter interactive mode
-aiscript
-```
-
-Check out the documentation for more information on AIScript syntax and features.
