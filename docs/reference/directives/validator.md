@@ -121,15 +121,15 @@ post /api/user {
 Validates arrays against specified constraints.
 
 Parameters:
-- `min_items`: Minimum number of items
-- `max_items`: Maximum number of items
+- `min_len`: Minimum number of items
+- `max_len`: Maximum number of items
 - `unique`: Whether items must be unique
 
 ```js
 post /api/tags {
     @json
     body {
-        @array(min_items=1, max_items=5, unique=true)
+        @array(min_len=1, max_len=5, unique=true)
         tags: array
     }
 }

@@ -17,6 +17,8 @@
   "devDependencies": {
     "@biomejs/biome": "^1.9.4",
     "@eslint/js": "^9.19.0",
+    "rsbuild-plugin-open-graph": "1.0",
+    "rspress-plugin-sitemap": "^1.1",
     "@rsbuild/plugin-yaml": "^1.0.2",
     "@types/node": "^18.11.17",
     "eslint": "^9.19.0",
