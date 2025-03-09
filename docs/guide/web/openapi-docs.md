@@ -23,11 +23,31 @@ post /api/chat {
 }
 ```
 
-## Documenting Routes
+## Using @docs Directive
 
-Each route can have a detailed description:
+The `@docs` directive gives you fine-grained control over how your API is documented:
 
 ```py
+@docs(tag="Authentication", deprecated=true)
+post /api/login {
+    """Login endpoint - use the new OAuth endpoint instead"""
+    
+    // Route implementation
+}
+```
+
+The `@docs` directive supports the following parameters:
+
+- `tag`: String value that groups related endpoints in the documentation UI
+- `deprecated`: Boolean that marks an endpoint as deprecated
+- `hidden`: Boolean that excludes an endpoint from the documentation
+
+## Documenting Routes
+
+Each route can have a detailed description using docstrings and can be enhanced with the `@docs` directive:
+
+```py
+@docs(tag="Users")
 get /api/users {
     """
     List all users
@@ -145,6 +165,8 @@ AIScript automatically generates OpenAPI documentation based on your route defin
 4. Data types for all parameters and responses
 5. Docstrings as descriptions
 6. Documentation specific to each parameter
+7. Tags and groupings defined by `@docs` directives
+8. Deprecated endpoints marked accordingly
 
 ## Accessing Documentation
 
@@ -163,33 +185,64 @@ AIScript's documentation UI support **Swagger UI** and **Redoc**.
 
 ## Tags and Grouping
 
-You can use tags to group related endpoints in the documentation:
+You can use the `tag` parameter in the `@docs` directive to group related endpoints in the documentation:
 
 ```py
-@docs(tag = "Users")
+@docs(tag="Users")
 get /api/users {
     """List all users"""
 }
 
-@docs(tag = "Users")
+@docs(tag="Users")
 get /api/users/<id:int> {
     """Get user by ID"""
 }
 
-@docs(tag = "Users")
+@docs(tag="Products")
 get /api/products {
     """List all products"""
 }
 ```
 
+In the generated documentation UI, endpoints will be grouped by their tags, making it easier to navigate complex APIs.
+
+## Marking Deprecated Endpoints
+
+Use the `deprecated` parameter to mark endpoints that should no longer be used:
+
+```py
+@docs(deprecated=true)
+get /api/v1/users {
+    """This endpoint is deprecated. Use /api/v2/users instead."""
+}
+```
+
+Deprecated endpoints will be clearly marked in the documentation UI, but will still be included so that users who need to migrate can understand the old API.
+
 ## Hiding Endpoints
 
-You can exclude specific endpoints from documentation:
+You can exclude specific endpoints from documentation with the `hidden` parameter:
 
 ```py
 @docs(hidden=true)
 get /internal/metrics {
     """This endpoint won't appear in documentation"""
+}
+```
+
+This is useful for internal endpoints that aren't meant for public consumption.
+
+## Combining Multiple Directives
+
+You can combine the `@docs` directive with other directives to create comprehensive documentation:
+
+```py
+@auth(jwt=true)
+@docs(tag="Users")
+get /api/users/me {
+    """Get the currently authenticated user's profile"""
+    
+    // Route implementation
 }
 ```
 
@@ -203,5 +256,7 @@ Automatic OpenAPI documentation in AIScript offers several benefits:
 4. **Validation rules included**: All validators are documented
 5. **Interactive testing**: Test endpoints directly from the documentation UI
 6. **Client generation**: Use the OpenAPI spec to generate client libraries in various languages
+7. **Organized documentation**: Group endpoints logically with tags
+8. **Deprecation notices**: Clearly mark endpoints that are being phased out
 
 AIScript's built-in documentation system ensures your API is well-documented with minimal effort, making it easier for both you and your API consumers to understand and use your services.
