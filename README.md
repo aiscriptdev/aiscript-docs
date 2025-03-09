@@ -1,6 +1,6 @@
-# AIScript website
-
 ![](docs/public/aiscript-social-image.png)
+
+# AIScript website
 
 [https://aiscript.dev](https://aiscript.dev)
 
