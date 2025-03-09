@@ -33,6 +33,7 @@ export default defineConfig({
             title: 'AIScript',
             type: 'website',
             url: PUBLISH_URL,
+            image: 'https://aiscript.dev/aiscript-social-image.png',
             description: 'AIScript is a unique combination of interpreter programming language and web framework, both written in Rust, designed to help developers build AI applications effortlessly.',
         }),
         pluginYaml(),
