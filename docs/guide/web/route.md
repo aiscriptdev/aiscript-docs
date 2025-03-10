@@ -132,13 +132,13 @@ get /hello {
     let abc = header.abc;
     let xyz = cookie.xyz;
 
-    // Set new header
-    header.test = "Test Header";
-    // Modify cookie
-    cookie.xyz = "changed";
     return f"header: abc={abc}, cookie: xyz={xyz}";
 }
 ```
+
+:::warning
+`cookie` is not supported yet.
+:::
 
 ## Request Object
 
