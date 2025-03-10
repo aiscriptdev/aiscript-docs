@@ -156,8 +156,12 @@ web:
           }
         filename: post.ai
       - code: |
-          put /repo/<id:int> {
+          put /repo/:id {
               """Update a repository"""
+              path {
+                  """The repository id"""
+                  id: int
+              }
 
               @json
               body {
@@ -170,8 +174,12 @@ web:
           }
         filename: put.ai
       - code: |
-          delete /repo/<id:int> {
+          delete /repo/:id {
               """Delete a repository"""
+
+              path {
+                id: str
+              }
 
               return f"delete repo: {id}";
           }

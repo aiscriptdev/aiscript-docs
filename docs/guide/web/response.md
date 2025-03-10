@@ -142,7 +142,11 @@ get /outdated {
 ### Conditional Response
 
 ```js
-get /api/users/<id:int> {
+get /api/users/:id {
+    path {
+        id: str
+    }
+    
     use std.db.pg;
     
     let user = pg.query_one("SELECT * FROM users WHERE id = $1", id);

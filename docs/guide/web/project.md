@@ -67,7 +67,7 @@ get /api/users {
     // Return all users
 }
 
-get /api/users/<id:int> {
+get /api/users/:id {
     // Return user by ID
 }
 

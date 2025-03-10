@@ -22,13 +22,13 @@ verb path [, verb path...] {
 
 The `verb` is the HTTP method:
 
-| Verb | Description |
-| --- | --- |
-| `get` | GET request |
-| `post` | POST request |
-| `put` | PUT request |
+| Verb     | Description    |
+| -------- | -------------- |
+| `get`    | GET request    |
+| `post`   | POST request   |
+| `put`    | PUT request    |
 | `delete` | DELETE request |
-| `head` | HEAD request |
+| `head`   | HEAD request   |
 
 The `path` is the URL path.
 
@@ -174,8 +174,12 @@ get /hello2 {
 ## Path Parameters
 
 ```py
-get /hello/<name:str> {
-    return "Hello, {name}!";
+get /hello/:name {
+    path {
+        name: str
+    }
+
+    return f"Hello, {name}!";
 }
 ```
 
@@ -217,7 +221,11 @@ Value is greater than 10
 ## Query Database with SQL
 
 ```py
-get /tweet/<id: int> {
+get /tweet/:id {
+    path {
+        id: str
+    }
+
     use std.db.pg;
 
     return pg.query("SELECT * FROM tweet WHERE id = $1", id);

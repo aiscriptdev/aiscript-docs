@@ -95,18 +95,47 @@ get /api/products {
 
 ### Path Parameters
 
+Path parameters allow you to capture values from the URL path. The syntax similar to `query {}` block, you can add type validators to each parameter:
+
 ```py
-get /api/users/<id:int> {
+get /api/users/:id {
     """
     Get user by ID
-    
-    Retrieves detailed information about a specific user.
-    
-    Parameters:
-      id: The unique identifier of the user
-    """
+    ""
+
+    path {
+        """User ID (must be a valid string)"""
+        id: str
+    }
     
     // Route implementation
+}
+```
+
+You can combine multiple path parameters and add type validation:
+
+```py
+get /users/:userId/posts/:postId {
+    """
+    Get user's post
+    """
+
+    path {
+        """User ID (alphanumeric with minimum length)"""
+        @string(min_len=3)
+        userId: str,
+
+        """Post ID (must be a positive integer)"""
+        @number(min=1)
+        postId: int
+    }
+
+    // Implementation example
+    print(f"Fetching post {path.postId} for user {path.userId}");
+    return {
+        "userId": path.userId,
+        "postId": path.postId
+    };
 }
 ```
 
@@ -139,7 +168,7 @@ post /api/products {
 You can document the responses a route might return:
 
 ```py
-get /api/orders/<id:int> {
+get /api/orders/:id {
     """
     Get order details
     
@@ -150,6 +179,10 @@ get /api/orders/<id:int> {
       404: Order not found
       403: Unauthorized access
     """
+
+    path {
+        id: str
+    }
     
     // Route implementation
 }
@@ -194,7 +227,7 @@ get /api/users {
 }
 
 @docs(tag="Users")
-get /api/users/<id:int> {
+get /api/users/:id {
     """Get user by ID"""
 }
 

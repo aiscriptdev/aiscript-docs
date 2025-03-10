@@ -242,7 +242,11 @@ post /login {
 ### No Content Response
 
 ```js
-delete /api/resource/<id:int> {
+delete /api/resource/:id {
+    path {
+        id: str
+    }
+    
     delete_resource(id);
     return response(status_code=204);  // No content
 }
