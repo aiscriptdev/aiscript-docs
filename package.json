@@ -24,15 +24,14 @@
     "eslint": "^9.19.0",
     "globals": "^15.14.0",
     "prettier": "^3.4.2",
-    "rspress": "^v2.0.0-alpha.0",
+    "rspress": "^v2.0.0-alpha.1",
     "typescript-eslint": "^8.22.0"
   },
-  "description": "## Setup",
-  "main": "index.js",
+  "description": "AIScript - The next generation language for human and AI.",
   "directories": {
     "doc": "docs"
   },
   "keywords": [],
-  "author": "",
+  "author": "Folyd",
   "license": "ISC"
 }
