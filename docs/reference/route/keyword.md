@@ -19,9 +19,9 @@ The `post` keyword defines a route handler for HTTP POST requests, which are typ
 ```rust
 post /products {
     body {
-        name: str
-        price: float
-        category: str
+        name: str,
+        price: float,
+        category: str,
     }
 
     // Validate input
@@ -104,8 +104,8 @@ route /user {
         }
         
         body {
-            name: str
-            email: str
+            name: str,
+            email: str,
         }
         
         // Update user with the given ID
@@ -122,8 +122,8 @@ Provides access to query parameters in the URL.
 ```rust
 get /search {
     query {
-        term: str
-        page: int = 1
+        term: str,
+        page: int = 1,
     }
 
     let term = query.term;
@@ -139,8 +139,8 @@ Contains route parameters defined with `:` in the route path.
 ```rust
 get /users/:id/posts/:postId {
     path {
-        id: str
-        postId: int
+        id: str,
+        postId: int,
     }
 
     let userId = path.id;
@@ -156,8 +156,8 @@ Contains the parsed request body. Automatically parsed based on Content-Type.
 ```rust
 post /users {
     body {
-        name: str
-        email: str
+        name: str,
+        email: str,
     }
 
     let name = body.name;

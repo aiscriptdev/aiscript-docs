@@ -14,8 +14,7 @@ AIScript provides a simple way to validate request components using directives.
 get /hello {
     query {
         @string(min_len=3, max_len=10)
-        name: str
-        
+        name: str,
         @in(["male", "female"])
         gender: str
     }
@@ -29,8 +28,7 @@ post /hello {
     @json // or use @form to validate form data
     body {
         @regex(r"^\d{4}-\d{2}-\d{2}$")
-        birthdate: str
-        
+        birthdate: str,
         @format(type="email")
         email: str
     }

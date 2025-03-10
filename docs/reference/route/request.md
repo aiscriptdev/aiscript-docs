@@ -8,7 +8,7 @@ Returns the HTTP method of the request (GET, POST, PUT, DELETE, etc.)
 
 ```rust
 get /echo {
-    return "Method: " + request.method;  // Returns "Method: GET"
+    return f"Method: {request.method}";  // Returns "Method: GET"
 }
 ```
 
@@ -18,7 +18,7 @@ Returns the complete URL of the request.
 
 ```rust
 get /info {
-    return "URL: " + request.url;  // Might return "URL: https://example.com/info?key=value"
+    return f"URL: {request.url}";  // Might return "URL: https://example.com/info?key=value"
 }
 ```
 
@@ -28,7 +28,7 @@ Returns the path portion of the URL.
 
 ```rust
 get /path/info {
-    return "Path: " + request.path;  // Returns "Path: /path/info"
+    return f"Path: {request.path}";  // Returns "Path: /path/info"
 }
 ```
 
@@ -38,7 +38,7 @@ Returns the scheme of the request (http or https).
 
 ```rust
 get /scheme {
-    return "Scheme: " + request.scheme;  // Returns "Scheme: https" for secure requests
+    return f"Scheme: {request.scheme}";  // Returns "Scheme: https" for secure requests
 }
 ```
 
@@ -48,7 +48,7 @@ Returns the host from the request.
 
 ```rust
 get /host {
-    return "Host: " + request.host;  // Might return "Host: example.com"
+    return f"Host: {request.host}";  // Might return "Host: example.com"
 }
 ```
 
@@ -58,6 +58,6 @@ Returns the port number of the request.
 
 ```rust
 get /port {
-    return "Port: " + request.port;  // Might return "Port: 443" for HTTPS
+    return f"Port: {request.port}";  // Might return "Port: 443" for HTTPS
 }
 ```

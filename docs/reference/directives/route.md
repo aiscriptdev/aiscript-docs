@@ -11,11 +11,11 @@ post /api/users {
     @json
     body {
         name: str,
-        email: str
+        email: str,
     }
 
     // Process body as JSON
-    return "Created user: " + body.name;
+    return f"Created user: {body.name}";
 }
 ```
 
@@ -28,11 +28,11 @@ post /api/contact {
     @form
     body {
         name: str,
-        message: str
+        message: str,
     }
 
     // Process body as form data
-    return "Received message from: " + body.name;
+    return f"Received message from: {body.name}";
 }
 ```
 
@@ -74,7 +74,7 @@ Enables Single Sign-On authentication for the route.
 @sso(provider="google")
 get /dashboard {
     // User must be authenticated via Google SSO
-    return "Welcome, " + user.name;
+    return f"Welcome, {user.name}";
 }
 ```
 
