@@ -229,18 +229,26 @@ web:
     description: Automatic OpenAPI documentation generation from route definitions with zero configuration. Documentation includes complete type information, validation rules, and examples derived directly from your code.
     codeDemos:
       - code: |
-          post /api/chat {
-              """Use triple-quotes for OpenAPI documentation"""
+          get / {
+              """An api to ask LLM"""
 
-              body {
-                  """Field also supports OpenAPI docs"""
-                  message: str,
+              query {
+                  """the question to ask"""
+                  @string(min_len=3, max_len=100) // validate params with builtin directive @string
+                  question: str
               }
 
-              return f"Input: {body.message}!";
+              // `ai` and `prompt` are keywords
+              ai fn ask(question: str) -> str {
+                  let answer = prompt question;
+                  return answer;
+              }
+              // use query.name or query["name"] to access query parameter
+              let answer = ask(query.question);
+              return { answer };
           }
         filename: openapi.ai
-      - img: /toucan.png
+      - img: https://aiscript.dev/guide/open-api.png
         filename: openapi.png
   - title: Effortless Auth and Social Login
     description: Integrate authentication and social login providers with minimal configuration. AIScript's auth decorators handle complex security flows while maintaining type safety throughout the authentication process.

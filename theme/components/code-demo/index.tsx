@@ -39,7 +39,7 @@ const CodeDemo: FC<CodeDemoProps> = ({
             {code}
           </SyntaxHighlighter>
         ) : img ? (
-          <img src={img} alt="Code demo" style={{ maxWidth: '100%', height: 'auto' }} />
+          <img src={img} className='medium-zoom-image' />
         ) : null}
       </div>
     </div>

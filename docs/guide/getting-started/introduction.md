@@ -35,10 +35,9 @@ AIScript isn't just a language—it's a complete web development solution:
 
 ```javascript
 $ export OPENAI_API_KEY=<your-openai-api-key>
-
 $ cat web.ai
 get / {
-    """A api to ask LLM"""
+    """An api to ask LLM"""
 
     query {
         """the question to ask"""
@@ -51,7 +50,6 @@ get / {
         let answer = prompt question;
         return answer;
     }
-
     // use query.name or query["name"] to access query parameter
     let answer = ask(query.question);
     return { answer };
