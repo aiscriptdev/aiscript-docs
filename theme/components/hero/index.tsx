@@ -65,6 +65,7 @@ type HeroProps = {
 
   showStars?: boolean;
   logoUrl?: string;
+  darkLogoUrl?: string;
   title?: string;
   subTitle?: string;
   description?: string;
@@ -78,6 +79,7 @@ export const Hero: FC<HeroProps> = ({
   onClickLearnMore,
   showStars = false,
   logoUrl = '/aiscript-logo.svg',
+  darkLogoUrl = '/aiscript-logo-white.svg',
   title = '',
   subTitle = '',
   description = '',
@@ -107,7 +109,12 @@ export const Hero: FC<HeroProps> = ({
         <div className={styles.logo}>
           <img
             src={logoUrl}
-            className={`${styles.logoImg} rs-logo`}
+            className={`${styles.logoImg} ${styles.lightLogo} rs-logo`}
+            alt="logo"
+          />
+          <img
+            src={darkLogoUrl}
+            className={`${styles.logoImg} ${styles.darkLogo} rs-logo`}
             alt="logo"
           />
         </div>

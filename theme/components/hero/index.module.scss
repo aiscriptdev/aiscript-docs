@@ -82,6 +82,35 @@
     height: 180px;
   }
 
+  .lightLogo {
+    display: block;
+  }
+
+  .darkLogo {
+    display: none;
+  }
+
+  :global(.dark) & {
+    .lightLogo {
+      display: none;
+    }
+
+    .darkLogo {
+      display: block;
+    }
+  }
+}
+
+:global {
+  .dark .logo {
+    .lightLogo {
+      display: none;
+    }
+
+    .darkLogo {
+      display: block;
+    }
+  }
 }
 
 .title {

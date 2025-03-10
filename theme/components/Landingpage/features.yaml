@@ -256,8 +256,8 @@ web:
       - code: |
           post /signin {
               body {
-                  username: str
-                  password: str
+                  username: str,
+                  password: str,
               }
 
               // Verify username and password correctly
