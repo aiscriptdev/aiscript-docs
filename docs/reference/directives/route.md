@@ -59,7 +59,7 @@ get /api/users {
 Enables HTTP Basic Authentication for the route.
 
 ```js
-@basic_auth(realm="Admin Area")
+@basic_auth
 get /admin/dashboard {
     // Only users with valid basic auth credentials can access
     return "Admin dashboard";

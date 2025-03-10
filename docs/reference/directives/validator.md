@@ -74,10 +74,10 @@ Validates that a string matches a given regular expression pattern.
 post /api/register {
     @json
     body {
-        @regex(r"^[a-zA-Z0-9_]+$")
+        @regex(pattern=r"^[a-zA-Z0-9_]+$")
         username: str,
         
-        @regex(r"^\d{3}-\d{2}-\d{4}$")
+        @regex(pattern=r"^\d{3}-\d{2}-\d{4}$")
         ssn: str
     }
 }
@@ -178,7 +178,7 @@ post /api/identifier {
     body {
         @or([
             @format(type="email"),
-            @regex(r"^\d{10}$")
+            @regex(pattern=r"^\d{10}$")
         ])
         identifier: str  // Can be either email or 10-digit number
     }
