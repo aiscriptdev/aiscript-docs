@@ -15,6 +15,11 @@
       "activeMatch": "/std/"
     },
     {
+      "text": "Blog",
+      "link": "/blog",
+      "activeMatch": "/blog"
+    },
+    {
       "text": "Why AIScript",
       "link": "/blog/why-aiscript",
       "activeMatch": ""
