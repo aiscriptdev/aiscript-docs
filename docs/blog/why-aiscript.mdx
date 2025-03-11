@@ -161,10 +161,7 @@ Most mainstream languages were designed decades ago—features like `prompt` and
 <Tabs>
 <Tab label="prompt.ai">
 ```rust
-let answer = prompt "Why the sky is blue?" => {
-    model: "claude-3.7",
-    temperature: 0.8,
-};
+let answer = prompt "Why the sky is blue?";
 print(answer);
 ```
 </Tab>
@@ -189,9 +186,6 @@ WeatherAgent.run(input=user_prompt);
 </Tab>
 <Tab label="project.toml">
 ```toml
-[ai.embedding]
-model = "gpt-3.5-turbo"
-
 [ai.openai]
 api_key = "YOUR_API_KEY"
 

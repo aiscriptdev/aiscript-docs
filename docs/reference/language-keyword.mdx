@@ -24,7 +24,13 @@ The `prompt` keyword sends a text prompt to an AI model and returns the response
 let response = prompt "What is the capital of France?";
 
 // With model specification
-let response = prompt "Explain quantum physics simply." => "anthropic://claude-3-5-sonnet-20241022?temperature=0.7";
+let detailed_answer = prompt {
+    input: "Explain quantum computing",
+    model: "gpt-4",
+    max_tokens: 500,
+    temperature: 0.7,
+    system_prompt: "You are a quantum physics expert"
+};
 ```
 
 ### agent
@@ -35,15 +41,14 @@ The `agent` keyword defines an AI agent with specific capabilities and instructi
 agent SearchAssistant {
     instructions: "You are a search assistant. Help users find information.",
     model: "claude-3-5-sonnet",
-    tools: ["search", "summarize"],
     
     fn search(query: str) -> str {
         // Implementation of search functionality
-        prompt "Search for: {query}";
+        prompt f"Search for: {query}";
     }
     
     fn summarize(text: str) -> str {
-        prompt "Summarize: {text}";
+        prompt f"Summarize: {text}";
     }
 }
 
@@ -186,6 +191,7 @@ Returns an error from a function.
 enum ArithError! {
     DivideByZero
 }
+
 fn divide(a: int, b: int) -> float, ArithError! {
     if b == 0 {
         raise ArithError!::DivideByZero;
