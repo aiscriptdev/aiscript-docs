@@ -41,7 +41,7 @@ const VersionCard: FC = () => {
             <div className={styles.content}>
                 <div className={styles.version}>
                     <span className={styles.label}>Latest Version</span>
-                    <span className={styles.value}>v0.1.0</span>
+                    <span className={styles.value}>v0.2.0</span>
                 </div>
                 <div style={{ marginTop: '15px', width: '100%' }}>
                     <div className={styles.tabs}>

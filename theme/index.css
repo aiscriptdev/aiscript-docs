@@ -28,3 +28,6 @@
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }
+.rspress-doc > h2 > a:hover {
+  opacity: 1;
+}

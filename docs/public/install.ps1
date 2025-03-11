@@ -6,12 +6,12 @@
 <#
 .SYNOPSIS
 
-The installer for aiscript 0.1.0
+The installer for aiscript 0.2.0
 
 .DESCRIPTION
 
 This script detects what platform you're on and fetches an appropriate archive from
-https://github.com/aiscriptdev/aiscript/releases/download/v0.1.0
+https://github.com/aiscriptdev/aiscript/releases/download/v0.2.0
 then unpacks the binaries and installs them to
 
     $env:CARGO_HOME/bin (or $HOME/.cargo/bin)
@@ -31,7 +31,7 @@ Print help
 
 param (
     [Parameter(HelpMessage = "The URL of the directory where artifacts can be fetched from")]
-    [string]$ArtifactDownloadUrl = 'https://github.com/aiscriptdev/aiscript/releases/download/v0.1.0',
+    [string]$ArtifactDownloadUrl = 'https://github.com/aiscriptdev/aiscript/releases/download/v0.2.0',
     [Parameter(HelpMessage = "Don't add the install directory to PATH")]
     [switch]$NoModifyPath,
     [Parameter(HelpMessage = "Print Help")]
@@ -39,7 +39,7 @@ param (
 )
 
 $app_name = 'aiscript'
-$app_version = '0.1.0'
+$app_version = '0.2.0'
 if ($env:AISCRIPT_INSTALLER_GHE_BASE_URL) {
   $installer_base_url = $env:AISCRIPT_INSTALLER_GHE_BASE_URL
 } elseif ($env:AISCRIPT_INSTALLER_GITHUB_BASE_URL) {
@@ -50,11 +50,11 @@ if ($env:AISCRIPT_INSTALLER_GHE_BASE_URL) {
 if ($env:INSTALLER_DOWNLOAD_URL) {
   $ArtifactDownloadUrl = $env:INSTALLER_DOWNLOAD_URL
 } else {
-  $ArtifactDownloadUrl = "$installer_base_url/aiscriptdev/aiscript/releases/download/v0.1.0"
+  $ArtifactDownloadUrl = "$installer_base_url/aiscriptdev/aiscript/releases/download/v0.2.0"
 }
 
 $receipt = @"
-{"binaries":["CARGO_DIST_BINS"],"binary_aliases":{},"cdylibs":["CARGO_DIST_DYLIBS"],"cstaticlibs":["CARGO_DIST_STATICLIBS"],"install_layout":"unspecified","install_prefix":"AXO_INSTALL_PREFIX","modify_path":true,"provider":{"source":"cargo-dist","version":"0.28.0"},"source":{"app_name":"aiscript","name":"aiscript","owner":"aiscriptdev","release_type":"github"},"version":"0.1.0"}
+{"binaries":["CARGO_DIST_BINS"],"binary_aliases":{},"cdylibs":["CARGO_DIST_DYLIBS"],"cstaticlibs":["CARGO_DIST_STATICLIBS"],"install_layout":"unspecified","install_prefix":"AXO_INSTALL_PREFIX","modify_path":true,"provider":{"source":"cargo-dist","version":"0.28.0"},"source":{"app_name":"aiscript","name":"aiscript","owner":"aiscriptdev","release_type":"github"},"version":"0.2.0"}
 "@
 if ($env:XDG_CONFIG_HOME) {
   $receipt_home = "${env:XDG_CONFIG_HOME}\aiscript"

@@ -17,7 +17,7 @@ fi
 set -u
 
 APP_NAME="aiscript"
-APP_VERSION="0.1.0"
+APP_VERSION="0.2.0"
 # Look for GitHub Enterprise-style base URL first
 if [ -n "${AISCRIPT_INSTALLER_GHE_BASE_URL:-}" ]; then
     INSTALLER_BASE_URL="$AISCRIPT_INSTALLER_GHE_BASE_URL"
@@ -27,7 +27,7 @@ fi
 if [ -n "${INSTALLER_DOWNLOAD_URL:-}" ]; then
     ARTIFACT_DOWNLOAD_URL="$INSTALLER_DOWNLOAD_URL"
 else
-    ARTIFACT_DOWNLOAD_URL="${INSTALLER_BASE_URL}/aiscriptdev/aiscript/releases/download/v0.1.0"
+    ARTIFACT_DOWNLOAD_URL="${INSTALLER_BASE_URL}/aiscriptdev/aiscript/releases/download/v0.2.0"
 fi
 PRINT_VERBOSE=${INSTALLER_PRINT_VERBOSE:-0}
 PRINT_QUIET=${INSTALLER_PRINT_QUIET:-0}
@@ -48,7 +48,7 @@ if [ -n "${UNMANAGED_INSTALL}" ]; then
 fi
 
 read -r RECEIPT <<EORECEIPT
-{"binaries":["CARGO_DIST_BINS"],"binary_aliases":{},"cdylibs":["CARGO_DIST_DYLIBS"],"cstaticlibs":["CARGO_DIST_STATICLIBS"],"install_layout":"unspecified","install_prefix":"AXO_INSTALL_PREFIX","modify_path":true,"provider":{"source":"cargo-dist","version":"0.28.0"},"source":{"app_name":"aiscript","name":"aiscript","owner":"aiscriptdev","release_type":"github"},"version":"0.1.0"}
+{"binaries":["CARGO_DIST_BINS"],"binary_aliases":{},"cdylibs":["CARGO_DIST_DYLIBS"],"cstaticlibs":["CARGO_DIST_STATICLIBS"],"install_layout":"unspecified","install_prefix":"AXO_INSTALL_PREFIX","modify_path":true,"provider":{"source":"cargo-dist","version":"0.28.0"},"source":{"app_name":"aiscript","name":"aiscript","owner":"aiscriptdev","release_type":"github"},"version":"0.2.0"}
 EORECEIPT
 RECEIPT_HOME="${XDG_CONFIG_HOME:-$HOME/.config}/aiscript"
 
@@ -57,10 +57,10 @@ usage() {
     cat <<EOF
 aiscript-installer.sh
 
-The installer for aiscript 0.1.0
+The installer for aiscript 0.2.0
 
 This script detects what platform you're on and fetches an appropriate archive from
-https://github.com/aiscriptdev/aiscript/releases/download/v0.1.0
+https://github.com/aiscriptdev/aiscript/releases/download/v0.2.0
 then unpacks the binaries and installs them to
 
     \$CARGO_HOME/bin (or \$HOME/.cargo/bin)
@@ -163,7 +163,7 @@ download_binary_and_run_installer() {
             _arch="aarch64-apple-darwin"
             _zip_ext=".tar.xz"
             _checksum_style="sha256"
-            _checksum_value="0aa77b74319efaf9177ea3bab4b2dfb816689daea0b8b956d89a51aa905a0812"
+            _checksum_value="2adca6949de4db64c79885068a35745c03e9e743ba9434215841683c2930b10a"
             _bins="aiscript"
             _bins_js_array='"aiscript"'
             _libs=""
@@ -177,7 +177,7 @@ download_binary_and_run_installer() {
             _arch="x86_64-apple-darwin"
             _zip_ext=".tar.xz"
             _checksum_style="sha256"
-            _checksum_value="161f799a28c69fad04c18d7ef8e6cf268408589f1595964d5d95a6810e898928"
+            _checksum_value="7ce71264619d5e3d883eceba372041a624c5c8fef1a820afd1adbcd2594bdfed"
             _bins="aiscript"
             _bins_js_array='"aiscript"'
             _libs=""
@@ -191,7 +191,7 @@ download_binary_and_run_installer() {
             _arch="x86_64-pc-windows-msvc"
             _zip_ext=".zip"
             _checksum_style="sha256"
-            _checksum_value="b1df977649d2bc335f76f8c7e17a93bc03e56ef73a4b82959908069d19dd696a"
+            _checksum_value="2f17636036c71021b89e917d56b1f76d063b1686d542465f032d3d0001bb2d56"
             _bins="aiscript.exe"
             _bins_js_array='"aiscript.exe"'
             _libs=""
@@ -205,7 +205,7 @@ download_binary_and_run_installer() {
             _arch="x86_64-unknown-linux-gnu"
             _zip_ext=".tar.xz"
             _checksum_style="sha256"
-            _checksum_value="7661ddef984f993dc88ba5720e1b39329e9db22cf3b4fd02e57c42cc6180ee1b"
+            _checksum_value="51153eb30a6e11a341541c1e4b49a4ae178ece24180f96e08c81194f5ff217e0"
             _bins="aiscript"
             _bins_js_array='"aiscript"'
             _libs=""
