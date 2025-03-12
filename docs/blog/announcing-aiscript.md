@@ -1,6 +1,6 @@
 # Announcing AIScript and How I Built It
 
-I'm excited to share **AIScript**, a new programming language I've been developing over the past few months in collaboration with Claude. AIScript is designed specifically for web development in the AI era, with AI capabilities as first-class language features, and an intuitive route DSL and directive design. In my [Why AIScript](/blog/why-aiscript) post, I shared why I developed this new language; this post focuses on what AIScript is and how I developed it.
+I'm excited to share **AIScript**, a new programming language I've been developing over the past few months. AIScript is designed specifically for web development in the AI era, with AI capabilities as first-class language features, and an intuitive route DSL and directive design. In my [Why AIScript](/blog/why-aiscript) post, I shared why I developed this new language; this post focuses on what AIScript is and how I developed it.
 
 ## What is AIScript?
 
@@ -24,7 +24,7 @@ I've had a fantastic collaboration with Claude in implementing the AIScript inte
 
 ## Final Thoughts
 
-In the LLM era, writing an interpreter language isn't as difficult as it once was. I'm deeply grateful to Claude for being my interpreter teacher. I believe anyone following a similar path can also create their own interpreter language with relative ease. Building a programming language has been one of the most educational experiences of my development career. I hope AIScript can help bridge the gap between traditional web development and AI capabilities, making powerful AI features accessible to more developers.
+I'm deeply grateful to Claude for being my interpreter teacher. I believe anyone following a similar path can also create their own interpreter language with relative ease. Building a programming language has been one of the most educational experiences of my development career. I hope AIScript can help bridge the gap between traditional web development and AI capabilities, making powerful AI features accessible to more developers.
 
 Lastly and most importantly, AIScript is open source and available on [GitHub](https://github.com/aiscriptdev/aiscript). Hope you give it a try and welcome contributions from the community, whether it's submitting bug reports, suggesting features, improving documentation, or contributing code. 
 
