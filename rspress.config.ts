@@ -2,6 +2,7 @@ import * as path from 'node:path';
 import { defineConfig } from 'rspress/config';
 import { pluginYaml } from "@rsbuild/plugin-yaml";
 import { pluginOpenGraph } from 'rsbuild-plugin-open-graph';
+import { pluginSass } from '@rsbuild/plugin-sass';
 import pluginSitemap from 'rspress-plugin-sitemap';
 
 const PUBLISH_URL = 'https://aiscript.dev';
@@ -36,6 +37,7 @@ export default defineConfig({
             image: 'https://aiscript.dev/aiscript-social-image.png',
             description: 'AIScript is a unique combination of interpreter programming language and web framework, both written in Rust, designed to help developers build AI applications effortlessly.',
         }),
+        pluginSass(),
         pluginYaml(),
     ],
     globalStyles: path.join(__dirname, 'theme/index.css'),
