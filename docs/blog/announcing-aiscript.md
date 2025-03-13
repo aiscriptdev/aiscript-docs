@@ -1,10 +1,55 @@
 # Announcing AIScript and How I Built It
 
+![](/aiscript-social-image.png)
+
 I'm excited to share **AIScript**, a new programming language I've been developing over the past few months. AIScript is designed specifically for web development in the AI era, with AI capabilities as first-class language features, and an intuitive route DSL and directive design. In my [Why AIScript](/blog/why-aiscript) post, I shared why I developed this new language; this post focuses on what AIScript is and how I developed it.
 
 ## What is AIScript?
 
-AIScript is a unique combination of an interpreted programming language and web framework, both written in Rust, designed to help developers build AI applications effortlessly. The language syntax draws inspiration from Python, JavaScript, and Rust, combining their strengths to create something that's intuitive, powerful, and easy to use. The [Introduction](/guide/getting-started/introduction) page provides more details about AIScript.
+AIScript is a unique combination of an interpreted programming language and web framework, both written in Rust, designed to help developers build AI applications effortlessly. The language syntax draws inspiration from Python, JavaScript, and Rust, combining their strengths to create something that's intuitive, powerful, and easy to use. 
+
+```js
+$ export OPENAI_API_KEY=<your-openai-api-key>
+$ cat web.ai
+get / {
+    """An api to ask LLM"""
+
+    query {
+        """the question to ask"""
+        @string(min_len=3, max_len=100) // validate params with builtin directive @string
+        question: str
+    }
+
+    // `ai` and `prompt` are keywords
+    ai fn ask(question: str) -> str {
+        let answer = prompt question;
+        return answer;
+    }
+    // use query.name or query["name"] to access query parameter
+    let answer = ask(query.question);
+    return { answer };
+}
+
+$ aiscript serve web.ai
+Listening on http://localhost:8080
+
+$ curl http://localhost:8080
+{
+    "error": "Missing required field: question"
+}
+
+$ curl http://localhost:8080?question=Hi
+{
+    "error": "Field validation failed: question: String length is less than the minimum length of 3"
+}
+
+$ curl http://localhost:8080?question=What is the capital of France?
+{
+    "answer": "The capital of France is Paris."
+}
+```
+
+The [Introduction](/guide/getting-started/introduction) page provides more details about AIScript.
 
 ## How I Built AIScript
 
@@ -17,8 +62,6 @@ When I decided to develop AIScript, I began by searching for compiler books and 
 Since many concepts in Crafting Interpreters are derived from the Lua interpreter, I also purchased a book to learn about Lua's implementation. During this time, I discovered two outstanding projects: [Piccolo](https://github.com/kyren/piccolo), a Rust implementation of the Lua VM, and [gc-arena](https://github.com/kyren/gc-arena), an incremental garbage collector written in safe Rust. I spent considerable time diving into both projects and learned a great deal. This gave me a fundamental understanding of interpreter development within about a month.
 
 I then began writing AIScript from scratch, basing some code on my Lox implementation and using gc-arena for garbage collection. However, I soon realized that Crafting Interpreters' single-pass architecture, while offering good performance for parsing and compilation, made static type checking and advanced optimization difficult. To address this, I collaborated with Claude to help me [migrate from a single-pass to a two-pass architecture](https://github.com/aiscriptdev/aiscript/pull/1). Through this process, I discovered that Claude excels at writing interpreters, which led me to instruct Claude to help implement the remaining components of the AIScript interpreter.
-
-![](/blog/claude-project.png)
 
 I've had a fantastic collaboration with Claude in implementing the AIScript interpreter. Not only did Claude help me write boilerplate code, but it also served as an exceptional interpreter teacher. When I was uncertain about the best implementation method, I would ask how CPython, Ruby, or other languages implement similar features, and Claude would provide detailed explanations that helped me make informed decisions. Without Claude's assistance, I definitely would have struggled to complete the first version of AIScript in just four months!
 
