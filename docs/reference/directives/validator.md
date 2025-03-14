@@ -99,6 +99,7 @@ Supported formats:
 - `month`: Month (YYYY-MM)
 - `week`: Week (YYYY-Www)
 - `color`: HTML color code
+- `uscc`: Unified Social Credit Code
 
 ```js
 post /api/user {
