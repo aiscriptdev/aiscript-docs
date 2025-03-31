@@ -1,16 +1,6 @@
 # Database
 
 ```toml
-[database.pinecone]
-api_key = "YOUR_API_KEY"
-environment = "YOUR_ENVIRONMENT"
-index = "YOUR_INDEX"
-
-[database.qdrant]
-api_key = "YOUR_API_KEY"
-environment = "YOUR_ENVIRONMENT"
-index = "YOUR_INDEX"
-
 [database.sqlite]
 path = "example.db"
 
@@ -41,10 +31,6 @@ password = "redis"
 ```
 
 ## Vector Database
-
-### Pinecone
-
-### Qdrant
 
 ## Rational Database
 

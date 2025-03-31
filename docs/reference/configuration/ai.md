@@ -3,15 +3,15 @@
 > For AI observability, please refer to [observability](./observability.md).
 
 ```toml
-[ai.embedding]
-model = "gpt-3.5-turbo"
-
 [ai.openai]
 api_key = "YOUR_API_KEY"
-completion_model = "gpt-3.5-turbo"
+model = "gpt-4"
+
+[ai.deepseek]
+api_key = "YOUR_API_KEY"
+model = "deepseek-chat"
 
 [ai.anthropic]
 api_key = "YOUR_API_KEY"
-completion_model = "claude-2"
-
+model = "claude-3-5-sonnet-latest"
 ```

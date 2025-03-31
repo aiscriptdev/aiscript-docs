@@ -181,7 +181,7 @@ web:
                 id: str
               }
 
-              return f"delete repo: {id}";
+              return f"delete repo: {path.id}";
           }
         filename: delete.ai
   - title: Validator
