@@ -149,7 +149,7 @@ get /api/users/:id {
     
     use std.db.pg;
     
-    let user = pg.query_one("SELECT * FROM users WHERE id = $1", id);
+    let user = pg.query("SELECT * FROM users WHERE id = $1", path.id);
     
     if user == nil {
         return response(

@@ -179,7 +179,7 @@ get /hello/:name {
         name: str
     }
 
-    return f"Hello, {name}!";
+    return f"Hello, {path.name}!";
 }
 ```
 
@@ -228,6 +228,6 @@ get /tweet/:id {
 
     use std.db.pg;
 
-    return pg.query("SELECT * FROM tweet WHERE id = $1", id);
+    return pg.query("SELECT * FROM tweet WHERE id = $1", path.id);
 }
 ```
