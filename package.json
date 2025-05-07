@@ -24,7 +24,8 @@
     "globals": "^15.14.0",
     "prettier": "^3.4.2",
     "rsbuild-plugin-open-graph": "1.0",
-    "rspress": "^v2.0.0-alpha.2",
+    "rspress": "2.0.0-beta.4",
+    "@rspress/plugin-llms": "2.0.0-beta.4",
     "rspress-plugin-sitemap": "^1.1",
     "typescript-eslint": "^8.22.0"
   },

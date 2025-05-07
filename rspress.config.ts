@@ -4,6 +4,7 @@ import { pluginYaml } from "@rsbuild/plugin-yaml";
 import { pluginOpenGraph } from 'rsbuild-plugin-open-graph';
 import { pluginSass } from '@rsbuild/plugin-sass';
 import pluginSitemap from 'rspress-plugin-sitemap';
+import { pluginLlms } from '@rspress/plugin-llms';
 
 const PUBLISH_URL = 'https://aiscript.dev';
 export default defineConfig({
@@ -20,26 +21,26 @@ export default defineConfig({
     route: {
         cleanUrls: true,
     },
-    ssg: {
-        strict: true,
-    },
     mediumZoom: true,
     plugins: [
         pluginSitemap({
             domain: PUBLISH_URL,
         }),
+        pluginLlms(),
     ],
-    builderPlugins: [
-        pluginOpenGraph({
-            title: 'AIScript',
-            type: 'website',
-            url: PUBLISH_URL,
-            image: 'https://aiscript.dev/aiscript-social-image.png',
-            description: 'AIScript is a unique combination of interpreter programming language and web framework, both written in Rust, designed to help developers build AI applications effortlessly.',
-        }),
-        pluginSass(),
-        pluginYaml(),
-    ],
+    builderConfig: {
+        plugins: [
+            pluginOpenGraph({
+                title: 'AIScript',
+                type: 'website',
+                url: PUBLISH_URL,
+                image: 'https://aiscript.dev/aiscript-social-image.png',
+                description: 'AIScript is a unique combination of interpreter programming language and web framework, both written in Rust, designed to help developers build AI applications effortlessly.',
+            }),
+            pluginSass(),
+            pluginYaml(),
+        ],
+    },
     globalStyles: path.join(__dirname, 'theme/index.css'),
     themeConfig: {
         enableScrollToTop: true,
