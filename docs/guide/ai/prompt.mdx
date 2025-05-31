@@ -51,7 +51,7 @@ let response = prompt f"Explain {topic} at a {detail_level} level";
 
 ## API Keys and Configuration
 
-To use the `prompt` feature, you need to configure your API keys. AIScript supports multiple LLM providers.
+To use the `prompt` feature, you need to configure your API keys. AIScript supports multiple LLM providers including cloud-based services and local models.
 
 ### Environment Variables
 
@@ -63,6 +63,9 @@ export OPENAI_API_KEY="your_openai_key"
 
 # For Anthropic Claude
 export CLAUDE_API_KEY="your_claude_key"
+
+# For Ollama (local models)
+export OLLAMA_API_ENDPOINT="http://localhost:11434/v1"
 ```
 
 ### Configuration File
@@ -78,9 +81,46 @@ api_key = "YOUR_OPENAI_API_KEY"
 
 [ai.anthropic]
 api_key = "YOUR_CLAUDE_API_KEY"
+
+# For Ollama (local models)
+[ai.ollama]
+api_endpoint = "http://localhost:11434/v1"
+model = "llama3.2" # or any other model installed in your Ollama instance
 ```
 </Tab>
 </Tabs>
+
+## Local Models with Ollama
+
+AIScript supports running local models through [Ollama](https://ollama.ai/), which allows you to run AI models on your own hardware without sending data to external services.
+
+### Setting Up Ollama
+
+1. **Install Ollama** from [ollama.ai](https://ollama.ai/)
+2. **Pull models** you want to use:
+   ```bash
+   ollama pull llama3.2
+   ollama pull deepseek-r1
+   ollama pull codellama
+   ```
+3. **Start Ollama** (it runs on port 11434 by default)
+4. **Configure AIScript** to use Ollama
+
+### Example with Local Models
+
+```rust
+// Using a local Llama model
+let response = prompt {
+    input: "What is rust?",
+    model: "llama3.2"
+};
+
+// Using a local coding model
+let code_explanation = prompt {
+    input: "Review this Python function for potential issues",
+    model: "codellama"
+};
+```
 
 ## Error Handling <Badge text="Not supported yet" type="warning" />
 
@@ -134,6 +174,12 @@ let openai_response = prompt {
 let claude_response = prompt {
     input: f"Summarize this article: {article_text}" ,
     model: "claude-3.7"
+};
+
+// Using Ollama (local models)
+let local_response = prompt {
+    input: f"Summarize this article: {article_text}",
+    model: "llama3.2"
 };
 ```
 

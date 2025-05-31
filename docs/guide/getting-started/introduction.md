@@ -78,6 +78,21 @@ You can open [http://localhost:8080/redoc](http://localhost:8080/redoc) to see t
 
 ![](/guide/open-api.png)
 
+### Local Models Support
+
+AIScript also supports local models through [Ollama](https://ollama.ai/), allowing you to run AI models on your own hardware:
+
+```javascript
+$ ollama pull llama3.2
+$ export OLLAMA_API_ENDPOINT=http://localhost:11434/v1
+$ cat local.ai
+let a = prompt {
+    input: "What is rust?",
+    model: "llama3.2"
+};
+print(a);
+```
+
 ## Use Cases
 
 AIScript excels in these scenarios:
