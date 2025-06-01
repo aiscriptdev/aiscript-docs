@@ -1,0 +1,120 @@
+import { Badge, Tab, Tabs } from "rspress/theme";
+
+# Local Models with Ollama
+
+AIScript supports running AI models locally through [Ollama](https://ollama.ai/), providing privacy, cost-effectiveness, and offline capabilities.
+
+## Setting Up Ollama
+
+### Installation
+
+1. **Install Ollama** from [ollama.ai](https://ollama.ai/)
+2. **Start Ollama** service (runs on port 11434 by default)
+3. **Pull models** you want to use:
+
+```bash
+# Popular general-purpose models
+ollama pull llama3.2
+
+# Coding models
+ollama pull codellama
+ollama pull deepseek-coder
+
+# Specialized models
+ollama pull deepseek-r1
+ollama pull gemma2
+ollama pull qwen2.5
+```
+
+### Verification
+
+Check that Ollama is running and models are available:
+
+```bash
+# List installed models
+ollama list
+
+# Test a model
+ollama run llama3.2 "Hello, how are you?"
+```
+
+## Configuration
+
+Configure AIScript to use Ollama models:
+
+<Tabs>
+<Tab label="project.toml">
+
+```toml
+[ai.ollama]
+api_endpoint = "http://localhost:11434/v1"
+model = "llama3.2"  # Default model
+```
+
+</Tab>
+<Tab label="Environment Variable">
+
+```bash
+export OLLAMA_API_ENDPOINT="http://localhost:11434/v1"
+```
+
+</Tab>
+</Tabs>
+
+## Basic Usage
+
+### Simple Prompts
+
+```rust
+let response = prompt {
+    input: "Explain how neural networks work",
+    model: "llama3.2"
+};
+```
+
+## Troubleshooting
+
+### Common Issues
+
+**Ollama not responding:**
+```bash
+# Check if Ollama is running
+curl http://localhost:11434/api/tags
+
+# Restart Ollama service
+ollama serve
+```
+
+**Model not found:**
+```bash
+# List available models
+ollama list
+
+# Pull missing model
+ollama pull llama3.2
+```
+
+**Out of memory:**
+- Try a smaller model (e.g., `phi3` instead of `llama3.1`)
+- Close other applications
+- Use quantized models
+
+### Performance Issues
+
+- **Slow responses**: Try smaller models or increase hardware resources
+- **High memory usage**: Monitor with `htop` or Activity Monitor
+- **GPU not utilized**: Ensure GPU drivers are properly installed
+
+## Comparison: Local vs Cloud Models
+
+| Aspect | Local Models | Cloud Models |
+|--------|-------------|--------------|
+| **Privacy** | ✅ Complete | ❌ Data sent externally |
+| **Cost** | ✅ One-time setup | ❌ Per-token billing |
+| **Internet** | ✅ Works offline | ❌ Requires connection |
+| **Latency** | ✅ Low (local) | ❌ Network dependent |
+| **Quality** | ⚠️ Model dependent | ✅ Usually higher |
+| **Maintenance** | ❌ Self-managed | ✅ Fully managed |
+| **Scaling** | ❌ Hardware limited | ✅ Unlimited |
+
+Local models with Ollama provide a powerful way to integrate AI capabilities into your AIScript applications while maintaining full control over your data and costs.
