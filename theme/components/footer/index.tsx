@@ -39,6 +39,14 @@ export const Footer = () => {
                             <a href="https://discord.gg/bXRqsweNPb" className={styles.link}>Discord</a>
                         </div>
                     </div>
+                    {/* Friends Column */}
+                    <div className={styles.column}>
+                        <h3 className={styles.title}>Friends</h3>
+                        <div className={styles.links}>
+                            <a href="https://geddle.com" className={styles.link}>Geddle</a>
+                            <a href="https://arrfounder.com" className={styles.link}>Arrfounder</a>
+                        </div>
+                    </div>
                 </div>
                 <div className={styles.copyright}>
                     <p>
